@@ -1,0 +1,2083 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>产品 Roadmap 可视化</title>
+  <style>
+    :root {
+      --bg: #f5f6f2;
+      --panel: #ffffff;
+      --ink: #1e2320;
+      --muted: #68716b;
+      --line: #dce1d8;
+      --soft: #eef1eb;
+      --accent: #0f766e;
+      --accent-2: #bf6f2e;
+      --danger: #b93b46;
+      --shadow: 0 18px 46px rgba(32, 38, 34, .14);
+      --radius: 8px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 284px 1fr;
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      padding: 22px 18px;
+      border-right: 1px solid var(--line);
+      background: #fbfcf8;
+    }
+
+    main {
+      min-width: 0;
+      padding: 24px;
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .subhead {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .view-toggle {
+      display: inline-grid;
+      grid-template-columns: repeat(4, minmax(70px, 1fr));
+      gap: 3px;
+      min-height: 40px;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #eef1eb;
+    }
+
+    .view-toggle button {
+      min-height: 32px;
+      border: 0;
+      background: transparent;
+      white-space: nowrap;
+    }
+
+    .view-toggle button.active {
+      background: var(--panel);
+      box-shadow: 0 1px 4px rgba(32, 38, 34, .08);
+    }
+
+    .import-tools {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .file-input {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .status {
+      min-height: 20px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .search {
+      width: min(420px, 100%);
+      position: relative;
+    }
+
+    .search input {
+      width: 100%;
+      min-height: 40px;
+      padding: 10px 12px 10px 36px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      color: var(--ink);
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search::before {
+      content: "";
+      position: absolute;
+      left: 13px;
+      top: 13px;
+      width: 13px;
+      height: 13px;
+      border: 2px solid #7a837d;
+      border-radius: 50%;
+    }
+
+    .search::after {
+      content: "";
+      position: absolute;
+      left: 25px;
+      top: 26px;
+      width: 8px;
+      height: 2px;
+      background: #7a837d;
+      transform: rotate(45deg);
+      border-radius: 2px;
+    }
+
+    .btn-row, .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    button, .chip {
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    .secondary-btn {
+      background: #eef1eb;
+    }
+
+    button { padding: 7px 11px; }
+
+    button.active, .chip.active {
+      border-color: var(--accent);
+      background: #e0f1ee;
+      color: #064d47;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 9px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .section-title {
+      margin: 22px 0 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .legend {
+      display: grid;
+      gap: 9px;
+    }
+
+    .legend-item {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .tier-badge {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      color: #fff;
+      font-weight: 850;
+    }
+
+    .legend-item strong { display: block; font-size: 13px; }
+    .legend-item span { color: var(--muted); font-size: 12px; line-height: 1.35; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(116px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .stat {
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .stat .value { font-size: 24px; font-weight: 850; }
+    .stat .label { color: var(--muted); font-size: 12px; }
+
+    .roadmap-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .roadmap {
+      min-width: 1100px;
+      display: grid;
+      grid-template-columns: 170px repeat(4, minmax(220px, 1fr));
+    }
+
+    .roadmap.timeline-roadmap {
+      min-width: 1240px;
+    }
+
+    .cell, .head-cell, .row-head {
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .head-cell {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      min-height: 72px;
+      padding: 14px;
+      background: #fbfcf8;
+    }
+
+    .corner {
+      position: sticky;
+      left: 0;
+      z-index: 3;
+      background: #fbfcf8;
+    }
+
+    .head-cell strong { display: block; font-size: 24px; line-height: 1; }
+    .head-cell span { color: var(--muted); font-size: 12px; }
+
+    .row-head {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      min-height: 220px;
+      padding: 14px 12px;
+      background: #fbfcf8;
+      text-transform: uppercase;
+      font-weight: 850;
+      letter-spacing: .04em;
+      writing-mode: horizontal-tb;
+    }
+
+    .row-head small {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .cell {
+      min-height: 220px;
+      padding: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(245,246,242,.55));
+    }
+
+    .timeline-roadmap .cell {
+      min-height: 190px;
+    }
+
+    .timeline-roadmap .row-head {
+      min-height: 190px;
+    }
+
+    .timeline-roadmap .head-cell strong {
+      font-size: 19px;
+    }
+
+    .lane {
+      display: grid;
+      gap: 9px;
+    }
+
+    .product-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 10px;
+      min-height: 108px;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-right: 0;
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 0 7px 20px rgba(34, 38, 34, .06);
+      cursor: default;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      border-color: rgba(15, 118, 110, .34);
+    }
+
+    .status-edge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--status-stripe, #d5ddd7);
+    }
+
+    .product-card img {
+      width: 72px;
+      height: 86px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: var(--soft);
+    }
+
+    .product-media {
+      display: grid;
+      align-content: start;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .media-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .media-meta .tag {
+      min-height: 19px;
+      padding: 2px 5px;
+      font-size: 10px;
+      line-height: 1.2;
+    }
+
+    .product-card h3 {
+      margin: 0 0 4px;
+      font-size: 14px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .spu {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .meta-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-top: 7px;
+    }
+
+    .card-meta {
+      display: grid;
+      gap: 5px;
+      margin-top: 7px;
+    }
+
+    .card-meta .meta-line {
+      margin-top: 0;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 3px 6px;
+      border-radius: 6px;
+      background: var(--soft);
+      color: #3f4842;
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .channel-tag {
+      border: 1px solid color-mix(in srgb, var(--channel-color) 40%, transparent);
+      background: color-mix(in srgb, var(--channel-color) 14%, white);
+      color: color-mix(in srgb, var(--channel-color) 68%, black);
+    }
+
+    .quarter {
+      background: #f7eadf;
+      color: #844511;
+    }
+
+    .competitor-tag {
+      background: #f1e9f7;
+      color: #5f3481;
+    }
+
+    .map-tag {
+      background: #e6f2ee;
+      color: #09564f;
+      white-space: nowrap;
+    }
+
+    .variant-tag {
+      background: #edf0f7;
+      color: #37466f;
+    }
+
+    .sku-configs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 7px;
+    }
+
+    .sku-config-tag {
+      display: inline-flex;
+      align-items: center;
+      max-width: 100%;
+      min-height: 21px;
+      padding: 3px 6px;
+      border: 1px solid #dce2ee;
+      border-radius: 6px;
+      background: #f7f8fc;
+      color: #37466f;
+      font-size: 11px;
+      font-weight: 750;
+      line-height: 1.25;
+    }
+
+    .empty {
+      height: 100%;
+      min-height: 110px;
+      display: grid;
+      place-items: center;
+      color: #9ba49d;
+      font-size: 12px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.48);
+    }
+
+    .tooltip {
+      position: fixed;
+      z-index: 20;
+      width: 390px;
+      max-width: calc(100vw - 24px);
+      padding: 14px;
+      border: 1px solid rgba(30, 35, 32, .14);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.98);
+      box-shadow: var(--shadow);
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity .12s ease, transform .12s ease;
+    }
+
+    .tooltip.show { opacity: 1; transform: translateY(0); }
+    .tooltip h2 { margin: 0 0 4px; font-size: 16px; }
+    .tooltip .spu { margin-bottom: 10px; }
+    .detail { display: grid; gap: 8px; }
+    .detail-row { display: grid; grid-template-columns: 68px 1fr; gap: 10px; font-size: 12px; line-height: 1.45; }
+    .detail-row b { color: var(--muted); }
+    .detail-row > span { min-width: 0; }
+    .hover-sku-configs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      min-width: 0;
+    }
+    .competitor-list { display: grid; gap: 7px; }
+    .competitor-item {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 8px;
+      align-items: start;
+      min-width: 0;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #faf8fc;
+    }
+    .competitor-item img {
+      width: 42px;
+      height: 42px;
+      object-fit: cover;
+      border-radius: 5px;
+      background: var(--soft);
+    }
+    .competitor-copy { display: grid; gap: 2px; min-width: 0; }
+    .competitor-item strong { display: block; margin-bottom: 3px; font-size: 12px; }
+    .competitor-item span { display: block; color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .variant-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    .variant-item {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 8px;
+      align-items: start;
+      min-width: 0;
+      padding: 8px;
+      border: 1px solid #dce2ee;
+      border-radius: 7px;
+      background: #f7f8fc;
+    }
+    .variant-item img {
+      width: 42px;
+      height: 42px;
+      object-fit: cover;
+      border-radius: 5px;
+      background: var(--soft);
+    }
+    .variant-item strong,
+    .variant-item span {
+      display: block;
+      min-width: 0;
+      overflow: visible;
+      text-overflow: clip;
+      white-space: normal;
+    }
+    .variant-copy { display: grid; gap: 3px; min-width: 0; }
+    .variant-item strong { color: #26304c; font-size: 12px; }
+    .variant-item span { color: #5f6b86; font-size: 11px; line-height: 1.35; }
+    .variant-item b { color: #37466f; font-weight: 850; }
+    .sku-empty {
+      padding: 8px;
+      border: 1px dashed #cbd3e4;
+      border-radius: 7px;
+      background: #fbfcff;
+      color: #6a7286;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      background: rgba(30, 35, 32, .22);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .16s ease;
+    }
+
+    .drawer-backdrop.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 31;
+      width: min(520px, 100vw);
+      height: 100vh;
+      padding: 18px;
+      overflow: auto;
+      border-left: 1px solid var(--line);
+      background: #fbfcf8;
+      box-shadow: -18px 0 46px rgba(32, 38, 34, .16);
+      transform: translateX(102%);
+      transition: transform .18s ease;
+    }
+
+    .drawer.show { transform: translateX(0); }
+
+    .drawer-head {
+      position: sticky;
+      top: -18px;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: -18px -18px 16px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(251, 252, 248, .96);
+      backdrop-filter: blur(8px);
+    }
+
+    .drawer-head h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .icon-btn {
+      width: 34px;
+      min-height: 34px;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+
+    .drawer-hero {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 14px;
+      align-items: start;
+      margin-bottom: 14px;
+    }
+
+    .drawer-hero img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--soft);
+    }
+
+    .drawer .detail {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .drawer .detail-row {
+      grid-template-columns: 82px 1fr;
+      font-size: 13px;
+    }
+
+    .hidden { display: none !important; }
+
+    /* —— 健康度色块 —— */
+    .health-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #6c8a78;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(0,0,0,.08);
+      vertical-align: middle;
+    }
+    .health-dot.health-green  { background: #1e9c6b; }
+    .health-dot.health-yellow { background: #d99b22; }
+    .health-dot.health-red    { background: #c2353f; }
+    .health-dot.health-na     { background: #b6bbb4; }
+
+    .card-health {
+      position: absolute;
+      top: 8px;
+      left: -2px;
+      z-index: 2;
+    }
+
+    .health-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 11px;
+      font-weight: 750;
+      color: #2d3530;
+    }
+    .health-pill .health-dot { box-shadow: none; width: 8px; height: 8px; }
+
+    .owner-tag {
+      background: #ecefe9;
+      color: #2d3530;
+    }
+    .decision-tag {
+      background: #fdecec;
+      color: #8a242c;
+      border: 1px dashed #d18289;
+    }
+
+    /* —— Executive 视图 —— */
+    .exec-grid {
+      display: grid;
+      grid-template-columns: minmax(260px, 1.3fr) 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 1200px) {
+      .exec-grid { grid-template-columns: 1fr; }
+    }
+    .exec-card {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 7px 20px rgba(34,38,34,.04);
+    }
+    .exec-card h2 {
+      margin: 0 0 4px;
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+    .exec-card .exec-sub {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+    .campaign-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      background: #fbfcf8;
+    }
+    .campaign-row.health-green  { border-left-color: #1e9c6b; }
+    .campaign-row.health-yellow { border-left-color: #d99b22; background: #fdf7eb; }
+    .campaign-row.health-red    { border-left-color: #c2353f; background: #fbeeef; }
+    .campaign-row strong { display: block; font-size: 13px; }
+    .campaign-row .campaign-meta { color: var(--muted); font-size: 11px; margin-top: 3px; }
+    .campaign-row .campaign-counts {
+      display: flex;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-row .count-chip {
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #eef1eb;
+      color: #2d3530;
+    }
+    .campaign-row .count-chip.red   { background: #fbe2e4; color: #8a242c; }
+    .campaign-row .count-chip.yellow{ background: #fbecd1; color: #6a4912; }
+    .campaign-row .count-chip.green { background: #d9f1e5; color: #0c4d35; }
+
+    .exec-item {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 8px;
+      padding: 9px 10px;
+      margin-bottom: 7px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcf8;
+      cursor: pointer;
+    }
+    .exec-item:hover { border-color: rgba(15,118,110,.34); }
+    .exec-item strong { display: block; font-size: 12px; }
+    .exec-item span { display: block; color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .exec-empty {
+      padding: 14px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* —— 档位 × 渠道 空缺矩阵 —— */
+    .gap-matrix {
+      display: grid;
+      gap: 0;
+    }
+    .gap-cell {
+      min-height: 84px;
+      padding: 10px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .gap-cell.head {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #fbfcf8;
+      font-weight: 850;
+      min-height: 56px;
+    }
+    .gap-cell.head strong { font-size: 16px; }
+    .gap-cell.head span { color: var(--muted); font-size: 11px; font-weight: 650; }
+    .gap-cell .gap-count {
+      font-size: 22px;
+      font-weight: 850;
+      line-height: 1;
+    }
+    .gap-cell .gap-spus {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .gap-cell .gap-spu {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #eef1eb;
+      color: #2d3530;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .gap-cell.empty-cell {
+      background: repeating-linear-gradient(135deg, #fff, #fff 8px, #fbe2e4 8px, #fbe2e4 16px);
+      color: #8a242c;
+      font-size: 12px;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+    }
+    .gap-cell.thin-cell {
+      background: #fef6e8;
+      color: #6a4912;
+    }
+    .gap-cell.row-head {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: #fbfcf8;
+      font-weight: 850;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* —— Drawer 内联编辑 —— */
+    .editable {
+      cursor: text;
+      border-bottom: 1px dashed transparent;
+      padding: 1px 3px;
+      border-radius: 4px;
+      transition: background .12s ease, border-color .12s ease;
+    }
+    .editable:hover {
+      background: rgba(15,118,110,.06);
+      border-bottom-color: rgba(15,118,110,.4);
+    }
+    .editable[contenteditable="true"],
+    .editable.is-editing {
+      background: #fffdf2;
+      border: 1px solid rgba(15,118,110,.5);
+      border-radius: 4px;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(15,118,110,.08);
+    }
+    .editable.is-empty:not(.is-editing) {
+      color: #aab1a8;
+      font-style: italic;
+    }
+    .editable-select {
+      padding: 3px 6px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      font: inherit;
+      color: inherit;
+    }
+    .drawer-edit-hint {
+      margin: 10px 0 14px;
+      padding: 10px 12px;
+      border: 1px solid #cfe4df;
+      border-radius: var(--radius);
+      background: #eaf6f2;
+      color: #064d47;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    /* —— Toast —— */
+    .toast-host {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+    .toast {
+      padding: 11px 14px;
+      min-width: 260px;
+      max-width: 360px;
+      border: 1px solid rgba(30, 35, 32, .14);
+      border-radius: var(--radius);
+      background: rgba(30, 35, 32, .92);
+      color: #fff;
+      font-size: 13px;
+      line-height: 1.45;
+      box-shadow: var(--shadow);
+      pointer-events: auto;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: opacity .15s ease, transform .15s ease;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast button {
+      margin-left: 8px;
+      padding: 3px 9px;
+      border: 1px solid rgba(255,255,255,.32);
+      border-radius: 6px;
+      background: transparent;
+      color: #fff;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    /* —— PNG 导出态 —— */
+    .export-snap .toolbar,
+    .export-snap aside,
+    .export-snap .toast-host,
+    .export-snap .drawer,
+    .export-snap .drawer-backdrop,
+    .export-snap .tooltip {
+      display: none !important;
+    }
+    .export-snap.app {
+      grid-template-columns: 1fr;
+    }
+    .export-snap main { padding: 24px; }
+    .export-stamp {
+      margin: 0 0 12px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcf8;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; }
+      aside { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+      main { padding: 16px; }
+      .stats { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+      .drawer-hero { grid-template-columns: 1fr; }
+      .drawer-hero img { width: 100%; height: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <h1>产品 Roadmap</h1>
+      <p class="subhead">按产品档位、品类线和渠道组织，hover 产品卡查看战役、定位和对应竞品。</p>
+
+      <div class="section-title">产品档位</div>
+      <div class="legend" id="tierLegend"></div>
+
+      <div class="section-title">渠道筛选</div>
+      <div class="chip-row" id="channelFilters"></div>
+
+      <div class="section-title">状态筛选</div>
+      <div class="chip-row" id="statusFilters"></div>
+
+      <div class="section-title">健康度</div>
+      <div class="chip-row" id="healthLegend">
+        <span class="health-pill"><span class="health-dot health-green"></span>按计划</span>
+        <span class="health-pill"><span class="health-dot health-yellow"></span>有风险</span>
+        <span class="health-pill"><span class="health-dot health-red"></span>阻塞 / 延期</span>
+      </div>
+
+      <div class="section-title">视图建议</div>
+      <div class="legend-item">
+        <div class="tier-badge" style="background:var(--danger)">!</div>
+        <div><strong>数据口径</strong><span>每个 SPU 建议维护唯一 owner、目标季度、主战役、次战役、战略定位、核心职责和对应竞品。</span></div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="toolbar">
+        <div class="search"><input id="search" placeholder="搜索 SPU、产品名、渠道、战役、竞品" /></div>
+        <div class="view-toggle" aria-label="切换 roadmap 视图">
+          <button type="button" data-view="exec">执行摘要</button>
+          <button class="active" type="button" data-view="matrix">矩阵</button>
+          <button type="button" data-view="timeline">时间线</button>
+          <button type="button" data-view="gap">渠道空缺</button>
+        </div>
+        <div class="import-tools">
+          <button id="importBtn" type="button">导入 Excel/CSV</button>
+          <button id="templateBtn" class="secondary-btn" type="button">下载模板</button>
+          <button id="exportExcelBtn" class="secondary-btn" type="button">导出 Excel</button>
+          <button id="exportCsvBtn" class="secondary-btn" type="button">导出 CSV</button>
+          <button id="exportPngBtn" class="secondary-btn" type="button">导出图片</button>
+          <input id="fileInput" class="file-input" type="file" accept=".xlsx,.csv,.tsv" />
+        </div>
+        <div class="btn-row" id="tierFilters"></div>
+      </div>
+      <div class="status" id="importStatus"></div>
+      <div class="stats" id="stats"></div>
+      <div class="roadmap-wrap">
+        <div class="roadmap" id="roadmap"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="tooltip" id="tooltip"></div>
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <section class="drawer" id="detailDrawer" aria-label="产品详情" aria-hidden="true"></section>
+  <div class="toast-host" id="toastHost" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
+  <script>
+    const tiers = [
+      { id: "E", name: "Entry", desc: "入门款 / 价格带防守", color: "#4b6f8f" },
+      { id: "C", name: "Core", desc: "主销款 / 销量与评价基盘", color: "#0f766e" },
+      { id: "P", name: "Premium", desc: "利润款 / 功能差异化", color: "#bf6f2e" },
+      { id: "U", name: "Ultimate", desc: "旗舰款 / 品牌心智与技术标杆", color: "#6f4aa2" }
+    ];
+
+    const baseCategories = [
+      { id: "cam", name: "Cam", note: "轻量化观鸟入口" },
+      { id: "feeder", name: "Feeder", note: "全局主航道，布局最完整" },
+      { id: "nest", name: "Nest", note: "休息与温控" },
+      { id: "hum feeder", name: "Hum", note: "高颜值传播与礼赠增长" },
+      { id: "house", name: "House", note: "后院生态体验与亲子教育" },
+      { id: "bath", name: "Bath", note: "创新场景与视觉差异化" }
+    ];
+
+    let categories = [...baseCategories];
+    let channels = ["SC", "VC", "SHOPIFY", "WM", "SAMS", "BJ's"];
+    const channelColors = {
+      SC: "#0f766e",
+      VC: "#4267ac",
+      SHOPIFY: "#bf6f2e",
+      WM: "#7b8432",
+      SAMS: "#b93b46",
+      "BJ's": "#805a25",
+      TBD: "#6b7280"
+    };
+    const fallbackChannelColors = ["#546a7b", "#8f4f24", "#7c3aed", "#0f8a9d", "#9a5b13"];
+    const statusDefinitions = [
+      { id: "PLAN", label: "规划中", color: "#546a7b" },
+      { id: "DEV", label: "开发中", color: "#bf6f2e" },
+      { id: "ITER", label: "迭代中", color: "#6f4aa2" },
+      { id: "LIVE", label: "已上线", color: "#0f766e" },
+      { id: "EOL", label: "已取消", color: "#9f3a38" }
+    ];
+    const statusColors = Object.fromEntries(statusDefinitions.map(status => [status.id, status.color]));
+
+    const healthDefinitions = [
+      { id: "green",  label: "按计划",      color: "#1e9c6b" },
+      { id: "yellow", label: "有风险",      color: "#d99b22" },
+      { id: "red",    label: "阻塞 / 延期", color: "#c2353f" }
+    ];
+    const healthColors = Object.fromEntries(healthDefinitions.map(item => [item.id, item.color]));
+    const healthLabels = Object.fromEntries(healthDefinitions.map(item => [item.id, item.label]));
+
+    const image = seed => `https://images.unsplash.com/${seed}?auto=format&fit=crop&w=320&q=80`;
+    const defaultProducts = [
+      { spu: "CAM-E100", name: "Cam Mini", category: "cam", tier: "E", quarter: "2026 Q2", mapPrice: "$39.99", channels: ["SC", "WM"], img: image("photo-1583337130417-3346a1be7dee"), main: "低价位铺量", secondary: "新客首购", position: "承担 E 档入口，补齐低价带对竞品防守。", role: "拉新、评价积累、渠道补坑。" },
+      { spu: "CAM-C240", name: "Cam 2K Pan", category: "cam", tier: "C", quarter: "2026 Q3", mapPrice: "$79.99", channels: ["SC", "VC", "SHOPIFY"], img: image("photo-1601758125946-6ec2ef64daf8"), main: "主销爆品", secondary: "订阅转化", position: "Cam 线销量中枢，用 2K、云存储和双向语音稳定转化。", role: "承担评论量、转化率和订阅入口。" },
+      { spu: "CAM-P360", name: "Cam AI 360", category: "cam", tier: "P", quarter: "2026 Q4", mapPrice: "$129.99", channels: ["SC", "SHOPIFY", "SAMS"], img: image("photo-1548199973-03cce0bbc87b"), main: "AI 差异化", secondary: "礼品季利润", position: "用宠物识别、异常提醒和自动追踪拉开溢价。", role: "提升 ASP、带动 App 活跃和会员包。" },
+      { spu: "FDR-E120", name: "Feeder Lite", category: "feeder", tier: "E", quarter: "2026 Q2", mapPrice: "$49.99", channels: ["WM", "BJ's"], img: image("photo-1573865526739-10659fec78a5"), main: "大货架覆盖", secondary: "价格带占位", position: "基础定时喂食款，解决渠道低价 SKU 需求。", role: "支撑线下渠道毛利和促销档期。" },
+      { spu: "FDR-C300", name: "Feeder Pro", category: "feeder", tier: "C", quarter: "2026 Q3", mapPrice: "$99.99", channels: ["SC", "VC", "SHOPIFY", "SAMS"], img: image("photo-1592194996308-7b43878e84a6"), main: "年度主战役", secondary: "多宠家庭", position: "Feeder 线主销 SPU，容量、卡粮检测、摄像头形成均衡卖点。", role: "承担品类 GMV、评价星级和渠道首推。" },
+      { spu: "FDR-U700", name: "Feeder Ultra Fresh", category: "feeder", tier: "U", quarter: "2027 Q1", mapPrice: "$199.99", channels: ["SHOPIFY", "SAMS"], img: image("photo-1514888286974-6c03e2ca1dba"), main: "旗舰心智", secondary: "鲜食生态", position: "以制冷保鲜和精准投喂建立技术标杆。", role: "打开高端价格带，验证鲜食订阅组合。" },
+      { spu: "NST-C200", name: "Smart Nest", category: "nest", tier: "C", quarter: "2026 Q4", mapPrice: "$89.99", channels: ["SHOPIFY", "SC"], img: image("photo-1608848461950-0fe51dfc41cb"), main: "新品类验证", secondary: "复购关联", position: "Nest 线首个可规模化 SPU，验证温控睡眠场景。", role: "验证需求、沉淀内容素材、拉动配件。" },
+      { spu: "HFD-P500", name: "Hum Feeder Chill", category: "hum feeder", tier: "P", quarter: "2027 Q1", mapPrice: "$149.99", channels: ["SHOPIFY", "VC"], img: image("photo-1596854407944-bf87f6fdd49e"), main: "湿粮升级", secondary: "会员绑定", position: "湿粮喂食高毛利款，围绕保鲜和易清洁建立信任。", role: "提升客单价，承接鲜食/湿粮生态。" },
+      { spu: "BTH-C180", name: "Bath Care", category: "bath", tier: "C", quarter: "2026 Q3", mapPrice: "$59.99", channels: ["WM", "SC", "BJ's"], img: image("photo-1543852786-1cf6624b9987"), main: "清洁护理扩品", secondary: "渠道独家", position: "Bath 线基础款，优先验证线下护理场景。", role: "扩展非喂食看护品类，提升货架丰富度。" },
+      { spu: "BTH-P320", name: "Bath Dry Plus", category: "bath", tier: "P", quarter: "2027 Q2", mapPrice: "$129.99", channels: ["SHOPIFY", "SAMS"], img: image("photo-1548767797-d8c844163c4c"), main: "利润补充", secondary: "高端护理", position: "以快速烘干、低噪和安全感做高端护理 SKU。", role: "承接高毛利与内容种草。" }
+    ];
+
+    const defaultCompetitors = {
+      "CAM-E100": [{ name: "Wyze Cam v4", company: "Wyze", img: image("photo-1601758125946-6ec2ef64daf8"), price: "$35-45", channel: "Amazon / WM", point: "低价与基础画质强", response: "用宠物场景、App 引导和组合促销避开纯硬件比价。" }],
+      "CAM-C240": [{ name: "Furbo 360", company: "Furbo", img: image("photo-1583337130417-3346a1be7dee"), price: "$99-149", channel: "Amazon / DTC", point: "品牌认知与宠物互动强", response: "强调 2K 画质、云存储转化和更低总拥有成本。" }],
+      "CAM-P360": [{ name: "Eufy Pet Camera", company: "Eufy", img: image("photo-1548199973-03cce0bbc87b"), price: "$169-199", channel: "Amazon / DTC", point: "AI 追踪和本地存储心智强", response: "主打 AI 识别准确率、异常提醒和生态联动。" }],
+      "FDR-E120": [{ name: "Petlibro Air", company: "Petlibro", img: image("photo-1573865526739-10659fec78a5"), price: "$49-69", channel: "Amazon / WM", point: "基础喂食器价格带强", response: "以渠道包、售后和基础可靠性承接低价段。" }],
+      "FDR-C300": [{ name: "Petlibro Granary Camera", company: "Petlibro", img: image("photo-1592194996308-7b43878e84a6"), price: "$89-129", channel: "Amazon / DTC", point: "容量、摄像头与评价基盘强", response: "用卡粮检测、内容素材和多宠场景做差异化。" }],
+      "FDR-U700": [{ name: "PETKIT Fresh Element", company: "PETKIT", img: image("photo-1514888286974-6c03e2ca1dba"), price: "$149-199", channel: "Amazon / DTC", point: "高端设计和智能喂食认知强", response: "用保鲜能力、精准投喂和鲜食订阅组合拉开定位。" }],
+      "NST-C200": [{ name: "K&H Heated Bed", company: "K&H", img: image("photo-1608848461950-0fe51dfc41cb"), price: "$45-90", channel: "Amazon / Chewy", point: "温控休息场景成熟", response: "用智能温控、数据化睡眠和 App 连接验证新品类价值。" }],
+      "HFD-P500": [{ name: "SureFeed Microchip Feeder", company: "Sure Petcare", img: image("photo-1596854407944-bf87f6fdd49e"), price: "$170-220", channel: "Amazon / Chewy", point: "多宠隔离和高端信任强", response: "以湿粮保鲜、易清洁和会员绑定避开单点功能竞争。" }],
+      "BTH-C180": [{ name: "Aquapaw / Waterpik Pet", company: "Aquapaw / Waterpik", img: image("photo-1543852786-1cf6624b9987"), price: "$25-60", channel: "Amazon / WM", point: "低价清洁工具覆盖广", response: "围绕线下渠道独家套装和护理流程提升客单。" }],
+      "BTH-P320": [{ name: "Flying Pig Dryer", company: "Flying Pig", img: image("photo-1548767797-d8c844163c4c"), price: "$120-180", channel: "Amazon / DTC", point: "烘干效率和专业护理心智强", response: "主打低噪、安全感和家用护理内容种草。" }]
+    };
+
+    let products = groupProductVariants(defaultProducts.map(product => ({ ...product, productGroup: product.spu, status: "PLAN", color: "", variants: [{ spu: product.spu, color: "", img: product.img }], competitors: defaultCompetitors[product.spu] || [] })));
+
+    const state = { tiers: new Set(tiers.map(t => t.id)), channels: new Set(channels), statuses: new Set(statusDefinitions.map(status => status.id)), query: "", view: "matrix" };
+
+    const tierLegend = document.getElementById("tierLegend");
+    const tierFilters = document.getElementById("tierFilters");
+    const channelFilters = document.getElementById("channelFilters");
+    const statusFilters = document.getElementById("statusFilters");
+    const roadmap = document.getElementById("roadmap");
+    const stats = document.getElementById("stats");
+    const tooltip = document.getElementById("tooltip");
+    const detailDrawer = document.getElementById("detailDrawer");
+    const drawerBackdrop = document.getElementById("drawerBackdrop");
+    const importStatus = document.getElementById("importStatus");
+
+    function initControls() {
+      tierLegend.innerHTML = tiers.map(t => `
+        <div class="legend-item">
+          <div class="tier-badge" style="background:${t.color}">${t.id}</div>
+          <div><strong>${t.name}</strong><span>${t.desc}</span></div>
+        </div>`).join("");
+
+      renderTierFilters();
+      renderChannelFilters();
+      renderStatusFilters();
+
+      document.getElementById("search").addEventListener("input", e => {
+        state.query = e.target.value.trim().toLowerCase();
+        render();
+      });
+
+      document.getElementById("importBtn").addEventListener("click", () => document.getElementById("fileInput").click());
+      document.getElementById("fileInput").addEventListener("change", importFile);
+      document.getElementById("templateBtn").addEventListener("click", downloadTemplate);
+      document.getElementById("exportExcelBtn").addEventListener("click", () => exportRoadmap("xlsx"));
+      document.getElementById("exportCsvBtn").addEventListener("click", () => exportRoadmap("csv"));
+
+      document.querySelectorAll(".view-toggle button").forEach(btn => btn.addEventListener("click", () => {
+        state.view = btn.dataset.view;
+        document.querySelectorAll(".view-toggle button").forEach(item => item.classList.toggle("active", item === btn));
+        render();
+      }));
+
+      drawerBackdrop.addEventListener("click", closeDrawer);
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape") closeDrawer();
+      });
+    }
+
+    function renderTierFilters() {
+      tierFilters.innerHTML = tiers.map(t => `<button class="active" data-tier="${t.id}">${t.id} ${t.name}</button>`).join("");
+      tierFilters.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+        const id = btn.dataset.tier;
+        state.tiers.has(id) ? state.tiers.delete(id) : state.tiers.add(id);
+        btn.classList.toggle("active", state.tiers.has(id));
+        render();
+      }));
+    }
+
+    function renderChannelFilters() {
+      channelFilters.innerHTML = channels.map(c => `<button class="chip active" data-channel="${escapeHtml(c)}"><span class="dot" style="background:${channelColor(c)}"></span>${escapeHtml(c)}</button>`).join("");
+      channelFilters.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+        const id = btn.dataset.channel;
+        state.channels.has(id) ? state.channels.delete(id) : state.channels.add(id);
+        btn.classList.toggle("active", state.channels.has(id));
+        render();
+      }));
+    }
+
+    function renderStatusFilters() {
+      statusFilters.innerHTML = statusDefinitions.map(status => `<button class="chip active" data-status="${status.id}"><span class="dot" style="background:${status.color}"></span>${status.id}</button>`).join("");
+      statusFilters.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+        const id = btn.dataset.status;
+        state.statuses.has(id) ? state.statuses.delete(id) : state.statuses.add(id);
+        btn.classList.toggle("active", state.statuses.has(id));
+        render();
+      }));
+    }
+
+    function importFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      importStatus.textContent = `正在导入：${file.name}`;
+      const reader = new FileReader();
+      reader.onerror = () => importStatus.textContent = "导入失败：无法读取文件。";
+      reader.onload = async e => {
+        try {
+          const { rows, imagesByRow } = await parseWorkbook(file, e.target.result);
+        const imported = rows.map(row => normalizeRow(row, imagesByRow[row.__rowNumber])).filter(p => p.spu);
+        if (!imported.length) throw new Error("没有识别到有效产品行，请检查 SPU 列。 ");
+
+          products = groupProductVariants(imported);
+          syncDimensionsFromProducts();
+          renderChannelFilters();
+          renderStatusFilters();
+          render();
+          const imageCount = imported.filter(p => p.img && p.img.startsWith("data:image/")).length;
+          const imageNote = /\.xlsx$/i.test(file.name) ? `，读取 ${imageCount} 张嵌入图片` : "；CSV/TSV 不支持嵌入图片";
+          importStatus.textContent = `已导入 ${imported.length} 个 SPU，合并为 ${products.length} 张卡${imageNote}：${file.name}`;
+        } catch (error) {
+          importStatus.textContent = `导入失败：${error.message}`;
+        } finally {
+          event.target.value = "";
+        }
+      };
+
+      if (/\.csv$|\.tsv$/i.test(file.name)) reader.readAsText(file, "utf-8");
+      else reader.readAsArrayBuffer(file);
+    }
+
+    async function parseWorkbook(file, payload) {
+      if (/\.csv$/i.test(file.name)) return { rows: parseDelimited(payload, ","), imagesByRow: {} };
+      if (/\.tsv$/i.test(file.name)) return { rows: parseDelimited(payload, "\t"), imagesByRow: {} };
+      if (!window.XLSX) throw new Error("Excel 解析库未加载；请联网后刷新页面，或先另存为 CSV 导入。 ");
+      const workbook = XLSX.read(payload, { type: "array" });
+      const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+      const matrix = XLSX.utils.sheet_to_json(firstSheet, { header: 1, defval: "", blankrows: false });
+      const headers = (matrix[0] || []).map(value => String(value).trim());
+      const imageColumn = headers.findIndex(header => ["图片", "image", "photo", "产品图片"].includes(header.toLowerCase())) + 1;
+      const rows = matrix.slice(1).filter(row => row.some(Boolean)).map((row, index) => {
+        const record = Object.fromEntries(headers.map((header, colIndex) => [header, row[colIndex] || ""]));
+        record.__rowNumber = index + 2;
+        return record;
+      });
+      const imagesByRow = /\.xlsx$/i.test(file.name) ? await extractExcelImages(payload, imageColumn) : {};
+      return { rows, imagesByRow };
+    }
+
+    function parseDelimited(text, delimiter) {
+      const rows = [];
+      let row = [];
+      let value = "";
+      let quoted = false;
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const next = text[i + 1];
+        if (char === '"' && quoted && next === '"') { value += '"'; i++; continue; }
+        if (char === '"') { quoted = !quoted; continue; }
+        if (char === delimiter && !quoted) { row.push(value); value = ""; continue; }
+        if ((char === "\n" || char === "\r") && !quoted) {
+          if (char === "\r" && next === "\n") i++;
+          row.push(value);
+          rows.push(row);
+          row = [];
+          value = "";
+          continue;
+        }
+        value += char;
+      }
+      row.push(value);
+      rows.push(row);
+      const headers = rows.shift().map(h => h.trim());
+      return rows.filter(r => r.some(Boolean)).map((r, index) => {
+        const record = Object.fromEntries(headers.map((h, i) => [h, r[i] || ""]));
+        record.__rowNumber = index + 2;
+        return record;
+      });
+    }
+
+    async function extractExcelImages(payload, imageColumn) {
+      if (!window.JSZip || !imageColumn) return {};
+      const zip = await JSZip.loadAsync(payload);
+      const richDataImages = await extractRichDataImages(zip, imageColumn);
+      const sheetPath = "xl/worksheets/sheet1.xml";
+      const sheet = zip.file(sheetPath);
+      if (!sheet) return {};
+
+      const sheetXml = await sheet.async("text");
+      const sheetDoc = parseXml(sheetXml);
+      const drawingEl = firstByLocal(sheetDoc, "drawing");
+      if (!drawingEl) return richDataImages;
+
+      const drawingRid = drawingEl.getAttribute("r:id") || drawingEl.getAttribute("id");
+      const sheetRels = await readRelationships(zip, "xl/worksheets/_rels/sheet1.xml.rels");
+      const drawingPath = resolveZipPath("xl/worksheets", sheetRels[drawingRid]);
+      if (!drawingPath || !zip.file(drawingPath)) return {};
+
+      const drawingXml = await zip.file(drawingPath).async("text");
+      const drawingDoc = parseXml(drawingXml);
+      const drawingRels = await readRelationships(zip, `${dirName(drawingPath)}/_rels/${baseName(drawingPath)}.rels`);
+      const imagesByRow = {};
+      const fallbackImagesByRow = {};
+
+      Array.from(drawingDoc.getElementsByTagName("*")).filter(el => ["twoCellAnchor", "oneCellAnchor"].includes(el.localName)).forEach(anchor => {
+        const from = firstByLocal(anchor, "from");
+        const blip = firstByLocal(anchor, "blip");
+        if (!from || !blip) return;
+        const row = Number(textByLocal(from, "row")) + 1;
+        const col = Number(textByLocal(from, "col")) + 1;
+        const rid = blip.getAttribute("r:embed") || blip.getAttribute("embed");
+        const mediaPath = resolveZipPath(dirName(drawingPath), drawingRels[rid]);
+        if (!mediaPath || !zip.file(mediaPath)) return;
+        if (!fallbackImagesByRow[row]) fallbackImagesByRow[row] = mediaPath;
+        if (imageColumn && col === imageColumn && !imagesByRow[row]) imagesByRow[row] = mediaPath;
+      });
+
+      const mergedImagesByRow = { ...richDataImages, ...fallbackImagesByRow, ...imagesByRow };
+      for (const [row, mediaPath] of Object.entries(mergedImagesByRow)) {
+        if (String(mediaPath).startsWith("data:image/")) continue;
+        const bytes = await zip.file(mediaPath).async("base64");
+        mergedImagesByRow[row] = `data:${mimeFromPath(mediaPath)};base64,${bytes}`;
+      }
+      return mergedImagesByRow;
+    }
+
+    async function extractRichDataImages(zip, imageColumn) {
+      const sheet = zip.file("xl/worksheets/sheet1.xml");
+      const richValues = zip.file("xl/richData/rdrichvalue.xml");
+      const richValueRels = zip.file("xl/richData/richValueRel.xml");
+      const richRels = zip.file("xl/richData/_rels/richValueRel.xml.rels");
+      if (!sheet || !richValues || !richValueRels || !richRels) return {};
+
+      const sheetDoc = parseXml(await sheet.async("text"));
+      const cells = Array.from(sheetDoc.getElementsByTagName("*")).filter(el => el.localName === "c");
+      const imageCells = cells.map(cell => {
+        const ref = cell.getAttribute("r") || "";
+        const match = ref.match(/^([A-Z]+)(\d+)$/);
+        const vm = cell.getAttribute("vm");
+        if (!match || !vm) return null;
+        const col = columnLettersToNumber(match[1]);
+        if (col !== imageColumn) return null;
+        return { row: Number(match[2]), richIndex: Number(vm) - 1 };
+      }).filter(Boolean);
+      if (!imageCells.length) return {};
+
+      const richDoc = parseXml(await richValues.async("text"));
+      const richRelDoc = parseXml(await richValueRels.async("text"));
+      const richRelIds = Array.from(richRelDoc.getElementsByTagName("*")).filter(el => el.localName === "rel").map(rel => rel.getAttribute("r:id") || rel.getAttribute("id"));
+      const mediaByRid = await readRelationships(zip, "xl/richData/_rels/richValueRel.xml.rels");
+      const rvItems = Array.from(richDoc.getElementsByTagName("*")).filter(el => el.localName === "rv").map(rv => {
+        const values = Array.from(rv.children).filter(child => child.localName === "v").map(child => Number(child.textContent));
+        const relIndex = values[0];
+        return richRelIds[relIndex];
+      });
+
+      const imagesByRow = {};
+      for (const cell of imageCells) {
+        const rid = rvItems[cell.richIndex];
+        const mediaPath = resolveZipPath("xl/richData", mediaByRid[rid]);
+        if (!mediaPath || !zip.file(mediaPath)) continue;
+        const bytes = await zip.file(mediaPath).async("base64");
+        imagesByRow[cell.row] = `data:${mimeFromPath(mediaPath)};base64,${bytes}`;
+      }
+      return imagesByRow;
+    }
+
+    function columnLettersToNumber(letters) {
+      return letters.split("").reduce((sum, char) => sum * 26 + char.charCodeAt(0) - 64, 0);
+    }
+
+    function parseXml(xml) {
+      return new DOMParser().parseFromString(xml, "application/xml");
+    }
+
+    function firstByLocal(root, localName) {
+      return Array.from(root.getElementsByTagName("*")).find(el => el.localName === localName);
+    }
+
+    function textByLocal(root, localName) {
+      const el = firstByLocal(root, localName);
+      return el ? el.textContent : "0";
+    }
+
+    async function readRelationships(zip, path) {
+      const relFile = zip.file(path);
+      if (!relFile) return {};
+      const doc = parseXml(await relFile.async("text"));
+      return Object.fromEntries(Array.from(doc.getElementsByTagName("*")).filter(el => el.localName === "Relationship").map(rel => [rel.getAttribute("Id"), rel.getAttribute("Target")]));
+    }
+
+    function resolveZipPath(baseDir, target) {
+      if (!target) return "";
+      if (target.startsWith("/")) return target.slice(1);
+      const parts = `${baseDir}/${target}`.split("/");
+      const stack = [];
+      parts.forEach(part => {
+        if (!part || part === ".") return;
+        if (part === "..") stack.pop();
+        else stack.push(part);
+      });
+      return stack.join("/");
+    }
+
+    function dirName(path) { return path.split("/").slice(0, -1).join("/"); }
+    function baseName(path) { return path.split("/").pop(); }
+    function mimeFromPath(path) {
+      const ext = path.split(".").pop().toLowerCase();
+      return { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", gif: "image/gif", webp: "image/webp" }[ext] || "image/png";
+    }
+
+    function normalizeRow(row, embeddedImage) {
+      const get = (...keys) => {
+        const normalized = Object.fromEntries(Object.entries(row).map(([k, v]) => [String(k).trim().toLowerCase(), v]));
+        for (const key of keys) {
+          const value = normalized[String(key).trim().toLowerCase()];
+          if (value !== undefined && value !== null && String(value).trim() !== "") return String(value).trim();
+        }
+        return "";
+      };
+
+      const category = normalizeCategory(get("category", "品类", "品类线", "line", "product line"));
+      const tier = get("tier", "档位", "产品档位", "grade", "level").toUpperCase().slice(0, 1) || "C";
+      const competitorNames = get("competitors", "对应竞品", "竞品", "竞品名称", "competitor", "competitor name");
+      const competitorCompanies = splitList(get("competitor company", "竞品公司", "竞品品牌", "竞品厂商", "company", "brand"));
+      const competitorImages = splitAssetList(get("competitor image", "竞品图片", "竞品图片链接", "competitor image url", "competitor img"));
+      const competitorPrices = splitList(get("competitor prices", "竞品价格", "竞品价", "price"));
+      const competitorChannels = splitList(get("competitor channels", "竞品渠道", "竞品平台"));
+      const competitorPoints = splitList(get("comparison points", "对比要点", "竞品优势", "竞品卖点"));
+      const competitorResponses = splitList(get("response", "我方打法", "应对打法", "竞争打法"));
+      const sku = get("sku", "SKU", "子SKU", "销售SKU", "销售 sku");
+      const spu = get("spu", "SPU", "产品SPU", "产品 spu") || sku;
+      const explicitGroup = get("product group", "产品组", "产品组ID", "产品族", "结构组", "配置组", "group");
+      const color = get("color", "配色", "颜色", "colour");
+      const status = normalizeStatus(get("status", "状态", "产品状态", "SKU状态", "sku status", "roadmap status"));
+      const skuChannels = normalizeChannels(splitList(get("sku channels", "SKU渠道", "SKU 渠道", "sku channel", "sku渠道")));
+      const skuMapPrice = get("sku map price", "SKU MAP价格", "SKU MAP", "sku map", "SKU价格", "SKU MAP价");
+      return {
+        spu,
+        sku,
+        productGroup: explicitGroup,
+        color,
+        status,
+        skuConfig: get("sku config", "SKU配置", "SKU 配置", "配置", "configuration", "config"),
+        skuPosition: get("sku positioning", "SKU定位差异", "SKU 定位差异", "配置定位", "差异定位", "sku position"),
+        skuImg: get("sku image", "SKU图片", "SKU 图片", "sku image url"),
+        skuChannels,
+        skuMapPrice,
+        name: get("name", "产品名", "产品名称", "product", "product name") || spu,
+        category,
+        tier: ["E", "C", "P", "U"].includes(tier) ? tier : "C",
+        quarter: get("quarter", "季度", "上市季度", "节点", "时间", "launch") || "TBD",
+        mapPrice: get("map price", "map", "MAP", "MAP价格", "map价格", "最低广告价", "最低广告价格") || skuMapPrice || "TBD",
+        channels: skuChannels.length ? skuChannels : ["TBD"],
+        img: embeddedImage || get("img", "image", "图片链接", "image url", "photo") || placeholderImage(category),
+        main: get("main", "主战役", "primary campaign", "primary") || "待定义",
+        secondary: get("secondary", "次战役", "secondary campaign", "secondary") || "待定义",
+        position: get("position", "战略定位", "positioning", "strategy") || "待定义",
+        role: get("role", "核心职责", "responsibility", "job") || "待定义",
+        competitors: buildCompetitors(competitorNames, competitorCompanies, competitorImages, competitorPrices, competitorChannels, competitorPoints, competitorResponses)
+      };
+    }
+
+    function groupProductVariants(rows) {
+      const grouped = new Map();
+      rows.forEach(row => {
+        const groupingId = row.productGroup ? `group:${row.productGroup}` : `spu:${row.spu}`;
+        const key = [groupingId, row.category, row.tier].join("::");
+        if (!grouped.has(key)) {
+          grouped.set(key, { ...row, variants: [], competitors: [...(row.competitors || [])] });
+        }
+        const group = grouped.get(key);
+        group.variants.push({
+          spu: row.spu,
+          sku: row.sku || row.spu,
+          color: row.color || "",
+          config: row.skuConfig || "",
+          status: normalizeStatus(row.status),
+          position: row.skuPosition || "",
+          channels: row.skuChannels && row.skuChannels.length ? row.skuChannels : row.channels,
+          mapPrice: row.skuMapPrice || row.mapPrice,
+          img: row.skuImg || row.img,
+          main: row.main || "待定义",
+          secondary: row.secondary || "待定义"
+        });
+        group.spu = group.productGroup || group.spu;
+        group.img = group.img && !isPlaceholderImage(group.img) ? group.img : row.img;
+        group.channels = mergeChannels(group.channels, row.channels);
+        group.competitors = mergeCompetitors(group.competitors, row.competitors || []);
+      });
+      return Array.from(grouped.values()).map(group => ({
+        ...group,
+        mapPrice: mapPriceForGroup(group),
+        statuses: unique(group.variants.map(variant => normalizeStatus(variant.status))),
+        cardId: [group.productGroup ? `group:${group.productGroup}` : `spu:${group.spu}`, group.category, group.tier].join("::"),
+        variantCount: group.variants.length,
+        variantSpus: group.variants.map(variant => variant.spu)
+      }));
+    }
+
+    function mapPriceForGroup(group) {
+      const variants = group.variants || [];
+      const hasSkuConfig = variants.some(variant => variant.config || variant.position || (variant.sku && variant.sku !== variant.spu));
+      const prices = unique(variants.map(variant => variant.mapPrice).filter(value => value && value !== "TBD"));
+      if (!prices.length || (!hasSkuConfig && variants.length <= 1)) return group.mapPrice || "TBD";
+      const parsed = prices.map(parsePriceRange).filter(Boolean);
+      if (parsed.length !== prices.length) return prices.join(" / ");
+      const min = Math.min(...parsed.map(item => item.min));
+      const max = Math.max(...parsed.map(item => item.max));
+      const currency = parsed.find(item => item.currency)?.currency || "";
+      if (min === max) return `${currency}${formatPrice(min)}`;
+      return `${currency}${formatPrice(min)}-${currency}${formatPrice(max)}`;
+    }
+
+    function parsePriceRange(value) {
+      const text = String(value || "").trim();
+      const numbers = (text.match(/\d+(?:\.\d+)?/g) || []).map(Number);
+      if (!numbers.length) return null;
+      const firstNumberIndex = text.search(/\d/);
+      const currency = firstNumberIndex > -1 ? text.slice(0, firstNumberIndex).trim() : "";
+      return { currency, min: Math.min(...numbers), max: Math.max(...numbers) };
+    }
+
+    function formatPrice(value) {
+      return Number.isInteger(value) ? String(value) : value.toFixed(2).replace(/\.00$/, "").replace(/0$/, "");
+    }
+
+    function normalizeVariantLabel(value) {
+      const normalized = String(value || "").replace(/[‘’]/g, "'").trim();
+      const upper = normalized.toUpperCase();
+      if (["WM", "VC", "SC", "BJ", "BJS", "BJ'S", "SAMS", "SAM'S"].includes(upper)) return upper.replace("BJS", "BJ's").replace("SAMS", "SAMS");
+      return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+    }
+
+    function normalizeStatus(value) {
+      const raw = String(value || "").trim().toUpperCase();
+      const compact = raw.replace(/[\s_-]+/g, "");
+      const aliases = {
+        PLAN: "PLAN",
+        PLANNING: "PLAN",
+        规划中: "PLAN",
+        规划: "PLAN",
+        DEV: "DEV",
+        DEVELOPING: "DEV",
+        开发中: "DEV",
+        开发: "DEV",
+        ITER: "ITER",
+        ITERATING: "ITER",
+        ITERATION: "ITER",
+        迭代中: "ITER",
+        迭代: "ITER",
+        LIVE: "LIVE",
+        ONLINE: "LIVE",
+        已上线: "LIVE",
+        上线: "LIVE",
+        EOL: "EOL",
+        CANCELLED: "EOL",
+        CANCELED: "EOL",
+        已取消: "EOL",
+        取消: "EOL"
+      };
+      return aliases[raw] || aliases[compact] || "PLAN";
+    }
+
+    function inferColor(spu, group) {
+      const normalizedGroup = String(group || "").trim().toLowerCase();
+      const normalizedSpu = String(spu || "").trim();
+      if (normalizedGroup && normalizedSpu.toLowerCase().startsWith(normalizedGroup)) return normalizedSpu.slice(normalizedGroup.length).replace(/^[-_\s]+/, "");
+      const parts = normalizedSpu.split(/[\s_-]+/).filter(Boolean);
+      return parts.length > 1 ? parts[parts.length - 1] : "";
+    }
+
+    function unique(values) {
+      return [...new Set(values.filter(Boolean))];
+    }
+
+    function mergeChannels(base, extra) {
+      const merged = unique([...(base || []), ...(extra || [])]);
+      return merged.length > 1 ? merged.filter(channel => channel !== "TBD") : merged;
+    }
+
+    function mergeCompetitors(base, extra) {
+      const byName = new Map((base || []).map(item => [item.name, item]));
+      extra.forEach(item => { if (item.name && !byName.has(item.name)) byName.set(item.name, item); });
+      return Array.from(byName.values());
+    }
+
+    function isPlaceholderImage(src) {
+      return String(src || "").includes("images.unsplash.com");
+    }
+
+    function buildCompetitors(names, companies = [], images = [], prices = [], channels = [], points = [], responses = []) {
+      return splitList(names).map((name, index) => ({
+        name,
+        company: companies[index] || companies[0] || "",
+        img: images[index] || images[0] || "",
+        price: prices[index] || prices[0] || "",
+        channel: channels[index] || channels[0] || "",
+        point: points[index] || points[0] || "",
+        response: responses[index] || responses[0] || ""
+      }));
+    }
+
+    function splitList(value) {
+      return value.split(/[、,，/;；|]+/).map(v => v.trim()).filter(Boolean);
+    }
+
+    function splitAssetList(value) {
+      return value.split(/[、,，;；|]+/).map(v => v.trim()).filter(Boolean);
+    }
+
+    function normalizeChannels(values) {
+      return values.map(value => value.replace(/[‘’]/g, "'").trim()).filter(Boolean);
+    }
+
+    function channelColor(channel) {
+      const normalized = String(channel || "TBD").replace(/[‘’]/g, "'").trim().toUpperCase();
+      const canonical = normalized === "BJS" || normalized === "BJ'S" ? "BJ's" : normalized;
+      if (channelColors[canonical]) return channelColors[canonical];
+      let hash = 0;
+      for (const char of normalized) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+      return fallbackChannelColors[hash % fallbackChannelColors.length];
+    }
+
+    function channelTag(channel) {
+      return `<span class="tag channel-tag" style="--channel-color:${channelColor(channel)}">${escapeHtml(channel)}</span>`;
+    }
+
+    function channelStripe(channels) {
+      const colors = unique((channels || ["TBD"]).map(channelColor));
+      if (colors.length === 1) return colors[0];
+      const step = 100 / colors.length;
+      const stops = colors.flatMap((color, index) => [`${color} ${index * step}%`, `${color} ${(index + 1) * step}%`]);
+      return `linear-gradient(to bottom, ${stops.join(", ")})`;
+    }
+
+    function normalizeCategory(value) {
+      const raw = value.trim().toLowerCase();
+      const aliases = { camera: "cam", cameras: "cam", nest: "nest", feeder: "feeder", bath: "bath", house: "house", houses: "house", "bird house": "house", birdhouse: "house", "hum feeder": "hum feeder", humfeeder: "hum feeder", hum: "hum feeder", wet: "hum feeder" };
+      return aliases[raw] || raw || "cam";
+    }
+
+    function placeholderImage(category) {
+      const seeds = {
+        cam: "photo-1601758125946-6ec2ef64daf8",
+        feeder: "photo-1592194996308-7b43878e84a6",
+        nest: "photo-1608848461950-0fe51dfc41cb",
+        "hum feeder": "photo-1596854407944-bf87f6fdd49e",
+        house: "photo-1518791841217-8f162f1e1131",
+        bath: "photo-1548767797-d8c844163c4c"
+      };
+      return image(seeds[category] || seeds.cam);
+    }
+
+    function syncDimensionsFromProducts() {
+      const importedCategories = [...new Set(products.map(p => p.category).filter(Boolean))];
+      const byId = new Map(baseCategories.map(c => [c.id, c]));
+      categories = importedCategories.map(id => byId.get(id) || { id, name: titleCase(id), note: "导入品类" });
+      channels = [...new Set(products.flatMap(p => p.channels))];
+      state.channels = new Set(channels);
+      state.tiers = new Set(tiers.map(t => t.id));
+      state.statuses = new Set(statusDefinitions.map(status => status.id));
+    }
+
+    function roadmapHeaders() {
+      return ["产品组", "SPU", "SKU配置", "SKU定位差异", "SKU渠道", "SKU MAP价格", "配色", "品类", "档位", "季度", "状态", "MAP价格", "图片", "主战役", "次战役", "战略定位", "核心职责", "对应竞品", "竞品公司", "竞品图片", "竞品价格", "竞品渠道", "对比要点", "我方打法"];
+    }
+
+    function downloadTemplate() {
+      const headers = roadmapHeaders();
+      const samples = [
+        ["", "Nest E100", "无太阳能板 / 基础电源", "低价入口，主打基础功能和评价积累", "SC/WM", "$49.99", "White", "nest", "E", "2026 Q3", "PLAN", "$49.99", "可填图片链接；XLSX 可把图片放在此列", "低价位铺量", "新客首购", "E 档入口，补齐低价带防守", "拉新、评价积累、渠道补坑", "K&H Heated Bed", "K&H", "可填竞品图片链接", "$45-90", "Amazon / Chewy", "温控休息场景成熟", "用智能温控和 App 连接验证新品类价值"],
+        ["", "Nest E100", "含太阳能板 / 户外长续航", "承担户外场景加价和差异化卖点", "SHOPIFY/SAMS", "$69.99", "Wood", "nest", "E", "2026 Q3", "ITER", "$49.99", "同一 SPU 多个配置可重复 SPU；每行维护一个 SKU 配置；SPU 渠道由 SKU渠道自动汇总", "低价位铺量", "户外长续航", "E 档入口，Solar 配置承担轻差异化", "基础款拉新，Solar 配置提升 ASP", "K&H Heated Bed", "K&H", "多个竞品图片建议用 | 分隔", "$45-90", "Amazon / Chewy", "温控休息场景成熟", "用长续航配置和渠道组合应对"]
+      ];
+      if (window.XLSX) {
+        const worksheet = XLSX.utils.aoa_to_sheet([headers, ...samples]);
+        worksheet["!cols"] = headers.map(header => ({ wch: header === "图片" ? 24 : 16 }));
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Roadmap");
+        XLSX.writeFile(workbook, "product-roadmap-template.xlsx");
+        return;
+      }
+      downloadCsvFallback(headers, samples, "product-roadmap-template.csv");
+    }
+
+    function exportRoadmap(format) {
+      const headers = roadmapHeaders();
+      const rows = exportRows();
+      if (!rows.length) {
+        importStatus.textContent = "暂无可导出的产品数据。";
+        return;
+      }
+      if (format === "xlsx") {
+        if (!window.XLSX) {
+          importStatus.textContent = "Excel 导出库未加载，请改用 CSV 导出。";
+          return;
+        }
+        const worksheet = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+        worksheet["!cols"] = headers.map(header => ({ wch: header === "图片" ? 24 : 16 }));
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Roadmap");
+        XLSX.writeFile(workbook, "product-roadmap-export.xlsx");
+        importStatus.textContent = `已导出 ${rows.length} 条 SKU：product-roadmap-export.xlsx`;
+        return;
+      }
+      downloadCsvFallback(headers, rows, "product-roadmap-export.csv");
+      importStatus.textContent = `已导出 ${rows.length} 条 SKU：product-roadmap-export.csv`;
+    }
+
+    function exportRows() {
+      return products.flatMap(product => {
+        const competitors = product.competitors || [];
+        const names = competitors.map(item => item.name).filter(Boolean).join(" / ");
+        const companies = competitors.map(item => item.company).filter(Boolean).join(" / ");
+        const images = competitors.map(item => item.img).filter(Boolean).join(" | ");
+        const prices = competitors.map(item => item.price).filter(Boolean).join(" / ");
+        const channelsText = competitors.map(item => item.channel).filter(Boolean).join(" / ");
+        const points = competitors.map(item => item.point).filter(Boolean).join(" / ");
+        const responses = competitors.map(item => item.response).filter(Boolean).join(" / ");
+        const variants = product.variants && product.variants.length ? product.variants : [{ spu: product.spu, sku: product.spu, color: product.color, config: "", position: "", channels: product.channels, mapPrice: product.mapPrice, img: product.img, main: product.main, secondary: product.secondary }];
+        return variants.map(variant => [
+          product.productGroup || "",
+          variant.spu || product.spu || "",
+          variant.config || "",
+          variant.position || "",
+          variant.channels && variant.channels.length ? variant.channels.join("/") : "",
+          variant.mapPrice || "",
+          variant.color || "",
+          product.category || "",
+          product.tier || "",
+          product.quarter || "",
+          normalizeStatus(variant.status),
+          product.mapPrice || "",
+          variant.img && !isPlaceholderImage(variant.img) ? variant.img : "",
+          variant.main || product.main || "",
+          variant.secondary || product.secondary || "",
+          product.position || "",
+          product.role || "",
+          names,
+          companies,
+          images,
+          prices,
+          channelsText,
+          points,
+          responses
+        ]);
+      });
+    }
+
+    function downloadCsvFallback(headers, samples, filename = "product-roadmap-template.csv") {
+      const csv = [headers, ...samples].map(row => row.map(cell => `"${String(cell ?? "").replaceAll('"', '""')}"`).join(",")).join("\n");
+      const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function titleCase(value) {
+      return value.split(/\s+/).map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(" ");
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
+    }
+
+    function filteredProducts() {
+      return products.filter(p => {
+        const competitorText = (p.competitors || []).flatMap(c => [c.name, c.company, c.price, c.channel, c.point, c.response]);
+        const variantText = (p.variants || []).flatMap(v => [
+          v.spu, v.sku, v.color, v.config, v.status, v.position, v.mapPrice, ...(v.channels || [])
+        ]);
+        const text = [p.spu, p.productGroup, p.name, p.category, p.tier, p.quarter, p.mapPrice, p.main, p.secondary, p.position, p.role, ...p.channels, ...variantText, ...competitorText].join(" ").toLowerCase();
+        const variants = p.variants || [];
+        const statusMatch = variants.some(variant => state.statuses.has(normalizeStatus(variant.status)));
+        return state.tiers.has(p.tier) && p.channels.some(c => state.channels.has(c)) && statusMatch && text.includes(state.query);
+      });
+    }
+
+    function renderStats(items) {
+      const uniqueChannels = new Set(items.flatMap(p => p.channels));
+      const competitorCount = items.reduce((sum, p) => sum + (p.competitors || []).length, 0);
+      const spuCount = new Set(items.flatMap(p => p.variantSpus && p.variantSpus.length ? p.variantSpus : [p.spu]).filter(Boolean)).size;
+      const skuCount = items.reduce((sum, p) => sum + (p.variantCount || 1), 0);
+      stats.innerHTML = [
+        [spuCount, "SPU"],
+        [skuCount, "SKU"],
+        [uniqueChannels.size, "渠道"],
+        [items.length, "产品卡"],
+        [competitorCount, "对应竞品"]
+      ].map(([value, label]) => `<div class="stat"><div class="value">${value}</div><div class="label">${label}</div></div>`).join("");
+    }
+
+    function render() {
+      const items = filteredProducts();
+      renderStats(items);
+      if (state.view === "timeline") renderTimeline(items);
+      else renderMatrix(items);
+
+      attachProductEvents();
+    }
+
+    function renderMatrix(items) {
+      roadmap.className = "roadmap";
+      roadmap.style.gridTemplateColumns = "170px repeat(4, minmax(220px, 1fr))";
+      roadmap.innerHTML = `<div class="head-cell corner"><strong>品类</strong><span>档位矩阵</span></div>` +
+        tiers.map(t => `<div class="head-cell"><strong style="color:${t.color}">${escapeHtml(t.id)}</strong><span>${escapeHtml(t.name)}<br>${escapeHtml(t.desc)}</span></div>`).join("") +
+        categories.map(cat => {
+          const cells = tiers.map(t => {
+            const lane = items.filter(p => p.category === cat.id && p.tier === t.id);
+            return `<div class="cell"><div class="lane">${lane.length ? lane.map(card).join("") : `<div class="empty">暂无 SPU</div>`}</div></div>`;
+          }).join("");
+          return `<div class="row-head">${escapeHtml(cat.name)}<small>${escapeHtml(cat.note)}</small></div>${cells}`;
+        }).join("");
+    }
+
+    function renderTimeline(items) {
+      const quarters = sortedQuarters(unique(items.map(p => p.quarter || "TBD")));
+      const columns = Math.max(quarters.length, 1);
+      roadmap.className = "roadmap timeline-roadmap";
+      roadmap.style.gridTemplateColumns = `170px repeat(${columns}, minmax(240px, 1fr))`;
+      roadmap.innerHTML = `<div class="head-cell corner"><strong>品类</strong><span>上市节奏</span></div>` +
+        quarters.map(quarter => `<div class="head-cell"><strong>${escapeHtml(quarter)}</strong><span>${quarterSummary(items, quarter)}</span></div>`).join("") +
+        categories.map(cat => {
+          const cells = quarters.map(quarter => {
+            const lane = items.filter(p => p.category === cat.id && (p.quarter || "TBD") === quarter);
+            return `<div class="cell"><div class="lane">${lane.length ? lane.map(card).join("") : `<div class="empty">暂无 SPU</div>`}</div></div>`;
+          }).join("");
+          return `<div class="row-head">${escapeHtml(cat.name)}<small>${escapeHtml(cat.note)}</small></div>${cells}`;
+        }).join("");
+    }
+
+    function attachProductEvents() {
+      roadmap.querySelectorAll(".product-card").forEach(el => {
+        const product = products.find(p => p.cardId === el.dataset.cardId);
+        el.addEventListener("mouseenter", e => showTooltip(product, e));
+        el.addEventListener("mousemove", e => moveTooltip(e));
+        el.addEventListener("mouseleave", hideTooltip);
+        el.addEventListener("click", e => {
+          e.stopPropagation();
+          openDrawer(product);
+        });
+      });
+    }
+
+    function sortedQuarters(values) {
+      const list = values.length ? values : ["TBD"];
+      return list.sort((a, b) => quarterRank(a) - quarterRank(b) || String(a).localeCompare(String(b)));
+    }
+
+    function quarterRank(value) {
+      const text = String(value || "TBD").toUpperCase();
+      const match = text.match(/(20\d{2})\s*Q([1-4])/);
+      if (!match) return 999999;
+      return Number(match[1]) * 10 + Number(match[2]);
+    }
+
+    function quarterSummary(items, quarter) {
+      const inQuarter = items.filter(p => (p.quarter || "TBD") === quarter);
+      const configCount = inQuarter.reduce((sum, p) => sum + (p.variantCount || 1), 0);
+      const tierMix = tiers.map(t => `${t.id}${inQuarter.filter(p => p.tier === t.id).length}`).filter(item => !item.endsWith("0")).join(" / ");
+      return `${configCount} 配置${tierMix ? `<br>${escapeHtml(tierMix)}` : ""}`;
+    }
+
+    function card(p) {
+      const tier = tiers.find(t => t.id === p.tier) || tiers[1];
+      const competitorCount = (p.competitors || []).length;
+      const variants = p.variants || [{ spu: p.spu, color: p.color }];
+      const cardTitle = p.productGroup || p.spu;
+      const configTags = renderCardSkuConfigs(variants, cardTitle);
+      const statusStripe = statusStripeForProduct(p.statuses || variants.map(variant => variant.status));
+      const competitorTag = competitorCount ? `<span class="tag competitor-tag">竞品 ${competitorCount}</span>` : "";
+      return `<article class="product-card" data-card-id="${escapeHtml(p.cardId)}" style="border-left-color:${tier.color}">
+        <div class="status-edge" style="--status-stripe:${escapeHtml(statusStripe)}" aria-label="SKU 状态"></div>
+        <div class="product-media">
+          <img src="${escapeHtml(p.img)}" alt="${escapeHtml(p.spu)}" loading="lazy" />
+          <div class="media-meta"><span class="tag quarter">${escapeHtml(p.quarter)}</span></div>
+        </div>
+        <div>
+          <h3>${escapeHtml(cardTitle)}</h3>
+          ${configTags}
+          <div class="card-meta">
+            <div class="meta-line">${p.mapPrice ? `<span class="tag map-tag">MAP ${escapeHtml(p.mapPrice)}</span>` : `<span class="tag map-tag">MAP 待补充</span>`}${competitorTag}</div>
+            <div class="meta-line">${p.channels.map(channelTag).join("")}</div>
+          </div>
+        </div>
+      </article>`;
+    }
+
+    function renderCardSkuConfigs(variants, productName = "") {
+      const configs = unique((variants || []).map(variant => {
+        const config = String(variant.config || "").trim();
+        const color = String(variant.color || "").trim();
+        return [config, color].filter(Boolean).join(" · ");
+      }).filter(Boolean));
+      if (!configs.length) return "";
+      return `<div class="sku-configs">${configs.map(config => `<span class="sku-config-tag">${escapeHtml(config)}</span>`).join("")}</div>`;
+    }
+
+    function statusStripeForProduct(statuses) {
+      const normalized = unique((statuses || []).map(normalizeStatus));
+      const colors = normalized.length ? normalized.map(status => statusColors[status] || statusColors.PLAN) : [statusColors.PLAN];
+      if (colors.length === 1) return colors[0];
+      const step = 100 / colors.length;
+      const stops = colors.flatMap((color, index) => [`${color} ${index * step}%`, `${color} ${(index + 1) * step}%`]);
+      return `linear-gradient(to bottom, ${stops.join(", ")})`;
+    }
+
+    function variantDisplayName(variant, variants = [], productName = "") {
+      const config = stripProductTokens(String(variant.config || "").trim(), productName);
+      const color = stripProductTokens(String(variant.color || "").trim(), productName, false);
+      if ((variants || []).length <= 1 && config) return config;
+      if (config && color && !hasConfigToken(config, color)) return `${config} · ${color}`;
+      return config || color || "";
+    }
+
+    function stripProductTokens(config, productName, keepOriginalIfEmpty = true) {
+      if (!config || !productName) return config;
+      const productTokens = new Set(String(productName).toLowerCase().split(/[\s_\-·/|,，、;；]+/).filter(token => token.length > 1));
+      if (!productTokens.size) return config;
+      const configTokens = String(config).split(/[\s_\-·/|,，、;；]+/).filter(Boolean);
+      const kept = configTokens.filter(token => !productTokens.has(token.toLowerCase()));
+      return kept.length ? kept.join(" ") : (keepOriginalIfEmpty ? config : "");
+    }
+
+    function hasConfigToken(config, color) {
+      const normalizedColor = String(color || "").trim().toLowerCase();
+      if (!normalizedColor) return false;
+      return String(config || "").toLowerCase().split(/[\s_\-·/|,，、;；]+/).filter(Boolean).includes(normalizedColor);
+    }
+
+    function showTooltip(p, event) {
+      tooltip.innerHTML = `<h2>${escapeHtml(p.productGroup || p.spu)}</h2><div class="spu">${escapeHtml(p.category.toUpperCase())} · ${escapeHtml(p.tier)} 档</div>
+        ${productHoverHtml(p)}`;
+      tooltip.classList.add("show");
+      moveTooltip(event);
+    }
+
+    function openDrawer(p) {
+      hideTooltip();
+      const tier = tiers.find(t => t.id === p.tier) || tiers[1];
+      detailDrawer.innerHTML = `<div class="drawer-head">
+          <div><h2>${escapeHtml(p.productGroup || p.spu)}</h2><div class="spu">${escapeHtml(p.category.toUpperCase())} · <span style="color:${tier.color}">${escapeHtml(p.tier)} 档</span></div></div>
+          <button class="icon-btn" type="button" aria-label="关闭详情" id="closeDrawerBtn">×</button>
+        </div>
+        <div class="drawer-hero">
+          <img src="${escapeHtml(p.img)}" alt="${escapeHtml(p.spu)}" />
+          <div class="meta-line"><span class="tag quarter">${escapeHtml(p.quarter)}</span>${p.mapPrice ? `<span class="tag map-tag">MAP ${escapeHtml(p.mapPrice)}</span>` : ""}${p.channels.map(channelTag).join("")}</div>
+        </div>
+        ${productDetailHtml(p)}`;
+      detailDrawer.classList.add("show");
+      drawerBackdrop.classList.add("show");
+      detailDrawer.setAttribute("aria-hidden", "false");
+      document.getElementById("closeDrawerBtn").addEventListener("click", closeDrawer);
+    }
+
+    function closeDrawer() {
+      detailDrawer.classList.remove("show");
+      drawerBackdrop.classList.remove("show");
+      detailDrawer.setAttribute("aria-hidden", "true");
+    }
+
+    function productHoverHtml(p) {
+      const variants = p.variants || [{ spu: p.spu, color: p.color }];
+      const competitors = renderCompetitors(p.competitors || []);
+      return `<div class="detail">
+        <div class="detail-row"><b>SKU定位</b><span>${renderHoverSkuItems(variants)}</span></div>
+        <div class="detail-row"><b>战略定位</b><span>${escapeHtml(p.position)}</span></div>
+        <div class="detail-row"><b>核心职责</b><span>${escapeHtml(p.role)}</span></div>
+        <div class="detail-row"><b>对应竞品</b><span>${competitors}</span></div>
+      </div>`;
+    }
+
+    function renderHoverSkuItems(variants) {
+      if (!variants.length) return "待补充";
+      return `<div class="variant-list">${variants.map(variant => {
+        const config = [variant.config, variant.color].map(value => String(value || "").trim()).filter(Boolean).join(" · ") || variant.sku || variant.spu || "默认配置";
+        const channelText = variant.channels && variant.channels.length ? variant.channels.join(" / ") : "待补充";
+        return `<div class="variant-item">
+          <img src="${escapeHtml(variant.img || placeholderImage("cam"))}" alt="${escapeHtml(variant.spu)}" loading="lazy" />
+          <div class="variant-copy">
+            <strong>${escapeHtml(config)}</strong>
+            <span><b>状态：</b>${escapeHtml(normalizeStatus(variant.status))}</span>
+            <span><b>MAP / 渠道：</b>${escapeHtml(variant.mapPrice || "待补充")} · ${escapeHtml(channelText)}</span>
+            <span><b>定位差异：</b>${escapeHtml(variant.position || "待补充")}</span>
+          </div>
+        </div>`;
+      }).join("")}</div>`;
+    }
+
+    function productDetailHtml(p) {
+      const competitors = renderCompetitors(p.competitors || []);
+      const variants = p.variants || [{ spu: p.spu, color: p.color }];
+      const skuConfigs = renderVariants(variants, p.productGroup || p.spu);
+      return `<div class="detail">
+        <div class="detail-row"><b>SKU配置</b><span>${skuConfigs}</span></div>
+        <div class="detail-row"><b>主战役</b><span>${escapeHtml(p.main)}</span></div>
+        <div class="detail-row"><b>次战役</b><span>${escapeHtml(p.secondary)}</span></div>
+        <div class="detail-row"><b>战略定位</b><span>${escapeHtml(p.position)}</span></div>
+        <div class="detail-row"><b>核心职责</b><span>${escapeHtml(p.role)}</span></div>
+        <div class="detail-row"><b>对应竞品</b><span>${competitors}</span></div>
+      </div>`;
+    }
+
+    function renderVariants(variants, productName = "") {
+      const hasSkuDetail = variants.some(variant => variant.config || variant.color || variant.position || (variant.sku && variant.sku !== variant.spu));
+      if (!hasSkuDetail) {
+        return `<div class="sku-empty">当前产品还没有导入 SKU 配置差异。请在模板里填写 SKU配置、SKU定位差异、SKU渠道、SKU MAP价格。</div>`;
+      }
+      return `<div class="variant-list">${variants.map(variant => {
+        const config = variantDisplayName(variant, variants, productName) || variant.sku || variant.spu || "默认配置";
+        const channelText = variant.channels && variant.channels.length ? variant.channels.join(" / ") : "待补充";
+        return `<div class="variant-item">
+          <img src="${escapeHtml(variant.img || placeholderImage("cam"))}" alt="${escapeHtml(variant.spu)}" loading="lazy" />
+          <div class="variant-copy">
+            <strong>${escapeHtml(config)}</strong>
+            <span><b>状态：</b>${escapeHtml(normalizeStatus(variant.status))}</span>
+            <span><b>MAP / 渠道：</b>${escapeHtml(variant.mapPrice || "待补充")} · ${escapeHtml(channelText)}</span>
+            <span><b>主战役：</b>${escapeHtml(variant.main || "待定义")}</span>
+            <span><b>次战役：</b>${escapeHtml(variant.secondary || "待定义")}</span>
+            <span><b>定位差异：</b>${escapeHtml(variant.position || "待补充")}</span>
+          </div>
+        </div>`;
+      }).join("")}</div>`;
+    }
+
+    function renderCompetitors(competitors) {
+      if (!competitors.length) return "待补充";
+      return `<div class="competitor-list">${competitors.map(c => `
+        <div class="competitor-item">
+          <img src="${escapeHtml(c.img || placeholderImage("cam"))}" alt="${escapeHtml(c.name)}" loading="lazy" />
+          <div class="competitor-copy">
+            <strong>${escapeHtml(c.name)}</strong>
+            ${c.company ? `<span>公司：${escapeHtml(c.company)}</span>` : ""}
+            ${c.price ? `<span>价格：${escapeHtml(c.price)}</span>` : ""}
+            ${c.channel ? `<span>渠道：${escapeHtml(c.channel)}</span>` : ""}
+            ${c.point ? `<span>对比：${escapeHtml(c.point)}</span>` : ""}
+            ${c.response ? `<span>打法：${escapeHtml(c.response)}</span>` : ""}
+          </div>
+        </div>`).join("")}</div>`;
+    }
+
+    function moveTooltip(event) {
+      const pad = 14;
+      const rect = tooltip.getBoundingClientRect();
+      let x = event.clientX + 16;
+      let y = event.clientY + 16;
+      if (x + rect.width + pad > window.innerWidth) x = event.clientX - rect.width - 16;
+      if (y + rect.height + pad > window.innerHeight) y = window.innerHeight - rect.height - pad;
+      tooltip.style.left = `${Math.max(pad, x)}px`;
+      tooltip.style.top = `${Math.max(pad, y)}px`;
+    }
+
+    function hideTooltip() { tooltip.classList.remove("show"); }
+
+    initControls();
+    render();
+  </script>
+</body>
+</html>
