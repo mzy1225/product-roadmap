@@ -693,6 +693,305 @@
 
     .hidden { display: none !important; }
 
+    /* —— 健康度色块 —— */
+    .health-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #6c8a78;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(0,0,0,.08);
+      vertical-align: middle;
+    }
+    .health-dot.health-green  { background: #1e9c6b; }
+    .health-dot.health-yellow { background: #d99b22; }
+    .health-dot.health-red    { background: #c2353f; }
+    .health-dot.health-na     { background: #b6bbb4; }
+
+    .card-health {
+      position: absolute;
+      top: 8px;
+      left: -2px;
+      z-index: 2;
+    }
+
+    .health-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 11px;
+      font-weight: 750;
+      color: #2d3530;
+    }
+    .health-pill .health-dot { box-shadow: none; width: 8px; height: 8px; }
+
+    .owner-tag {
+      background: #ecefe9;
+      color: #2d3530;
+    }
+    .decision-tag {
+      background: #fdecec;
+      color: #8a242c;
+      border: 1px dashed #d18289;
+    }
+
+    /* —— Executive 视图 —— */
+    .exec-grid {
+      display: grid;
+      grid-template-columns: minmax(260px, 1.3fr) 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 1200px) {
+      .exec-grid { grid-template-columns: 1fr; }
+    }
+    .exec-card {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 7px 20px rgba(34,38,34,.04);
+    }
+    .exec-card h2 {
+      margin: 0 0 4px;
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+    .exec-card .exec-sub {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+    .campaign-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      background: #fbfcf8;
+    }
+    .campaign-row.health-green  { border-left-color: #1e9c6b; }
+    .campaign-row.health-yellow { border-left-color: #d99b22; background: #fdf7eb; }
+    .campaign-row.health-red    { border-left-color: #c2353f; background: #fbeeef; }
+    .campaign-row strong { display: block; font-size: 13px; }
+    .campaign-row .campaign-meta { color: var(--muted); font-size: 11px; margin-top: 3px; }
+    .campaign-row .campaign-counts {
+      display: flex;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .campaign-row .count-chip {
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #eef1eb;
+      color: #2d3530;
+    }
+    .campaign-row .count-chip.red   { background: #fbe2e4; color: #8a242c; }
+    .campaign-row .count-chip.yellow{ background: #fbecd1; color: #6a4912; }
+    .campaign-row .count-chip.green { background: #d9f1e5; color: #0c4d35; }
+
+    .exec-item {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 8px;
+      padding: 9px 10px;
+      margin-bottom: 7px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcf8;
+      cursor: pointer;
+    }
+    .exec-item:hover { border-color: rgba(15,118,110,.34); }
+    .exec-item strong { display: block; font-size: 12px; }
+    .exec-item span { display: block; color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .exec-empty {
+      padding: 14px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* —— 档位 × 渠道 空缺矩阵 —— */
+    .gap-matrix {
+      display: grid;
+      gap: 0;
+    }
+    .gap-cell {
+      min-height: 84px;
+      padding: 10px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .gap-cell.head {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #fbfcf8;
+      font-weight: 850;
+      min-height: 56px;
+    }
+    .gap-cell.head strong { font-size: 16px; }
+    .gap-cell.head span { color: var(--muted); font-size: 11px; font-weight: 650; }
+    .gap-cell .gap-count {
+      font-size: 22px;
+      font-weight: 850;
+      line-height: 1;
+    }
+    .gap-cell .gap-spus {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .gap-cell .gap-spu {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #eef1eb;
+      color: #2d3530;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .gap-cell.empty-cell {
+      background: repeating-linear-gradient(135deg, #fff, #fff 8px, #fbe2e4 8px, #fbe2e4 16px);
+      color: #8a242c;
+      font-size: 12px;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+    }
+    .gap-cell.thin-cell {
+      background: #fef6e8;
+      color: #6a4912;
+    }
+    .gap-cell.row-head {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: #fbfcf8;
+      font-weight: 850;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* —— Drawer 内联编辑 —— */
+    .editable {
+      cursor: text;
+      border-bottom: 1px dashed transparent;
+      padding: 1px 3px;
+      border-radius: 4px;
+      transition: background .12s ease, border-color .12s ease;
+    }
+    .editable:hover {
+      background: rgba(15,118,110,.06);
+      border-bottom-color: rgba(15,118,110,.4);
+    }
+    .editable[contenteditable="true"],
+    .editable.is-editing {
+      background: #fffdf2;
+      border: 1px solid rgba(15,118,110,.5);
+      border-radius: 4px;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(15,118,110,.08);
+    }
+    .editable.is-empty:not(.is-editing) {
+      color: #aab1a8;
+      font-style: italic;
+    }
+    .editable-select {
+      padding: 3px 6px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      font: inherit;
+      color: inherit;
+    }
+    .drawer-edit-hint {
+      margin: 10px 0 14px;
+      padding: 10px 12px;
+      border: 1px solid #cfe4df;
+      border-radius: var(--radius);
+      background: #eaf6f2;
+      color: #064d47;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    /* —— Toast —— */
+    .toast-host {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+    .toast {
+      padding: 11px 14px;
+      min-width: 260px;
+      max-width: 360px;
+      border: 1px solid rgba(30, 35, 32, .14);
+      border-radius: var(--radius);
+      background: rgba(30, 35, 32, .92);
+      color: #fff;
+      font-size: 13px;
+      line-height: 1.45;
+      box-shadow: var(--shadow);
+      pointer-events: auto;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: opacity .15s ease, transform .15s ease;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast button {
+      margin-left: 8px;
+      padding: 3px 9px;
+      border: 1px solid rgba(255,255,255,.32);
+      border-radius: 6px;
+      background: transparent;
+      color: #fff;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    /* —— PNG 导出态 —— */
+    .export-snap .toolbar,
+    .export-snap aside,
+    .export-snap .toast-host,
+    .export-snap .drawer,
+    .export-snap .drawer-backdrop,
+    .export-snap .tooltip {
+      display: none !important;
+    }
+    .export-snap.app {
+      grid-template-columns: 1fr;
+    }
+    .export-snap main { padding: 24px; }
+    .export-stamp {
+      margin: 0 0 12px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcf8;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
     @media (max-width: 900px) {
       .app { grid-template-columns: 1fr; }
       aside { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
@@ -718,6 +1017,13 @@
       <div class="section-title">状态筛选</div>
       <div class="chip-row" id="statusFilters"></div>
 
+      <div class="section-title">健康度</div>
+      <div class="chip-row" id="healthLegend">
+        <span class="health-pill"><span class="health-dot health-green"></span>按计划</span>
+        <span class="health-pill"><span class="health-dot health-yellow"></span>有风险</span>
+        <span class="health-pill"><span class="health-dot health-red"></span>阻塞 / 延期</span>
+      </div>
+
       <div class="section-title">视图建议</div>
       <div class="legend-item">
         <div class="tier-badge" style="background:var(--danger)">!</div>
@@ -729,14 +1035,17 @@
       <div class="toolbar">
         <div class="search"><input id="search" placeholder="搜索 SPU、产品名、渠道、战役、竞品" /></div>
         <div class="view-toggle" aria-label="切换 roadmap 视图">
+          <button type="button" data-view="exec">执行摘要</button>
           <button class="active" type="button" data-view="matrix">矩阵</button>
           <button type="button" data-view="timeline">时间线</button>
+          <button type="button" data-view="gap">渠道空缺</button>
         </div>
         <div class="import-tools">
           <button id="importBtn" type="button">导入 Excel/CSV</button>
           <button id="templateBtn" class="secondary-btn" type="button">下载模板</button>
           <button id="exportExcelBtn" class="secondary-btn" type="button">导出 Excel</button>
           <button id="exportCsvBtn" class="secondary-btn" type="button">导出 CSV</button>
+          <button id="exportPngBtn" class="secondary-btn" type="button">导出图片</button>
           <input id="fileInput" class="file-input" type="file" accept=".xlsx,.csv,.tsv" />
         </div>
         <div class="btn-row" id="tierFilters"></div>
@@ -752,9 +1061,11 @@
   <div class="tooltip" id="tooltip"></div>
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
   <section class="drawer" id="detailDrawer" aria-label="产品详情" aria-hidden="true"></section>
+  <div class="toast-host" id="toastHost" aria-live="polite"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
   <script>
     const tiers = [
       { id: "E", name: "Entry", desc: "入门款 / 价格带防守", color: "#4b6f8f" },
