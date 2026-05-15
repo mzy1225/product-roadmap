@@ -1104,18 +1104,26 @@
     ];
     const statusColors = Object.fromEntries(statusDefinitions.map(status => [status.id, status.color]));
 
+    const healthDefinitions = [
+      { id: "green",  label: "按计划",      color: "#1e9c6b" },
+      { id: "yellow", label: "有风险",      color: "#d99b22" },
+      { id: "red",    label: "阻塞 / 延期", color: "#c2353f" }
+    ];
+    const healthColors = Object.fromEntries(healthDefinitions.map(item => [item.id, item.color]));
+    const healthLabels = Object.fromEntries(healthDefinitions.map(item => [item.id, item.label]));
+
     const image = seed => `https://images.unsplash.com/${seed}?auto=format&fit=crop&w=320&q=80`;
     const defaultProducts = [
-      { spu: "CAM-E100", name: "Cam Mini", category: "cam", tier: "E", quarter: "2026 Q2", mapPrice: "$39.99", channels: ["SC", "WM"], img: image("photo-1583337130417-3346a1be7dee"), main: "低价位铺量", secondary: "新客首购", position: "承担 E 档入口，补齐低价带对竞品防守。", role: "拉新、评价积累、渠道补坑。" },
-      { spu: "CAM-C240", name: "Cam 2K Pan", category: "cam", tier: "C", quarter: "2026 Q3", mapPrice: "$79.99", channels: ["SC", "VC", "SHOPIFY"], img: image("photo-1601758125946-6ec2ef64daf8"), main: "主销爆品", secondary: "订阅转化", position: "Cam 线销量中枢，用 2K、云存储和双向语音稳定转化。", role: "承担评论量、转化率和订阅入口。" },
-      { spu: "CAM-P360", name: "Cam AI 360", category: "cam", tier: "P", quarter: "2026 Q4", mapPrice: "$129.99", channels: ["SC", "SHOPIFY", "SAMS"], img: image("photo-1548199973-03cce0bbc87b"), main: "AI 差异化", secondary: "礼品季利润", position: "用宠物识别、异常提醒和自动追踪拉开溢价。", role: "提升 ASP、带动 App 活跃和会员包。" },
-      { spu: "FDR-E120", name: "Feeder Lite", category: "feeder", tier: "E", quarter: "2026 Q2", mapPrice: "$49.99", channels: ["WM", "BJ's"], img: image("photo-1573865526739-10659fec78a5"), main: "大货架覆盖", secondary: "价格带占位", position: "基础定时喂食款，解决渠道低价 SKU 需求。", role: "支撑线下渠道毛利和促销档期。" },
-      { spu: "FDR-C300", name: "Feeder Pro", category: "feeder", tier: "C", quarter: "2026 Q3", mapPrice: "$99.99", channels: ["SC", "VC", "SHOPIFY", "SAMS"], img: image("photo-1592194996308-7b43878e84a6"), main: "年度主战役", secondary: "多宠家庭", position: "Feeder 线主销 SPU，容量、卡粮检测、摄像头形成均衡卖点。", role: "承担品类 GMV、评价星级和渠道首推。" },
-      { spu: "FDR-U700", name: "Feeder Ultra Fresh", category: "feeder", tier: "U", quarter: "2027 Q1", mapPrice: "$199.99", channels: ["SHOPIFY", "SAMS"], img: image("photo-1514888286974-6c03e2ca1dba"), main: "旗舰心智", secondary: "鲜食生态", position: "以制冷保鲜和精准投喂建立技术标杆。", role: "打开高端价格带，验证鲜食订阅组合。" },
-      { spu: "NST-C200", name: "Smart Nest", category: "nest", tier: "C", quarter: "2026 Q4", mapPrice: "$89.99", channels: ["SHOPIFY", "SC"], img: image("photo-1608848461950-0fe51dfc41cb"), main: "新品类验证", secondary: "复购关联", position: "Nest 线首个可规模化 SPU，验证温控睡眠场景。", role: "验证需求、沉淀内容素材、拉动配件。" },
-      { spu: "HFD-P500", name: "Hum Feeder Chill", category: "hum feeder", tier: "P", quarter: "2027 Q1", mapPrice: "$149.99", channels: ["SHOPIFY", "VC"], img: image("photo-1596854407944-bf87f6fdd49e"), main: "湿粮升级", secondary: "会员绑定", position: "湿粮喂食高毛利款，围绕保鲜和易清洁建立信任。", role: "提升客单价，承接鲜食/湿粮生态。" },
-      { spu: "BTH-C180", name: "Bath Care", category: "bath", tier: "C", quarter: "2026 Q3", mapPrice: "$59.99", channels: ["WM", "SC", "BJ's"], img: image("photo-1543852786-1cf6624b9987"), main: "清洁护理扩品", secondary: "渠道独家", position: "Bath 线基础款，优先验证线下护理场景。", role: "扩展非喂食看护品类，提升货架丰富度。" },
-      { spu: "BTH-P320", name: "Bath Dry Plus", category: "bath", tier: "P", quarter: "2027 Q2", mapPrice: "$129.99", channels: ["SHOPIFY", "SAMS"], img: image("photo-1548767797-d8c844163c4c"), main: "利润补充", secondary: "高端护理", position: "以快速烘干、低噪和安全感做高端护理 SKU。", role: "承接高毛利与内容种草。" }
+      { spu: "CAM-E100", name: "Cam Mini", category: "cam", tier: "E", quarter: "2026 Q2", mapPrice: "$39.99", channels: ["SC", "WM"], img: image("photo-1583337130417-3346a1be7dee"), main: "低价位铺量", secondary: "新客首购", position: "承担 E 档入口，补齐低价带对竞品防守。", role: "拉新、评价积累、渠道补坑。", owner: "李雷", health: "green", decision: "" },
+      { spu: "CAM-C240", name: "Cam 2K Pan", category: "cam", tier: "C", quarter: "2026 Q3", mapPrice: "$79.99", channels: ["SC", "VC", "SHOPIFY"], img: image("photo-1601758125946-6ec2ef64daf8"), main: "主销爆品", secondary: "订阅转化", position: "Cam 线销量中枢，用 2K、云存储和双向语音稳定转化。", role: "承担评论量、转化率和订阅入口。", owner: "李雷", health: "yellow", decision: "Q3 内容预算追加 80 万待批" },
+      { spu: "CAM-P360", name: "Cam AI 360", category: "cam", tier: "P", quarter: "2026 Q4", mapPrice: "$129.99", channels: ["SC", "SHOPIFY", "SAMS"], img: image("photo-1548199973-03cce0bbc87b"), main: "AI 差异化", secondary: "礼品季利润", position: "用宠物识别、异常提醒和自动追踪拉开溢价。", role: "提升 ASP、带动 App 活跃和会员包。", owner: "韩梅梅", health: "green", decision: "" },
+      { spu: "FDR-E120", name: "Feeder Lite", category: "feeder", tier: "E", quarter: "2026 Q2", mapPrice: "$49.99", channels: ["WM", "BJ's"], img: image("photo-1573865526739-10659fec78a5"), main: "大货架覆盖", secondary: "价格带占位", position: "基础定时喂食款，解决渠道低价 SKU 需求。", role: "支撑线下渠道毛利和促销档期。", owner: "王磊", health: "green", decision: "" },
+      { spu: "FDR-C300", name: "Feeder Pro", category: "feeder", tier: "C", quarter: "2026 Q3", mapPrice: "$99.99", channels: ["SC", "VC", "SHOPIFY", "SAMS"], img: image("photo-1592194996308-7b43878e84a6"), main: "年度主战役", secondary: "多宠家庭", position: "Feeder 线主销 SPU，容量、卡粮检测、摄像头形成均衡卖点。", role: "承担品类 GMV、评价星级和渠道首推。", owner: "王磊", health: "yellow", decision: "" },
+      { spu: "FDR-U700", name: "Feeder Ultra Fresh", category: "feeder", tier: "U", quarter: "2027 Q1", mapPrice: "$199.99", channels: ["SHOPIFY", "SAMS"], img: image("photo-1514888286974-6c03e2ca1dba"), main: "旗舰心智", secondary: "鲜食生态", position: "以制冷保鲜和精准投喂建立技术标杆。", role: "打开高端价格带，验证鲜食订阅组合。", owner: "王磊", health: "red", decision: "保鲜模组供应商需 5/30 前定，影响整条 U 档" },
+      { spu: "NST-C200", name: "Smart Nest", category: "nest", tier: "C", quarter: "2026 Q4", mapPrice: "$89.99", channels: ["SHOPIFY", "SC"], img: image("photo-1608848461950-0fe51dfc41cb"), main: "新品类验证", secondary: "复购关联", position: "Nest 线首个可规模化 SPU，验证温控睡眠场景。", role: "验证需求、沉淀内容素材、拉动配件。", owner: "陈思", health: "yellow", decision: "" },
+      { spu: "HFD-P500", name: "Hum Feeder Chill", category: "hum feeder", tier: "P", quarter: "2027 Q1", mapPrice: "$149.99", channels: ["SHOPIFY", "VC"], img: image("photo-1596854407944-bf87f6fdd49e"), main: "湿粮升级", secondary: "会员绑定", position: "湿粮喂食高毛利款，围绕保鲜和易清洁建立信任。", role: "提升客单价，承接鲜食/湿粮生态。", owner: "韩梅梅", health: "green", decision: "" },
+      { spu: "BTH-C180", name: "Bath Care", category: "bath", tier: "C", quarter: "2026 Q3", mapPrice: "$59.99", channels: ["WM", "SC", "BJ's"], img: image("photo-1543852786-1cf6624b9987"), main: "清洁护理扩品", secondary: "渠道独家", position: "Bath 线基础款，优先验证线下护理场景。", role: "扩展非喂食看护品类，提升货架丰富度。", owner: "陈思", health: "green", decision: "" },
+      { spu: "BTH-P320", name: "Bath Dry Plus", category: "bath", tier: "P", quarter: "2027 Q2", mapPrice: "$129.99", channels: ["SHOPIFY", "SAMS"], img: image("photo-1548767797-d8c844163c4c"), main: "利润补充", secondary: "高端护理", position: "以快速烘干、低噪和安全感做高端护理 SKU。", role: "承接高毛利与内容种草。", owner: "韩梅梅", health: "green", decision: "渠道独家 SKU 提案需 6/15 前与 SAMS 谈定" }
     ];
 
     const defaultCompetitors = {
@@ -1131,7 +1139,7 @@
       "BTH-P320": [{ name: "Flying Pig Dryer", company: "Flying Pig", img: image("photo-1548767797-d8c844163c4c"), price: "$120-180", channel: "Amazon / DTC", point: "烘干效率和专业护理心智强", response: "主打低噪、安全感和家用护理内容种草。" }]
     };
 
-    let products = groupProductVariants(defaultProducts.map(product => ({ ...product, productGroup: product.spu, status: "PLAN", color: "", variants: [{ spu: product.spu, color: "", img: product.img }], competitors: defaultCompetitors[product.spu] || [] })));
+    let products = groupProductVariants(defaultProducts.map(product => ({ ...product, productGroup: product.spu, status: "PLAN", color: "", variants: [{ spu: product.spu, color: "", img: product.img }], competitors: defaultCompetitors[product.spu] || [], owner: product.owner || "", health: product.health || "green", decision: product.decision || "" })));
 
     const state = { tiers: new Set(tiers.map(t => t.id)), channels: new Set(channels), statuses: new Set(statusDefinitions.map(status => status.id)), query: "", view: "matrix" };
 
@@ -1145,6 +1153,88 @@
     const detailDrawer = document.getElementById("detailDrawer");
     const drawerBackdrop = document.getElementById("drawerBackdrop");
     const importStatus = document.getElementById("importStatus");
+
+    // —— Toast ——
+    const toastHost = document.getElementById("toastHost");
+    function showToast(message, { actionLabel, onAction, duration = 4200, key } = {}) {
+      if (key) {
+        const existing = toastHost.querySelector(`[data-toast-key="${key}"]`);
+        if (existing) existing.remove();
+      }
+      const node = document.createElement("div");
+      node.className = "toast";
+      if (key) node.dataset.toastKey = key;
+      node.innerHTML = `<span>${escapeHtml(message)}</span>`;
+      if (actionLabel) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = actionLabel;
+        btn.addEventListener("click", () => {
+          if (onAction) onAction();
+          node.classList.remove("show");
+          setTimeout(() => node.remove(), 200);
+        });
+        node.appendChild(btn);
+      }
+      toastHost.appendChild(node);
+      requestAnimationFrame(() => node.classList.add("show"));
+      if (duration > 0) {
+        setTimeout(() => {
+          node.classList.remove("show");
+          setTimeout(() => node.remove(), 220);
+        }, duration);
+      }
+      return node;
+    }
+
+    // —— 脏数据提醒：编辑后提示导出 ——
+    let dirty = false;
+    function markDirty(reason) {
+      dirty = true;
+      showToast(`已更新${reason ? `（${reason}）` : ""}。记得导出最新版以免丢失。`, {
+        actionLabel: "导出 Excel",
+        onAction: () => exportRoadmap("xlsx"),
+        duration: 5200,
+        key: "dirty"
+      });
+    }
+
+    // —— PNG 导出 ——
+    async function exportCurrentViewAsPng() {
+      if (!window.htmlToImage) {
+        showToast("图片导出库未加载，请联网后刷新页面。", { duration: 3500 });
+        return;
+      }
+      const root = document.querySelector(".app");
+      const main = root.querySelector("main");
+      const stamp = document.createElement("div");
+      const now = new Date();
+      const ymd = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+      const viewLabel = { exec: "执行摘要", matrix: "档位矩阵", timeline: "时间线", gap: "档位 × 渠道空缺" }[state.view] || state.view;
+      stamp.className = "export-stamp";
+      stamp.textContent = `产品 Roadmap · ${viewLabel} · 导出于 ${ymd}`;
+      main.insertBefore(stamp, main.firstChild);
+      root.classList.add("export-snap");
+      try {
+        const dataUrl = await window.htmlToImage.toPng(main, {
+          pixelRatio: 2,
+          backgroundColor: "#f5f6f2",
+          cacheBust: true,
+          filter: node => !(node.classList && (node.classList.contains("toast-host") || node.classList.contains("tooltip") || node.classList.contains("drawer") || node.classList.contains("drawer-backdrop")))
+        });
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = `product-roadmap-${state.view}-${ymd.replace(/[: ]/g, "-")}.png`;
+        link.click();
+        showToast(`已导出 ${viewLabel} 视图为 PNG`, { duration: 2800 });
+      } catch (err) {
+        console.error(err);
+        showToast(`导出失败：${err.message || err}`, { duration: 4500 });
+      } finally {
+        root.classList.remove("export-snap");
+        stamp.remove();
+      }
+    }
 
     function initControls() {
       tierLegend.innerHTML = tiers.map(t => `
@@ -1165,8 +1255,9 @@
       document.getElementById("importBtn").addEventListener("click", () => document.getElementById("fileInput").click());
       document.getElementById("fileInput").addEventListener("change", importFile);
       document.getElementById("templateBtn").addEventListener("click", downloadTemplate);
-      document.getElementById("exportExcelBtn").addEventListener("click", () => exportRoadmap("xlsx"));
-      document.getElementById("exportCsvBtn").addEventListener("click", () => exportRoadmap("csv"));
+      document.getElementById("exportExcelBtn").addEventListener("click", () => { exportRoadmap("xlsx"); dirty = false; });
+      document.getElementById("exportCsvBtn").addEventListener("click", () => { exportRoadmap("csv"); dirty = false; });
+      document.getElementById("exportPngBtn").addEventListener("click", () => exportCurrentViewAsPng());
 
       document.querySelectorAll(".view-toggle button").forEach(btn => btn.addEventListener("click", () => {
         state.view = btn.dataset.view;
@@ -1448,12 +1539,18 @@
       const status = normalizeStatus(get("status", "状态", "产品状态", "SKU状态", "sku status", "roadmap status"));
       const skuChannels = normalizeChannels(splitList(get("sku channels", "SKU渠道", "SKU 渠道", "sku channel", "sku渠道")));
       const skuMapPrice = get("sku map price", "SKU MAP价格", "SKU MAP", "sku map", "SKU价格", "SKU MAP价");
+      const owner = get("owner", "负责人", "Owner", "PM", "产品负责人");
+      const health = normalizeHealth(get("health", "健康度", "风险", "风险状态"));
+      const decision = get("decision", "需要决策", "待决策", "决策事项", "决策");
       return {
         spu,
         sku,
         productGroup: explicitGroup,
         color,
         status,
+        owner,
+        health,
+        decision,
         skuConfig: get("sku config", "SKU配置", "SKU 配置", "配置", "configuration", "config"),
         skuPosition: get("sku positioning", "SKU定位差异", "SKU 定位差异", "配置定位", "差异定位", "sku position"),
         skuImg: get("sku image", "SKU图片", "SKU 图片", "sku image url"),
@@ -1472,6 +1569,17 @@
         role: get("role", "核心职责", "responsibility", "job") || "待定义",
         competitors: buildCompetitors(competitorNames, competitorCompanies, competitorImages, competitorPrices, competitorChannels, competitorPoints, competitorResponses)
       };
+    }
+
+    function normalizeHealth(value) {
+      const raw = String(value || "").trim().toLowerCase();
+      if (!raw) return "green";
+      const aliases = {
+        green: "green", g: "green", "按计划": "green", "正常": "green", "ok": "green", "on track": "green", "ontrack": "green", "🟢": "green",
+        yellow: "yellow", y: "yellow", "有风险": "yellow", "风险": "yellow", "warn": "yellow", "warning": "yellow", "at risk": "yellow", "atrisk": "yellow", "🟡": "yellow",
+        red: "red", r: "red", "阻塞": "red", "延期": "red", "block": "red", "blocked": "red", "off track": "red", "offtrack": "red", "🔴": "red"
+      };
+      return aliases[raw] || aliases[raw.replace(/\s+/g, "")] || "green";
     }
 
     function groupProductVariants(rows) {
@@ -1500,15 +1608,25 @@
         group.img = group.img && !isPlaceholderImage(group.img) ? group.img : row.img;
         group.channels = mergeChannels(group.channels, row.channels);
         group.competitors = mergeCompetitors(group.competitors, row.competitors || []);
+        if (!group.owner && row.owner) group.owner = row.owner;
+        if (row.health && healthRank(row.health) > healthRank(group.health)) group.health = row.health;
+        if (!group.decision && row.decision) group.decision = row.decision;
       });
       return Array.from(grouped.values()).map(group => ({
         ...group,
+        owner: group.owner || "",
+        health: group.health || "green",
+        decision: group.decision || "",
         mapPrice: mapPriceForGroup(group),
         statuses: unique(group.variants.map(variant => normalizeStatus(variant.status))),
         cardId: [group.productGroup ? `group:${group.productGroup}` : `spu:${group.spu}`, group.category, group.tier].join("::"),
         variantCount: group.variants.length,
         variantSpus: group.variants.map(variant => variant.spu)
       }));
+    }
+
+    function healthRank(h) {
+      return { green: 0, yellow: 1, red: 2 }[h] ?? 0;
     }
 
     function mapPriceForGroup(group) {
@@ -1676,14 +1794,14 @@
     }
 
     function roadmapHeaders() {
-      return ["产品组", "SPU", "SKU配置", "SKU定位差异", "SKU渠道", "SKU MAP价格", "配色", "品类", "档位", "季度", "状态", "MAP价格", "图片", "主战役", "次战役", "战略定位", "核心职责", "对应竞品", "竞品公司", "竞品图片", "竞品价格", "竞品渠道", "对比要点", "我方打法"];
+      return ["产品组", "SPU", "SKU配置", "SKU定位差异", "SKU渠道", "SKU MAP价格", "配色", "品类", "档位", "季度", "状态", "MAP价格", "图片", "主战役", "次战役", "战略定位", "核心职责", "负责人", "健康度", "需要决策", "对应竞品", "竞品公司", "竞品图片", "竞品价格", "竞品渠道", "对比要点", "我方打法"];
     }
 
     function downloadTemplate() {
       const headers = roadmapHeaders();
       const samples = [
-        ["", "Nest E100", "无太阳能板 / 基础电源", "低价入口，主打基础功能和评价积累", "SC/WM", "$49.99", "White", "nest", "E", "2026 Q3", "PLAN", "$49.99", "可填图片链接；XLSX 可把图片放在此列", "低价位铺量", "新客首购", "E 档入口，补齐低价带防守", "拉新、评价积累、渠道补坑", "K&H Heated Bed", "K&H", "可填竞品图片链接", "$45-90", "Amazon / Chewy", "温控休息场景成熟", "用智能温控和 App 连接验证新品类价值"],
-        ["", "Nest E100", "含太阳能板 / 户外长续航", "承担户外场景加价和差异化卖点", "SHOPIFY/SAMS", "$69.99", "Wood", "nest", "E", "2026 Q3", "ITER", "$49.99", "同一 SPU 多个配置可重复 SPU；每行维护一个 SKU 配置；SPU 渠道由 SKU渠道自动汇总", "低价位铺量", "户外长续航", "E 档入口，Solar 配置承担轻差异化", "基础款拉新，Solar 配置提升 ASP", "K&H Heated Bed", "K&H", "多个竞品图片建议用 | 分隔", "$45-90", "Amazon / Chewy", "温控休息场景成熟", "用长续航配置和渠道组合应对"]
+        ["", "Nest E100", "无太阳能板 / 基础电源", "低价入口，主打基础功能和评价积累", "SC/WM", "$49.99", "White", "nest", "E", "2026 Q3", "PLAN", "$49.99", "可填图片链接；XLSX 可把图片放在此列", "低价位铺量", "新客首购", "E 档入口，补齐低价带防守", "拉新、评价积累、渠道补坑", "张三", "green", "", "K&H Heated Bed", "K&H", "可填竞品图片链接", "$45-90", "Amazon / Chewy", "温控休息场景成熟", "用智能温控和 App 连接验证新品类价值"],
+        ["", "Nest E100", "含太阳能板 / 户外长续航", "承担户外场景加价和差异化卖点", "SHOPIFY/SAMS", "$69.99", "Wood", "nest", "E", "2026 Q3", "ITER", "$49.99", "同一 SPU 多个配置可重复 SPU；每行维护一个 SKU 配置；SPU 渠道由 SKU渠道自动汇总", "低价位铺量", "户外长续航", "E 档入口，Solar 配置承担轻差异化", "基础款拉新，Solar 配置提升 ASP", "张三", "yellow", "Solar 模组成本待重谈", "K&H Heated Bed", "K&H", "多个竞品图片建议用 | 分隔", "$45-90", "Amazon / Chewy", "温控休息场景成熟", "用长续航配置和渠道组合应对"]
       ];
       if (window.XLSX) {
         const worksheet = XLSX.utils.aoa_to_sheet([headers, ...samples]);
@@ -1749,6 +1867,9 @@
           variant.secondary || product.secondary || "",
           product.position || "",
           product.role || "",
+          product.owner || "",
+          product.health || "green",
+          product.decision || "",
           names,
           companies,
           images,
@@ -1809,10 +1930,127 @@
     function render() {
       const items = filteredProducts();
       renderStats(items);
-      if (state.view === "timeline") renderTimeline(items);
-      else renderMatrix(items);
-
+      switch (state.view) {
+        case "exec":     renderExecutive(items); break;
+        case "timeline": renderTimeline(items);  break;
+        case "gap":      renderGapMatrix(items); break;
+        case "matrix":
+        default:         renderMatrix(items);
+      }
       attachProductEvents();
+    }
+
+    function renderExecutive(items) {
+      roadmap.className = "roadmap exec-roadmap";
+      roadmap.style.gridTemplateColumns = "1fr";
+
+      // 1. 按主战役聚合 + 健康度统计
+      const campaignMap = new Map();
+      items.forEach(p => {
+        const key = p.main || "未分类战役";
+        if (!campaignMap.has(key)) campaignMap.set(key, { name: key, items: [], red: 0, yellow: 0, green: 0, owners: new Set(), quarters: new Set() });
+        const bucket = campaignMap.get(key);
+        bucket.items.push(p);
+        bucket[p.health || "green"] = (bucket[p.health || "green"] || 0) + 1;
+        if (p.owner) bucket.owners.add(p.owner);
+        if (p.quarter) bucket.quarters.add(p.quarter);
+      });
+      const campaigns = Array.from(campaignMap.values()).sort((a, b) => (b.red - a.red) || (b.yellow - a.yellow) || (b.items.length - a.items.length));
+
+      // 2. 高风险 SPU
+      const riskItems = items
+        .filter(p => p.health === "red" || p.health === "yellow")
+        .sort((a, b) => healthRank(b.health) - healthRank(a.health));
+
+      // 3. 需要决策事项
+      const decisions = items.filter(p => String(p.decision || "").trim());
+
+      const campaignHtml = campaigns.length ? campaigns.map(c => {
+        const dominantHealth = c.red ? "red" : c.yellow ? "yellow" : "green";
+        const owners = Array.from(c.owners).join(" · ") || "—";
+        const quarters = Array.from(c.quarters).sort((a, b) => quarterRank(a) - quarterRank(b)).join(" / ") || "—";
+        return `<div class="campaign-row health-${dominantHealth}">
+          <div>
+            <strong>${escapeHtml(c.name)}</strong>
+            <div class="campaign-meta">${escapeHtml(quarters)} · 负责人 ${escapeHtml(owners)} · 共 ${c.items.length} 个 SPU</div>
+          </div>
+          <div class="campaign-counts">
+            ${c.red ? `<span class="count-chip red">🔴 ${c.red}</span>` : ""}
+            ${c.yellow ? `<span class="count-chip yellow">🟡 ${c.yellow}</span>` : ""}
+            ${c.green ? `<span class="count-chip green">🟢 ${c.green}</span>` : ""}
+          </div>
+        </div>`;
+      }).join("") : `<div class="exec-empty">当前筛选下没有主战役数据</div>`;
+
+      const riskHtml = riskItems.length ? riskItems.map(p => `
+        <div class="exec-item" data-card-id="${escapeHtml(p.cardId)}">
+          <span class="health-dot health-${escapeHtml(p.health)}"></span>
+          <div>
+            <strong>${escapeHtml(p.productGroup || p.spu)} <span style="color:var(--muted);font-weight:650">· ${escapeHtml(p.tier)} 档 · ${escapeHtml(p.quarter)}</span></strong>
+            <span>${escapeHtml(p.main || "未指定战役")} · 负责人 ${escapeHtml(p.owner || "—")}</span>
+            ${p.decision ? `<span style="color:#8a242c">⚑ ${escapeHtml(p.decision)}</span>` : ""}
+          </div>
+        </div>`).join("") : `<div class="exec-empty">当前没有红/黄风险 SPU</div>`;
+
+      const decisionHtml = decisions.length ? decisions.map(p => `
+        <div class="exec-item" data-card-id="${escapeHtml(p.cardId)}">
+          <span class="health-dot health-${escapeHtml(p.health)}"></span>
+          <div>
+            <strong>${escapeHtml(p.productGroup || p.spu)} <span style="color:var(--muted);font-weight:650">· ${escapeHtml(p.quarter)}</span></strong>
+            <span>${escapeHtml(p.decision)}</span>
+            <span style="color:var(--muted)">负责人 ${escapeHtml(p.owner || "—")}</span>
+          </div>
+        </div>`).join("") : `<div class="exec-empty">暂无待决策事项</div>`;
+
+      roadmap.innerHTML = `<div class="exec-grid" style="padding:14px">
+        <section class="exec-card">
+          <h2>本季主战役健康度</h2>
+          <div class="exec-sub">按战役聚合，按红黄数量排序</div>
+          ${campaignHtml}
+        </section>
+        <section class="exec-card">
+          <h2>高风险 SPU</h2>
+          <div class="exec-sub">点击进入详情</div>
+          ${riskHtml}
+        </section>
+        <section class="exec-card">
+          <h2>需要决策事项</h2>
+          <div class="exec-sub">点击进入对应 SPU</div>
+          ${decisionHtml}
+        </section>
+      </div>`;
+    }
+
+    function renderGapMatrix(items) {
+      const visibleChannels = channels.filter(c => state.channels.has(c));
+      const visibleTiers = tiers.filter(t => state.tiers.has(t.id));
+      const channelList = visibleChannels.length ? visibleChannels : channels;
+      const tierList = visibleTiers.length ? visibleTiers : tiers;
+
+      roadmap.className = "roadmap gap-matrix";
+      roadmap.style.gridTemplateColumns = `170px repeat(${tierList.length}, minmax(180px, 1fr))`;
+
+      const headerCells = `<div class="gap-cell head row-head"><strong>渠道</strong><span>档位 × 渠道</span></div>` +
+        tierList.map(t => `<div class="gap-cell head"><strong style="color:${t.color}">${escapeHtml(t.id)}</strong><span>${escapeHtml(t.name)}</span></div>`).join("");
+
+      const bodyCells = channelList.map(channel => {
+        const rowCells = tierList.map(t => {
+          const inCell = items.filter(p => p.tier === t.id && (p.channels || []).includes(channel));
+          if (!inCell.length) {
+            return `<div class="gap-cell empty-cell">空缺：${escapeHtml(channel)} × ${escapeHtml(t.id)}</div>`;
+          }
+          const cls = inCell.length === 1 ? "thin-cell" : "";
+          const spus = inCell.slice(0, 8).map(p => `<span class="gap-spu" data-card-id="${escapeHtml(p.cardId)}">${escapeHtml(p.productGroup || p.spu)}</span>`).join("");
+          const more = inCell.length > 8 ? `<span class="gap-spu">+${inCell.length - 8}</span>` : "";
+          return `<div class="gap-cell ${cls}">
+            <div class="gap-count">${inCell.length}</div>
+            <div class="gap-spus">${spus}${more}</div>
+          </div>`;
+        }).join("");
+        return `<div class="gap-cell row-head"><span class="tag channel-tag" style="--channel-color:${channelColor(channel)}">${escapeHtml(channel)}</span></div>${rowCells}`;
+      }).join("");
+
+      roadmap.innerHTML = headerCells + bodyCells;
     }
 
     function renderMatrix(items) {
@@ -1848,9 +2086,20 @@
     function attachProductEvents() {
       roadmap.querySelectorAll(".product-card").forEach(el => {
         const product = products.find(p => p.cardId === el.dataset.cardId);
+        if (!product) return;
         el.addEventListener("mouseenter", e => showTooltip(product, e));
         el.addEventListener("mousemove", e => moveTooltip(e));
         el.addEventListener("mouseleave", hideTooltip);
+        el.addEventListener("click", e => {
+          e.stopPropagation();
+          openDrawer(product);
+        });
+      });
+      // Executive / Gap 视图里的可点击条目
+      roadmap.querySelectorAll("[data-card-id]:not(.product-card)").forEach(el => {
+        const product = products.find(p => p.cardId === el.dataset.cardId);
+        if (!product) return;
+        el.style.cursor = "pointer";
         el.addEventListener("click", e => {
           e.stopPropagation();
           openDrawer(product);
@@ -1885,7 +2134,11 @@
       const configTags = renderCardSkuConfigs(variants, cardTitle);
       const statusStripe = statusStripeForProduct(p.statuses || variants.map(variant => variant.status));
       const competitorTag = competitorCount ? `<span class="tag competitor-tag">竞品 ${competitorCount}</span>` : "";
+      const ownerTag = p.owner ? `<span class="tag owner-tag" title="负责人">👤 ${escapeHtml(p.owner)}</span>` : "";
+      const decisionTag = p.decision ? `<span class="tag decision-tag" title="${escapeHtml(p.decision)}">⚑ 待决策</span>` : "";
+      const health = p.health || "green";
       return `<article class="product-card" data-card-id="${escapeHtml(p.cardId)}" style="border-left-color:${tier.color}">
+        <span class="health-dot health-${escapeHtml(health)} card-health" title="健康度：${escapeHtml(healthLabels[health] || "")}"></span>
         <div class="status-edge" style="--status-stripe:${escapeHtml(statusStripe)}" aria-label="SKU 状态"></div>
         <div class="product-media">
           <img src="${escapeHtml(p.img)}" alt="${escapeHtml(p.spu)}" loading="lazy" />
@@ -1895,7 +2148,7 @@
           <h3>${escapeHtml(cardTitle)}</h3>
           ${configTags}
           <div class="card-meta">
-            <div class="meta-line">${p.mapPrice ? `<span class="tag map-tag">MAP ${escapeHtml(p.mapPrice)}</span>` : `<span class="tag map-tag">MAP 待补充</span>`}${competitorTag}</div>
+            <div class="meta-line">${p.mapPrice ? `<span class="tag map-tag">MAP ${escapeHtml(p.mapPrice)}</span>` : `<span class="tag map-tag">MAP 待补充</span>`}${competitorTag}${ownerTag}${decisionTag}</div>
             <div class="meta-line">${p.channels.map(channelTag).join("")}</div>
           </div>
         </div>
