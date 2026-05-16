@@ -1,0 +1,9 @@
+.DS_Store
+*.swp
+.idea/
+.vscode/
+node_modules/
+
+# 截图 / 调试图片（运行不依赖）
+product-roadmap-debug-images.png
+product-roadmap3-import-check.png

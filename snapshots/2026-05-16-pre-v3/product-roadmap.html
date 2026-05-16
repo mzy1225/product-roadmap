@@ -71,7 +71,7 @@
 
     .view-toggle {
       display: inline-grid;
-      grid-template-columns: repeat(6, minmax(64px, 1fr));
+      grid-template-columns: repeat(4, minmax(70px, 1fr));
       gap: 3px;
       min-height: 40px;
       padding: 3px;
@@ -969,295 +969,6 @@
       cursor: pointer;
     }
 
-    /* —— 待评审 / Last updated —— */
-    .stale-tag {
-      background: #f4e8d7;
-      color: #6a4912;
-      border: 1px dashed #d8b774;
-    }
-    .updated-meta {
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    /* —— SKU notes 多行 —— */
-    .editable.is-multiline {
-      display: block;
-      min-height: 28px;
-      padding: 6px 8px;
-      border: 1px dashed transparent;
-      border-radius: 6px;
-      white-space: pre-wrap;
-      line-height: 1.45;
-    }
-    .editable.is-multiline:hover {
-      border-color: rgba(15,118,110,.4);
-      background: rgba(15,118,110,.04);
-    }
-    .editable.is-multiline.is-editing {
-      border: 1px solid rgba(15,118,110,.5);
-      background: #fffdf2;
-    }
-    .variant-notes {
-      grid-column: 1 / -1;
-      margin-top: 4px;
-    }
-    .variant-notes b { color: var(--muted); font-size: 11px; }
-
-    /* —— 依赖关系视图 —— */
-    .deps-wrap { padding: 14px; display: grid; gap: 12px; }
-    .platform-block {
-      padding: 12px 14px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--panel);
-    }
-    .platform-block h2 {
-      margin: 0 0 4px;
-      font-size: 14px;
-    }
-    .platform-block .platform-meta {
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
-    .platform-spus {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .dep-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: #fbfcf8;
-      font-size: 12px;
-      cursor: pointer;
-    }
-    .dep-chip:hover {
-      border-color: rgba(15,118,110,.4);
-      background: #f0f5f3;
-    }
-    .dep-chip .health-dot { width: 8px; height: 8px; box-shadow: none; }
-    .dep-edge {
-      margin-top: 8px;
-      padding: 7px 10px;
-      border-left: 3px solid var(--accent-2);
-      background: #fdf4ec;
-      font-size: 12px;
-      color: #6a4912;
-      border-radius: 0 6px 6px 0;
-    }
-    .dep-edge code {
-      padding: 1px 5px;
-      background: #fff;
-      border: 1px solid #e5d2b3;
-      border-radius: 4px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 11px;
-      cursor: pointer;
-    }
-    .dep-edge code:hover { background: #fef4e6; }
-
-    /* —— 版本对比 / Diff —— */
-    .diff-wrap { padding: 14px; }
-    .diff-head {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-      padding: 12px 14px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--panel);
-    }
-    .diff-head strong { font-size: 14px; }
-    .diff-head .diff-empty {
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .diff-summary {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .diff-summary .pill {
-      padding: 3px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 800;
-    }
-    .diff-summary .pill.added    { background: #d9f1e5; color: #0c4d35; }
-    .diff-summary .pill.removed  { background: #fbe2e4; color: #8a242c; }
-    .diff-summary .pill.modified { background: #fbecd1; color: #6a4912; }
-    .diff-section {
-      margin-bottom: 16px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--panel);
-      overflow: hidden;
-    }
-    .diff-section h2 {
-      margin: 0;
-      padding: 10px 14px;
-      font-size: 13px;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      background: #fbfcf8;
-      border-bottom: 1px solid var(--line);
-    }
-    .diff-section h2.added    { color: #0c4d35; border-left: 4px solid #1e9c6b; }
-    .diff-section h2.removed  { color: #8a242c; border-left: 4px solid #c2353f; }
-    .diff-section h2.modified { color: #6a4912; border-left: 4px solid #d99b22; }
-    .diff-list { padding: 12px 14px; display: grid; gap: 10px; }
-    .diff-item {
-      padding: 9px 12px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: #fbfcf8;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-    .diff-item strong { display: block; font-size: 13px; margin-bottom: 4px; cursor: pointer; }
-    .diff-changes { display: grid; gap: 3px; }
-    .diff-change {
-      display: grid;
-      grid-template-columns: 90px 1fr;
-      gap: 8px;
-    }
-    .diff-change b { color: var(--muted); font-weight: 700; }
-    .diff-change .from {
-      text-decoration: line-through;
-      color: #8a242c;
-      background: #fbe2e4;
-      padding: 0 4px;
-      border-radius: 3px;
-    }
-    .diff-change .arrow { color: var(--muted); margin: 0 6px; }
-    .diff-change .to {
-      color: #0c4d35;
-      background: #d9f1e5;
-      padding: 0 4px;
-      border-radius: 3px;
-    }
-
-    /* —— 角色徽标 / 登录模态 —— */
-    .role-bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 14px 0 6px;
-      padding: 10px 12px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--panel);
-    }
-    .role-bar .role-icon {
-      width: 28px;
-      height: 28px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: #eef1eb;
-      font-size: 15px;
-    }
-    .role-bar .role-icon.admin { background: #d9f1e5; color: #0c4d35; }
-    .role-bar .role-icon.viewer { background: #eef1eb; color: #4a544c; }
-    .role-bar .role-body { flex: 1; min-width: 0; }
-    .role-bar strong { display: block; font-size: 12px; }
-    .role-bar small { color: var(--muted); font-size: 11px; }
-    .role-bar button {
-      min-height: 28px;
-      padding: 4px 9px;
-      font-size: 11px;
-    }
-
-    .auth-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 40;
-      display: grid;
-      place-items: center;
-      background: rgba(30, 35, 32, .35);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .14s ease;
-    }
-    .auth-backdrop.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .auth-card {
-      width: min(360px, calc(100vw - 32px));
-      padding: 22px;
-      border-radius: var(--radius);
-      background: #fff;
-      box-shadow: var(--shadow);
-      transform: translateY(10px);
-      transition: transform .14s ease;
-    }
-    .auth-backdrop.show .auth-card { transform: translateY(0); }
-    .auth-card h2 { margin: 0 0 4px; font-size: 16px; }
-    .auth-card .auth-sub {
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 14px;
-      line-height: 1.5;
-    }
-    .auth-card label {
-      display: block;
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .auth-card input {
-      width: 100%;
-      min-height: 40px;
-      padding: 8px 10px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      font-size: 14px;
-      outline: none;
-    }
-    .auth-card input:focus { border-color: var(--accent); }
-    .auth-error {
-      margin-top: 8px;
-      padding: 8px 10px;
-      border-radius: 6px;
-      background: #fbeeef;
-      color: #8a242c;
-      font-size: 12px;
-      display: none;
-    }
-    .auth-error.show { display: block; }
-    .auth-actions {
-      margin-top: 14px;
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-    }
-    .auth-actions .primary {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    /* viewer 模式下：drawer 编辑提示 + 保存基准等管理操作隐藏 */
-    body.role-viewer .admin-only { display: none !important; }
-    body.role-viewer .editable {
-      cursor: default;
-      border-bottom-color: transparent !important;
-    }
-    body.role-viewer .editable:hover {
-      background: transparent !important;
-      border-bottom-color: transparent !important;
-    }
-
     /* —— PNG 导出态 —— */
     .export-snap .toolbar,
     .export-snap aside,
@@ -1297,15 +1008,6 @@
       <h1>产品 Roadmap</h1>
       <p class="subhead">按产品档位、品类线和渠道组织，hover 产品卡查看战役、定位和对应竞品。</p>
 
-      <div class="role-bar" id="roleBar">
-        <div class="role-icon viewer" id="roleIcon">👁</div>
-        <div class="role-body">
-          <strong id="roleLabel">浏览模式</strong>
-          <small id="roleHint">只能查看，无法编辑数据</small>
-        </div>
-        <button id="roleBtn" type="button">登录</button>
-      </div>
-
       <div class="section-title">产品档位</div>
       <div class="legend" id="tierLegend"></div>
 
@@ -1333,12 +1035,10 @@
       <div class="toolbar">
         <div class="search"><input id="search" placeholder="搜索 SPU、产品名、渠道、战役、竞品" /></div>
         <div class="view-toggle" aria-label="切换 roadmap 视图">
-          <button type="button" data-view="exec">摘要</button>
+          <button type="button" data-view="exec">执行摘要</button>
           <button class="active" type="button" data-view="matrix">矩阵</button>
           <button type="button" data-view="timeline">时间线</button>
-          <button type="button" data-view="gap">空缺</button>
-          <button type="button" data-view="deps">依赖</button>
-          <button type="button" data-view="diff">对比</button>
+          <button type="button" data-view="gap">渠道空缺</button>
         </div>
         <div class="import-tools">
           <button id="importBtn" type="button">导入 Excel/CSV</button>
@@ -1346,8 +1046,6 @@
           <button id="exportExcelBtn" class="secondary-btn" type="button">导出 Excel</button>
           <button id="exportCsvBtn" class="secondary-btn" type="button">导出 CSV</button>
           <button id="exportPngBtn" class="secondary-btn" type="button">导出图片</button>
-          <button id="exportPdfBtn" class="secondary-btn" type="button">导出 PDF</button>
-          <button id="saveBaselineBtn" class="secondary-btn admin-only" type="button">保存为基准</button>
           <input id="fileInput" class="file-input" type="file" accept=".xlsx,.csv,.tsv" />
         </div>
         <div class="btn-row" id="tierFilters"></div>
@@ -1365,24 +1063,9 @@
   <section class="drawer" id="detailDrawer" aria-label="产品详情" aria-hidden="true"></section>
   <div class="toast-host" id="toastHost" aria-live="polite"></div>
 
-  <div class="auth-backdrop" id="authBackdrop" aria-hidden="true">
-    <form class="auth-card" id="authForm">
-      <h2>管理员登录</h2>
-      <p class="auth-sub">登录后可在 drawer 内编辑产品、SKU、竞品信息。退出后回到只读浏览模式。</p>
-      <label for="authPwd">管理员密码</label>
-      <input id="authPwd" type="password" autocomplete="current-password" />
-      <div class="auth-error" id="authError">密码不正确，请再试一次。</div>
-      <div class="auth-actions">
-        <button type="button" id="authCancel">取消</button>
-        <button type="submit" class="primary" id="authSubmit">登录</button>
-      </div>
-    </form>
-  </div>
-
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script>
     const tiers = [
       { id: "E", name: "Entry", desc: "入门款 / 价格带防守", color: "#4b6f8f" },
@@ -1430,18 +1113,17 @@
     const healthLabels = Object.fromEntries(healthDefinitions.map(item => [item.id, item.label]));
 
     const image = seed => `https://images.unsplash.com/${seed}?auto=format&fit=crop&w=320&q=80`;
-    const daysAgo = n => new Date(Date.now() - n * 86400000).toISOString();
     const defaultProducts = [
-      { spu: "CAM-E100", name: "Cam Mini",            category: "cam",        tier: "E", quarter: "2026 Q2", mapPrice: "$39.99",  channels: ["SC", "WM"],                    img: image("photo-1583337130417-3346a1be7dee"), main: "低价位铺量", secondary: "新客首购", position: "承担 E 档入口，补齐低价带对竞品防守。",                        role: "拉新、评价积累、渠道补坑。",                  owner: "李雷",   health: "green",  decision: "",                                                  platform: "Cam 入门主板 v1",     dependencies: [],                       lastUpdated: daysAgo(4),   notes: "9 月内容素材已交付，等待销售反馈。" },
-      { spu: "CAM-C240", name: "Cam 2K Pan",          category: "cam",        tier: "C", quarter: "2026 Q3", mapPrice: "$79.99",  channels: ["SC", "VC", "SHOPIFY"],         img: image("photo-1601758125946-6ec2ef64daf8"), main: "主销爆品",     secondary: "订阅转化", position: "Cam 线销量中枢，用 2K、云存储和双向语音稳定转化。",            role: "承担评论量、转化率和订阅入口。",            owner: "李雷",   health: "yellow", decision: "Q3 内容预算追加 80 万待批",                          platform: "2K 影像主板 v2",      dependencies: [],                       lastUpdated: daysAgo(38),  notes: "线下渠道反馈包装易碎；6 月做包装改版评审。" },
-      { spu: "CAM-P360", name: "Cam AI 360",          category: "cam",        tier: "P", quarter: "2026 Q4", mapPrice: "$129.99", channels: ["SC", "SHOPIFY", "SAMS"],       img: image("photo-1548199973-03cce0bbc87b"), main: "AI 差异化",   secondary: "礼品季利润", position: "用宠物识别、异常提醒和自动追踪拉开溢价。",                    role: "提升 ASP、带动 App 活跃和会员包。",        owner: "韩梅梅", health: "green",  decision: "",                                                  platform: "AI 识别 SoC v2",      dependencies: ["CAM-C240"],             lastUpdated: daysAgo(12),  notes: "AI 模型基于 CAM-C240 训练集，预计 Q4 完成 v2 标注。" },
-      { spu: "FDR-E120", name: "Feeder Lite",         category: "feeder",     tier: "E", quarter: "2026 Q2", mapPrice: "$49.99",  channels: ["WM", "BJ's"],                  img: image("photo-1573865526739-10659fec78a5"), main: "大货架覆盖", secondary: "价格带占位", position: "基础定时喂食款，解决渠道低价 SKU 需求。",                      role: "支撑线下渠道毛利和促销档期。",              owner: "王磊",   health: "green",  decision: "",                                                  platform: "Feeder 主板 v1",      dependencies: [],                       lastUpdated: daysAgo(7),   notes: "" },
-      { spu: "FDR-C300", name: "Feeder Pro",          category: "feeder",     tier: "C", quarter: "2026 Q3", mapPrice: "$99.99",  channels: ["SC", "VC", "SHOPIFY", "SAMS"], img: image("photo-1592194996308-7b43878e84a6"), main: "年度主战役", secondary: "多宠家庭", position: "Feeder 线主销 SPU，容量、卡粮检测、摄像头形成均衡卖点。",     role: "承担品类 GMV、评价星级和渠道首推。",        owner: "王磊",   health: "yellow", decision: "",                                                  platform: "Feeder 主板 v2",      dependencies: ["FDR-E120"],             lastUpdated: daysAgo(2),   notes: "Q3 上线后需观察卡粮误报率。" },
-      { spu: "FDR-U700", name: "Feeder Ultra Fresh",  category: "feeder",     tier: "U", quarter: "2027 Q1", mapPrice: "$199.99", channels: ["SHOPIFY", "SAMS"],             img: image("photo-1514888286974-6c03e2ca1dba"), main: "旗舰心智",     secondary: "鲜食生态", position: "以制冷保鲜和精准投喂建立技术标杆。",                            role: "打开高端价格带，验证鲜食订阅组合。",        owner: "王磊",   health: "red",    decision: "保鲜模组供应商需 5/30 前定，影响整条 U 档",          platform: "鲜食保鲜模组 v1",     dependencies: ["FDR-C300"],             lastUpdated: daysAgo(1),   notes: "保鲜模组样机噪音偏大；6/10 前完成第二轮静音测试。" },
-      { spu: "NST-C200", name: "Smart Nest",          category: "nest",       tier: "C", quarter: "2026 Q4", mapPrice: "$89.99",  channels: ["SHOPIFY", "SC"],               img: image("photo-1608848461950-0fe51dfc41cb"), main: "新品类验证", secondary: "复购关联", position: "Nest 线首个可规模化 SPU，验证温控睡眠场景。",                  role: "验证需求、沉淀内容素材、拉动配件。",        owner: "陈思",   health: "yellow", decision: "",                                                  platform: "温控主板 v1",         dependencies: [],                       lastUpdated: daysAgo(45),  notes: "等待第二批样机出炉，注意更新进度。" },
-      { spu: "HFD-P500", name: "Hum Feeder Chill",    category: "hum feeder", tier: "P", quarter: "2027 Q1", mapPrice: "$149.99", channels: ["SHOPIFY", "VC"],               img: image("photo-1596854407944-bf87f6fdd49e"), main: "湿粮升级",     secondary: "会员绑定", position: "湿粮喂食高毛利款，围绕保鲜和易清洁建立信任。",                role: "提升客单价，承接鲜食/湿粮生态。",          owner: "韩梅梅", health: "green",  decision: "",                                                  platform: "鲜食保鲜模组 v1",     dependencies: ["FDR-U700"],             lastUpdated: daysAgo(9),   notes: "湿粮 SKU 待和供应商敲定包装规格。" },
-      { spu: "BTH-C180", name: "Bath Care",           category: "bath",       tier: "C", quarter: "2026 Q3", mapPrice: "$59.99",  channels: ["WM", "SC", "BJ's"],            img: image("photo-1543852786-1cf6624b9987"), main: "清洁护理扩品", secondary: "渠道独家", position: "Bath 线基础款，优先验证线下护理场景。",                        role: "扩展非喂食看护品类，提升货架丰富度。",      owner: "陈思",   health: "green",  decision: "",                                                  platform: "Bath 通用底座 v1",    dependencies: [],                       lastUpdated: daysAgo(60),  notes: "" },
-      { spu: "BTH-P320", name: "Bath Dry Plus",       category: "bath",       tier: "P", quarter: "2027 Q2", mapPrice: "$129.99", channels: ["SHOPIFY", "SAMS"],             img: image("photo-1548767797-d8c844163c4c"), main: "利润补充",     secondary: "高端护理", position: "以快速烘干、低噪和安全感做高端护理 SKU。",                    role: "承接高毛利与内容种草。",                    owner: "韩梅梅", health: "green",  decision: "渠道独家 SKU 提案需 6/15 前与 SAMS 谈定",            platform: "Bath 通用底座 v1",    dependencies: ["BTH-C180"],             lastUpdated: daysAgo(20),  notes: "" }
+      { spu: "CAM-E100", name: "Cam Mini", category: "cam", tier: "E", quarter: "2026 Q2", mapPrice: "$39.99", channels: ["SC", "WM"], img: image("photo-1583337130417-3346a1be7dee"), main: "低价位铺量", secondary: "新客首购", position: "承担 E 档入口，补齐低价带对竞品防守。", role: "拉新、评价积累、渠道补坑。", owner: "李雷", health: "green", decision: "" },
+      { spu: "CAM-C240", name: "Cam 2K Pan", category: "cam", tier: "C", quarter: "2026 Q3", mapPrice: "$79.99", channels: ["SC", "VC", "SHOPIFY"], img: image("photo-1601758125946-6ec2ef64daf8"), main: "主销爆品", secondary: "订阅转化", position: "Cam 线销量中枢，用 2K、云存储和双向语音稳定转化。", role: "承担评论量、转化率和订阅入口。", owner: "李雷", health: "yellow", decision: "Q3 内容预算追加 80 万待批" },
+      { spu: "CAM-P360", name: "Cam AI 360", category: "cam", tier: "P", quarter: "2026 Q4", mapPrice: "$129.99", channels: ["SC", "SHOPIFY", "SAMS"], img: image("photo-1548199973-03cce0bbc87b"), main: "AI 差异化", secondary: "礼品季利润", position: "用宠物识别、异常提醒和自动追踪拉开溢价。", role: "提升 ASP、带动 App 活跃和会员包。", owner: "韩梅梅", health: "green", decision: "" },
+      { spu: "FDR-E120", name: "Feeder Lite", category: "feeder", tier: "E", quarter: "2026 Q2", mapPrice: "$49.99", channels: ["WM", "BJ's"], img: image("photo-1573865526739-10659fec78a5"), main: "大货架覆盖", secondary: "价格带占位", position: "基础定时喂食款，解决渠道低价 SKU 需求。", role: "支撑线下渠道毛利和促销档期。", owner: "王磊", health: "green", decision: "" },
+      { spu: "FDR-C300", name: "Feeder Pro", category: "feeder", tier: "C", quarter: "2026 Q3", mapPrice: "$99.99", channels: ["SC", "VC", "SHOPIFY", "SAMS"], img: image("photo-1592194996308-7b43878e84a6"), main: "年度主战役", secondary: "多宠家庭", position: "Feeder 线主销 SPU，容量、卡粮检测、摄像头形成均衡卖点。", role: "承担品类 GMV、评价星级和渠道首推。", owner: "王磊", health: "yellow", decision: "" },
+      { spu: "FDR-U700", name: "Feeder Ultra Fresh", category: "feeder", tier: "U", quarter: "2027 Q1", mapPrice: "$199.99", channels: ["SHOPIFY", "SAMS"], img: image("photo-1514888286974-6c03e2ca1dba"), main: "旗舰心智", secondary: "鲜食生态", position: "以制冷保鲜和精准投喂建立技术标杆。", role: "打开高端价格带，验证鲜食订阅组合。", owner: "王磊", health: "red", decision: "保鲜模组供应商需 5/30 前定，影响整条 U 档" },
+      { spu: "NST-C200", name: "Smart Nest", category: "nest", tier: "C", quarter: "2026 Q4", mapPrice: "$89.99", channels: ["SHOPIFY", "SC"], img: image("photo-1608848461950-0fe51dfc41cb"), main: "新品类验证", secondary: "复购关联", position: "Nest 线首个可规模化 SPU，验证温控睡眠场景。", role: "验证需求、沉淀内容素材、拉动配件。", owner: "陈思", health: "yellow", decision: "" },
+      { spu: "HFD-P500", name: "Hum Feeder Chill", category: "hum feeder", tier: "P", quarter: "2027 Q1", mapPrice: "$149.99", channels: ["SHOPIFY", "VC"], img: image("photo-1596854407944-bf87f6fdd49e"), main: "湿粮升级", secondary: "会员绑定", position: "湿粮喂食高毛利款，围绕保鲜和易清洁建立信任。", role: "提升客单价，承接鲜食/湿粮生态。", owner: "韩梅梅", health: "green", decision: "" },
+      { spu: "BTH-C180", name: "Bath Care", category: "bath", tier: "C", quarter: "2026 Q3", mapPrice: "$59.99", channels: ["WM", "SC", "BJ's"], img: image("photo-1543852786-1cf6624b9987"), main: "清洁护理扩品", secondary: "渠道独家", position: "Bath 线基础款，优先验证线下护理场景。", role: "扩展非喂食看护品类，提升货架丰富度。", owner: "陈思", health: "green", decision: "" },
+      { spu: "BTH-P320", name: "Bath Dry Plus", category: "bath", tier: "P", quarter: "2027 Q2", mapPrice: "$129.99", channels: ["SHOPIFY", "SAMS"], img: image("photo-1548767797-d8c844163c4c"), main: "利润补充", secondary: "高端护理", position: "以快速烘干、低噪和安全感做高端护理 SKU。", role: "承接高毛利与内容种草。", owner: "韩梅梅", health: "green", decision: "渠道独家 SKU 提案需 6/15 前与 SAMS 谈定" }
     ];
 
     const defaultCompetitors = {
@@ -1457,12 +1139,9 @@
       "BTH-P320": [{ name: "Flying Pig Dryer", company: "Flying Pig", img: image("photo-1548767797-d8c844163c4c"), price: "$120-180", channel: "Amazon / DTC", point: "烘干效率和专业护理心智强", response: "主打低噪、安全感和家用护理内容种草。" }]
     };
 
-    // —— 2026-05-16 烘焙数据：从 product-roadmap-0516.xlsx 抽取，共 60 行 SKU ——
-    const BAKED_ROWS = [{"spu":"Cam 1","sku":"Cam 1","productGroup":"Cam 1","color":"","status":"LIVE","owner":"吴华福","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"NSP","skuPosition":"轻量化单机，最低门槛体验","skuImg":"images/image1.jpg","skuChannels":["VC"],"skuMapPrice":"$50","name":"Cam 1","category":"cam","tier":"E","quarter":"2022 Q1","mapPrice":"$50","channels":["VC"],"img":"images/image1.jpg","main":"用户拉新","secondary":"价格带防守","position":"轻量化智能观鸟入口，birdfy生态入口","role":"降低首次购买门槛，承接类目流量、积累评价、拉新试水","competitors":[]},{"spu":"Cam 1","sku":"Cam 1","productGroup":"Cam 1","color":"","status":"LIVE","owner":"吴华福","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"低维护长期在线单机","skuImg":"images/image1.jpg","skuChannels":["SC"],"skuMapPrice":"$70","name":"Cam 1","category":"cam","tier":"E","quarter":"2022 Q1","mapPrice":"$70","channels":["SC"],"img":"images/image1.jpg","main":"用户拉新","secondary":"礼赠成交","position":"轻量化智能观鸟入口，birdfy生态入口","role":"降低首次购买门槛，承接类目流量、积累评价、拉新试水","competitors":[]},{"spu":"Cam 2","sku":"Cam 2","productGroup":"Cam 2","color":"","status":"PLAN","owner":"","health":"green","decision":"待调研需求","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"NSP","skuPosition":"4K性价比主销","skuImg":"images/image1.jpg","skuChannels":["SC","Shopify"],"skuMapPrice":"$70","name":"Cam 2","category":"cam","tier":"C","quarter":"2027 Q2","mapPrice":"$70","channels":["SC","Shopify"],"img":"images/image1.jpg","main":"销量与口碑基本盘","secondary":"内容传播","position":"高画质观鸟入门","role":"扩大4K基数","competitors":[]},{"spu":"Cam 2","sku":"Cam 2","productGroup":"Cam 2","color":"","status":"PLAN","owner":"","health":"green","decision":"待调研需求","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"4K低维护长期在线","skuImg":"images/image1.jpg","skuChannels":["Shopify","SC"],"skuMapPrice":"$90","name":"Cam 2","category":"cam","tier":"C","quarter":"2027 Q2","mapPrice":"$90","channels":["Shopify","SC"],"img":"images/image1.jpg","main":"销量与口碑基本盘","secondary":"礼赠成交","position":"高画质观鸟入门","role":"建立高评分口碑基本盘","competitors":[]},{"spu":"Cam 3","sku":"Cam 3","productGroup":"Cam 3","color":"","status":"PLAN","owner":"陈清圆","health":"green","decision":"待调研需求","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"最低门槛鸟屋体验","skuImg":"images/image1.jpg","skuChannels":["SC","Shopify"],"skuMapPrice":"$50","name":"Cam 3","category":"cam","tier":"E","quarter":"2027 Q2","mapPrice":"$50","channels":["SC","Shopify"],"img":"images/image1.jpg","main":"用户拉新","secondary":"亲子教育渗透","position":"轻量化鸟屋入口","role":"降低首次购买门槛，承接类目流量、积累评价、拉新试水","competitors":[]},{"spu":"Cam 4","sku":"Cam 4","productGroup":"Cam 4","color":"","status":"PLAN","owner":"","health":"green","decision":"待调研需求","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"专业观察，长期在线","skuImg":"images/image1.jpg","skuChannels":["Shopify","SC"],"skuMapPrice":"$100","name":"Cam 4","category":"cam","tier":"U","quarter":"2027 Q4","mapPrice":"$100","channels":["Shopify","SC"],"img":"images/image1.jpg","main":"品牌旗舰","secondary":"内容传播","position":"自动对焦专业观鸟相机，一体式太阳能板","role":"建立品牌技术上限","competitors":[]},{"spu":"Rookie","sku":"Rookie","productGroup":"Rookie","color":"","status":"LIVE","owner":"陈清圆","health":"green","decision":"需要改版加屋顶","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"NSP","skuPosition":"最低门槛体验，强化价格竞争力","skuImg":"images/image2.jpg","skuChannels":["VC"],"skuMapPrice":"$50","name":"Rookie","category":"feeder","tier":"E","quarter":"2025 Q2","mapPrice":"$50","channels":["VC"],"img":"images/image2.jpg","main":"用户拉新","secondary":"价格带防守","position":"入门爆款","role":"低门槛转化、大盘承接","competitors":[]},{"spu":"Rookie","sku":"Rookie","productGroup":"Rookie","color":"","status":"LIVE","owner":"陈清圆","health":"green","decision":"需要改版加屋顶","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"入门低维护主销款","skuImg":"images/image2.jpg","skuChannels":["SC"],"skuMapPrice":"$60","name":"Rookie","category":"feeder","tier":"E","quarter":"2025 Q2","mapPrice":"$60","channels":["SC"],"img":"images/image2.jpg","main":"用户拉新","secondary":"亲子教育渗透","position":"入门升级款","role":"把入门用户往主流体验过渡","competitors":[]},{"spu":"Rookie 蓝色","sku":"Rookie 蓝色","productGroup":"Rookie","color":"","status":"EOL","owner":"陈静","health":"green","decision":"是否取消","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"Blue NSP","skuPosition":"渠道铺货","skuImg":"images/image3.jpg","skuChannels":["WM"],"skuMapPrice":"$50","name":"Rookie 蓝色","category":"feeder","tier":"E","quarter":"2025 Q2","mapPrice":"$50","channels":["WM"],"img":"images/image3.jpg","main":"用户拉新","secondary":"价格带防守","position":"低价渠道渗透","role":"渠道价格带站位","competitors":[]},{"spu":"Rookie B","sku":"Rookie B","productGroup":"Rookie","color":"","status":"EOL","owner":"陈静","health":"green","decision":"是否取消","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"B NSP","skuPosition":"渠道铺货","skuImg":"images/image4.jpg","skuChannels":["WM"],"skuMapPrice":"$50","name":"Rookie B","category":"feeder","tier":"E","quarter":"2025 Q2","mapPrice":"$50","channels":["WM"],"img":"images/image4.jpg","main":"用户拉新","secondary":"价格带防守","position":"低价渠道渗透","role":"渠道价格带站位","competitors":[]},{"spu":"Breeze","sku":"Breeze","productGroup":"Breeze","color":"","status":"DEV","owner":"陈静","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道铺货","skuImg":"images/image5.jpg","skuChannels":["WM"],"skuMapPrice":"$70","name":"Breeze","category":"feeder","tier":"E","quarter":"2026 Q4","mapPrice":"$70","channels":["WM"],"img":"images/image5.jpg","main":"用户拉新","secondary":"价格带防守","position":"低价渠道渗透","role":"渠道价格带站位","competitors":[]},{"spu":"BF1","sku":"BF1","productGroup":"BF1","color":"","status":"ITER","owner":"吴华福","health":"green","decision":"和rookie改出档位差距","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"NSP","skuPosition":"塑料标准主销款","skuImg":"images/image6.jpg","skuChannels":["SC"],"skuMapPrice":"$110","name":"BF1","category":"feeder","tier":"C","quarter":"2027 Q1","mapPrice":"$110","channels":["SC"],"img":"images/image6.jpg","main":"礼赠成交","secondary":"长辈陪伴关系","position":"标准主销款","role":"承担规模、转化与口碑","competitors":[]},{"spu":"BF1","sku":"BF1","productGroup":"BF1","color":"","status":"ITER","owner":"吴华福","health":"green","decision":"和rookie改出档位差距","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"主销升级承接款","skuImg":"images/image6.jpg","skuChannels":["SC"],"skuMapPrice":"$120","name":"BF1","category":"feeder","tier":"C","quarter":"2027 Q1","mapPrice":"$120","channels":["SC"],"img":"images/image6.jpg","main":"礼赠成交","secondary":"长辈陪伴关系","position":"主销升级承接款","role":"吸收内容种草后中高意向用户","competitors":[]},{"spu":"Wood","sku":"Wood","productGroup":"Wood","color":"","status":"LIVE","owner":"陈清圆","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"木制低维护主销款","skuImg":"images/image7.jpg","skuChannels":["VC"],"skuMapPrice":"$120","name":"Wood","category":"feeder","tier":"E","quarter":"2025 Q2","mapPrice":"$120","channels":["VC"],"img":"images/image7.jpg","main":"礼赠成交","secondary":"长辈陪伴关系","position":"木制标准主销款","role":"承担规模、转化与口碑","competitors":[]},{"spu":"Feeder Cyan","sku":"Feeder Cyan","productGroup":"Feeder Cyan","color":"","status":"DEV","owner":"陈静","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道铺货","skuImg":"images/image8.jpg","skuChannels":["WM"],"skuMapPrice":"$100","name":"Feeder Cyan","category":"feeder","tier":"E","quarter":"2027 Q1","mapPrice":"$100","channels":["WM"],"img":"images/image8.jpg","main":"礼赠成交","secondary":"渠道渗透","position":"木制低价渠道渗透","role":"渠道价格带站位","competitors":[]},{"spu":"Feeder Ebony","sku":"Feeder Ebony","productGroup":"Feeder Cyan","color":"","status":"DEV","owner":"陈静","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道铺货","skuImg":"images/image9.jpg","skuChannels":["WM"],"skuMapPrice":"$100","name":"Feeder Ebony","category":"feeder","tier":"E","quarter":"2027 Q1","mapPrice":"$100","channels":["WM"],"img":"images/image9.jpg","main":"礼赠成交","secondary":"渠道渗透","position":"木制低价渠道渗透","role":"渠道价格带站位","competitors":[]},{"spu":"Feeder BJs","sku":"Feeder BJs","productGroup":"Feeder Cyan","color":"","status":"EOL","owner":"吴华福","health":"green","decision":"生命周期终结","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道铺货","skuImg":"images/image9.jpg","skuChannels":["BJ's"],"skuMapPrice":"$100","name":"Feeder BJs","category":"feeder","tier":"E","quarter":"2025 Q4","mapPrice":"$100","channels":["BJ's"],"img":"images/image9.jpg","main":"礼赠成交","secondary":"渠道渗透","position":"木制低价渠道渗透","role":"渠道价格带站位","competitors":[]},{"spu":"Feeder Mocha","sku":"Feeder Mocha","productGroup":"Feeder Cyan","color":"","status":"DEV","owner":"吴华福","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道铺货","skuImg":"images/image9.jpg","skuChannels":["BJ's"],"skuMapPrice":"$100","name":"Feeder Mocha","category":"feeder","tier":"E","quarter":"2026 Q4","mapPrice":"$100","channels":["BJ's"],"img":"images/image9.jpg","main":"礼赠成交","secondary":"渠道渗透","position":"木制低价渠道渗透","role":"渠道价格带站位","competitors":[]},{"spu":"Cedar D","sku":"Cedar D","productGroup":"Cedar D","color":"","status":"LIVE","owner":"李禄媛","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道铺货","skuImg":"images/image10.jpg","skuChannels":["SAM"],"skuMapPrice":"$110","name":"Cedar D","category":"feeder","tier":"C","quarter":"2025 Q3","mapPrice":"$110","channels":["SAM"],"img":"images/image10.jpg","main":"礼赠成交","secondary":"渠道渗透","position":"木制低价渠道渗透","role":"渠道价格带站位","competitors":[]},{"spu":"Cedar V","sku":"Cedar V","productGroup":"Cedar V","color":"","status":"EOL","owner":"李禄媛","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道铺货","skuImg":"images/image11.jpg","skuChannels":["Costco"],"skuMapPrice":"","name":"Cedar V","category":"feeder","tier":"C","quarter":"2025 Q3","mapPrice":"TBD","channels":["Costco"],"img":"images/image11.jpg","main":"礼赠成交","secondary":"渠道渗透","position":"木制低价渠道渗透","role":"渠道价格带站位","competitors":[]},{"spu":"Bamboo V","sku":"Bamboo V","productGroup":"Bamboo V","color":"","status":"EOL","owner":"李禄媛","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"NSP","skuPosition":"渠道铺货","skuImg":"images/image12.jpg","skuChannels":["SAM"],"skuMapPrice":"","name":"Bamboo V","category":"feeder","tier":"C","quarter":"未上市","mapPrice":"TBD","channels":["SAM"],"img":"images/image12.jpg","main":"礼赠成交","secondary":"渠道渗透","position":"木制低价渠道渗透","role":"渠道价格带站位","competitors":[]},{"spu":"Metal","sku":"Metal","productGroup":"Metal","color":"","status":"LIVE","owner":"李禄媛","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道铺货","skuImg":"images/image13.jpg","skuChannels":["WM"],"skuMapPrice":"$140","name":"Metal","category":"feeder","tier":"C","quarter":"2024 Q4","mapPrice":"$140","channels":["WM"],"img":"images/image13.jpg","main":"后院疗愈","secondary":"礼赠成交","position":"金属耐用型主销款","role":"强化材质稳定感与庭院适配","competitors":[]},{"spu":"Metal","sku":"Metal","productGroup":"Metal","color":"","status":"LIVE","owner":"李禄媛","health":"green","decision":"需要GTM","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道铺货","skuImg":"images/image14.jpg","skuChannels":["SAM"],"skuMapPrice":"$130","name":"Metal","category":"feeder","tier":"C","quarter":"2026 Q4","mapPrice":"$130","channels":["SAM"],"img":"images/image14.jpg","main":"礼赠成交","secondary":"渠道渗透","position":"金属耐用型主销款","role":"渠道价格带站位","competitors":[]},{"spu":"Metal 2","sku":"Metal 2","productGroup":"Metal 2","color":"","status":"DEV","owner":"李禄媛","health":"green","decision":"需要立项改配色，8月底出货","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"金属主销款","skuImg":"images/image15.jpg","skuChannels":["SC"],"skuMapPrice":"$160","name":"Metal 2","category":"feeder","tier":"C","quarter":"2026 Q4","mapPrice":"$160","channels":["SC"],"img":"images/image15.jpg","main":"后院疗愈","secondary":"礼赠成交","position":"金属耐用型主销款","role":"强化材质稳定感与庭院适配","competitors":[]},{"spu":"Metal V","sku":"Metal V","productGroup":"Metal V","color":"","status":"LIVE","owner":"陈静","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"渠道铺货","skuImg":"images/image16.jpg","skuChannels":["WM"],"skuMapPrice":"$110","name":"Metal V","category":"feeder","tier":"E","quarter":"2025 Q3","mapPrice":"$110","channels":["WM"],"img":"images/image16.jpg","main":"礼赠成交","secondary":"渠道渗透","position":"金属耐用型主销款","role":"渠道价格带站位","competitors":[]},{"spu":"Metal S","sku":"Metal S","productGroup":"Metal S","color":"","status":"LIVE","owner":"李禄媛","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"渠道铺货","skuImg":"images/image17.jpg","skuChannels":["WBU"],"skuMapPrice":"","name":"Metal S","category":"feeder","tier":"E","quarter":"2025 Q3","mapPrice":"TBD","channels":["WBU"],"img":"images/image17.jpg","main":"礼赠成交","secondary":"渠道渗透","position":"金属耐用型主销款","role":"渠道价格带站位","competitors":[]},{"spu":"Metal A","sku":"Metal A","productGroup":"Metal A","color":"","status":"LIVE","owner":"吴华福","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"金属低价入门款","skuImg":"images/image18.jpg","skuChannels":["SC"],"skuMapPrice":"$100","name":"Metal A","category":"feeder","tier":"E","quarter":"2026 Q2","mapPrice":"$100","channels":["SC"],"img":"images/image18.jpg","main":"礼赠成交","secondary":"长辈陪伴关系","position":"金属耐用型主销款","role":"承担规模、转化与口碑","competitors":[]},{"spu":"Metal W","sku":"Metal W","productGroup":"Metal W","color":"","status":"DEV","owner":"吴华福","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"金属低价入门款","skuImg":"images/image19.jpg","skuChannels":["WM","BJ's"],"skuMapPrice":"$100","name":"Metal W","category":"feeder","tier":"E","quarter":"2026 Q4","mapPrice":"$100","channels":["WM","BJ's"],"img":"images/image19.jpg","main":"礼赠成交","secondary":"长辈陪伴关系","position":"金属耐用型主销款","role":"承担规模、转化与口碑","competitors":[]},{"spu":"Bamboo","sku":"Bamboo","productGroup":"Bamboo","color":"","status":"ITER","owner":"吴华福","health":"green","decision":"2k竹木，需重新立项，定义不当","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"自然材质主销款","skuImg":"images/image20.jpg","skuChannels":["SC"],"skuMapPrice":"$190","name":"Bamboo","category":"feeder","tier":"C","quarter":"2026 Q4","mapPrice":"$190","channels":["SC"],"img":"images/image20.jpg","main":"后院疗愈","secondary":"礼赠成交","position":"自然材质升级款","role":"承接设计感付费用户","competitors":[]},{"spu":"Metal 2 4K","sku":"Metal 2 4K","productGroup":"Metal 2 4K","color":"","status":"LIVE","owner":"李禄媛","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"高画质升级款","skuImg":"images/image15.jpg","skuChannels":["SC","Shopify","WM"],"skuMapPrice":"$200","name":"Metal 2 4K","category":"feeder","tier":"P","quarter":"2026 Q2","mapPrice":"$200","channels":["SC","Shopify","WM"],"img":"images/image15.jpg","main":"稀有惊喜拉新","secondary":"后院疗愈","position":"高画质升级款","role":"强化“更清晰、更值得升级”","competitors":[{"name":"Camojojo、Hibird、Humbirdy","company":"深圳斯远、深圳斯远、深圳讯美","img":"images/image21.jpg","price":"150","channel":"Amazon/Shopify","point":"","response":""}]},{"spu":"Bamboo 2 4K","sku":"Bamboo 2 4K","productGroup":"Bamboo 2 4K","color":"","status":"DEV","owner":"吴华福","health":"green","decision":"主芯片供应问题，MAP待更新","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"自然材质高画质升级款","skuImg":"images/image22.jpg","skuChannels":["SAM","Shopify"],"skuMapPrice":"$250","name":"Bamboo 2 4K","category":"feeder","tier":"P","quarter":"2026 Q3","mapPrice":"$250","channels":["SAM","Shopify"],"img":"images/image22.jpg","main":"后院疗愈","secondary":"稀有惊喜拉新","position":"设计感画质升级款","role":"面向庭院玩家和高意向用户","competitors":[]},{"spu":"BF2 Pro 2026","sku":"BF2 Pro 2026","productGroup":"BF2 Pro 2026","color":"","status":"LIVE","owner":"李禄媛","health":"green","decision":"结构优化，需跟踪内测用户反馈","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"","skuImg":"images/image23.jpg","skuChannels":["WM","Shopify"],"skuMapPrice":"$210","name":"BF2 Pro 2026","category":"feeder","tier":"P","quarter":"2026 Q4","mapPrice":"$210","channels":["WM","Shopify"],"img":"images/image23.jpg","main":"后院疗愈","secondary":"礼赠成交","position":"高意向升级款","role":"承接深度体验型用户","competitors":[]},{"spu":"BF2 Duo 2026","sku":"BF2 Duo 2026","productGroup":"BF2 Duo 2026","color":"","status":"LIVE","owner":"李禄媛","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"","skuImg":"images/image24.jpg","skuChannels":["Shopify"],"skuMapPrice":"$330","name":"BF2 Duo 2026","category":"feeder","tier":"U","quarter":"2026 Q4","mapPrice":"$330","channels":["Shopify"],"img":"images/image24.jpg","main":"稀有惊喜拉新","secondary":"后院疗愈","position":"旗舰形象款","role":"多视角示范、价格锚点、品牌展示","competitors":[]},{"spu":"Bamboo A","sku":"Bamboo A","productGroup":"Bamboo A","color":"","status":"EOL","owner":"李禄媛","health":"green","decision":"定义不当，退市","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"","skuImg":"images/image25.jpg","skuChannels":["WBU"],"skuMapPrice":"","name":"Bamboo A","category":"feeder","tier":"P","quarter":"2025 Q3","mapPrice":"TBD","channels":["WBU"],"img":"images/image25.jpg","main":"礼赠成交","secondary":"渠道渗透","position":"自然材质升级款","role":"花园渠道渗透","competitors":[]},{"spu":"Bamboo A Pro","sku":"Bamboo A Pro","productGroup":"Bamboo A Pro","color":"","status":"EOL","owner":"李禄媛","health":"green","decision":"定义不当，退市","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"","skuImg":"images/image25.jpg","skuChannels":["WBU"],"skuMapPrice":"","name":"Bamboo A Pro","category":"feeder","tier":"P","quarter":"2025 Q3","mapPrice":"TBD","channels":["WBU"],"img":"images/image25.jpg","main":"礼赠成交","secondary":"渠道渗透","position":"自然材质升级款","role":"花园渠道渗透","competitors":[]},{"spu":"Vista","sku":"Vista","productGroup":"Vista","color":"","status":"PLAN","owner":"李禄媛","health":"red","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"顶级旗舰","skuImg":"images/image26.jpg","skuChannels":["Shopify"],"skuMapPrice":"$650","name":"Vista","category":"feeder","tier":"U","quarter":"2028 Q1","mapPrice":"$650","channels":["Shopify"],"img":"images/image26.jpg","main":"稀有惊喜拉新","secondary":"后院疗愈","position":"顶级旗舰","role":"PR、旗舰展示、高端内容样板","competitors":[]},{"spu":"Hum SE","sku":"Hum SE","productGroup":"Hum SE","color":"","status":"ITER","owner":"孙嘉欣","health":"green","decision":"销量表现待复核后决定是否退市","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"NSP","skuPosition":"蜂鸟低价入门款","skuImg":"images/image27.jpg","skuChannels":["VC"],"skuMapPrice":"$80","name":"Hum SE","category":"hum feeder","tier":"E","quarter":"2025 Q2","mapPrice":"$80","channels":["VC"],"img":"images/image27.jpg","main":"礼赠成交","secondary":"稀有惊喜拉新","position":"蜂鸟线低门槛入门款","role":"轻礼赠、内容试水","competitors":[]},{"spu":"Hum SE","sku":"Hum SE","productGroup":"Hum SE","color":"","status":"ITER","owner":"孙嘉欣","health":"green","decision":"销量表现待复核后决定是否退市","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"低维护主销款","skuImg":"images/image27.jpg","skuChannels":["VC"],"skuMapPrice":"$100","name":"Hum SE","category":"hum feeder","tier":"E","quarter":"2027 Q1","mapPrice":"$100","channels":["VC"],"img":"images/image27.jpg","main":"礼赠成交","secondary":"稀有惊喜拉新","position":"蜂鸟线低门槛入门款","role":"轻礼赠、内容试水","competitors":[]},{"spu":"Hum","sku":"Hum","productGroup":"Hum","color":"","status":"ITER","owner":"孙嘉欣","health":"green","decision":"芯片供应问题待迭代","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"NSP","skuPosition":"蜂鸟标准主销款","skuImg":"images/image27.jpg","skuChannels":["SC"],"skuMapPrice":"$100","name":"Hum","category":"hum feeder","tier":"C","quarter":"2024 Q3","mapPrice":"$100","channels":["SC"],"img":"images/image27.jpg","main":"礼赠成交","secondary":"后院疗愈","position":"蜂鸟线标准主销款","role":"规模、转化、口碑基本盘","competitors":[]},{"spu":"Hum Ruby","sku":"Hum Ruby","productGroup":"Hum Ruby","color":"","status":"ITER","owner":"孙嘉欣","health":"green","decision":"芯片供应问题待迭代","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"NSP","skuPosition":"渠道铺货","skuImg":"images/image28.jpg","skuChannels":["WM"],"skuMapPrice":"$100","name":"Hum Ruby","category":"hum feeder","tier":"C","quarter":"2025 Q1","mapPrice":"$100","channels":["WM"],"img":"images/image28.jpg","main":"礼赠成交","secondary":"后院疗愈","position":"蜂鸟线标准主销款","role":"规模、转化、口碑基本盘","competitors":[]},{"spu":"Hum Duo AI","sku":"Hum Duo AI","productGroup":"Hum Duo AI","color":"","status":"ITER","owner":"孙嘉欣","health":"green","decision":"芯片供应问题待迭代","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"NSP","skuPosition":"差异化利润款","skuImg":"images/image29.jpg","skuChannels":["SC","Shopify","WM"],"skuMapPrice":"$190","name":"Hum Duo AI","category":"hum feeder","tier":"P","quarter":"2023 Q4","mapPrice":"$190","channels":["SC","Shopify","WM"],"img":"images/image29.jpg","main":"稀有惊喜拉新","secondary":"后院疗愈","position":"差异化利润款","role":"用更强内容效果建立升级理由","competitors":[]},{"spu":"Hum Duo AI","sku":"Hum Duo AI","productGroup":"Hum Duo AI","color":"","status":"ITER","owner":"孙嘉欣","health":"green","decision":"芯片供应问题待迭代","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"低维护升级款","skuImg":"images/image29.jpg","skuChannels":["SC","Shopify","WM"],"skuMapPrice":"$220","name":"Hum Duo AI","category":"hum feeder","tier":"P","quarter":"2023 Q4","mapPrice":"$220","channels":["SC","Shopify","WM"],"img":"images/image29.jpg","main":"稀有惊喜拉新","secondary":"后院疗愈","position":"差异化利润款","role":"用更强内容效果建立升级理由","competitors":[]},{"spu":"Hum Bloom","sku":"Hum Bloom","productGroup":"Hum Bloom","color":"","status":"DEV","owner":"孙嘉欣","health":"red","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"蜂鸟旗舰款","skuImg":"images/image30.jpg","skuChannels":["SC"],"skuMapPrice":"$280","name":"Hum Bloom","category":"hum feeder","tier":"U","quarter":"2026 Q4","mapPrice":"$280","channels":["SC"],"img":"images/image30.jpg","main":"后院疗愈","secondary":"礼赠成交","position":"蜂鸟线设计旗舰","role":"品牌锚点、高颜值内容、轻高端礼赠","competitors":[]},{"spu":"Nest","sku":"Nest","productGroup":"Nest","color":"","status":"LIVE","owner":"陈清圆","health":"green","decision":"wood c上市替换该spu","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"NSP","skuPosition":"HOUSE入门款","skuImg":"images/image31.jpg","skuChannels":["SC"],"skuMapPrice":"$90","name":"Nest","category":"house","tier":"E","quarter":"2025 Q3","mapPrice":"$90","channels":["SC"],"img":"images/image31.jpg","main":"亲子教育渗透","secondary":"后院疗愈","position":"HOUSE入门款","role":"进入鸟屋体验、降低生态体验门槛","competitors":[]},{"spu":"Nest Wood","sku":"Nest Wood","productGroup":"Nest Wood","color":"","status":"LIVE","owner":"陈清圆","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"HOUSE入门款","skuImg":"images/image32.jpg","skuChannels":["VC"],"skuMapPrice":"$100","name":"Nest Wood","category":"house","tier":"E","quarter":"2025 Q3","mapPrice":"$100","channels":["VC"],"img":"images/image32.jpg","main":"亲子教育渗透","secondary":"后院疗愈","position":"HOUSE入门款","role":"进入鸟屋体验、降低生态体验门槛","competitors":[]},{"spu":"Nest Wood C","sku":"Nest Wood C","productGroup":"Nest Wood C","color":"","status":"LIVE","owner":"陈清圆","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"HOUSE入门款，取代nest","skuImg":"images/image33.jpg","skuChannels":["SC"],"skuMapPrice":"$110","name":"Nest Wood C","category":"house","tier":"E","quarter":"2026 Q2","mapPrice":"$110","channels":["SC"],"img":"images/image33.jpg","main":"亲子教育渗透","secondary":"后院疗愈","position":"HOUSE入门款，取代nest","role":"承接 backyard 家庭场景","competitors":[]},{"spu":"Nest+CTLBOX","sku":"Nest+CTLBOX","productGroup":"Nest+CTLBOX","color":"","status":"LIVE","owner":"陈清圆","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP","skuPosition":"主销/口碑基本盘","skuImg":"images/image34.jpg","skuChannels":["SC"],"skuMapPrice":"$130","name":"Nest+CTLBOX","category":"house","tier":"C","quarter":"2024 Q3","mapPrice":"$130","channels":["SC"],"img":"images/image34.jpg","main":"亲子教育渗透","secondary":"后院疗愈","position":"主销/口碑基本盘","role":"进入鸟屋体验、降低生态体验门槛","competitors":[]},{"spu":"Nest Wood C+CTLBOX","sku":"Nest Wood C+CTLBOX","productGroup":"Nest Wood C+CTLBOX","color":"","status":"LIVE","owner":"陈清圆","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"主销/口碑基本盘，取代nest","skuImg":"images/image33.jpg","skuChannels":["SC"],"skuMapPrice":"$130","name":"Nest Wood C+CTLBOX","category":"house","tier":"C","quarter":"2026 Q2","mapPrice":"$130","channels":["SC"],"img":"images/image33.jpg","main":"亲子教育渗透","secondary":"后院疗愈","position":"主销/口碑基本盘，取代nest","role":"承接 backyard 家庭场景","competitors":[]},{"spu":"Nest Cyan","sku":"Nest Cyan","productGroup":"Nest Cyan","color":"","status":"DEV","owner":"陈静","health":"green","decision":"待升级2k","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道入门","skuImg":"images/image35.jpg","skuChannels":["WM"],"skuMapPrice":"$100","name":"Nest Cyan","category":"house","tier":"E","quarter":"2024 Q3","mapPrice":"$100","channels":["WM"],"img":"images/image35.jpg","main":"亲子教育渗透","secondary":"后院疗愈","position":"HOUSE入门款","role":"承接 backyard 家庭场景","competitors":[]},{"spu":"Nest Ebony","sku":"Nest Ebony","productGroup":"Nest Cyan","color":"","status":"DEV","owner":"陈静","health":"green","decision":"待升级2k","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道入门","skuImg":"images/image36.jpg","skuChannels":["WM"],"skuMapPrice":"$100","name":"Nest Ebony","category":"house","tier":"E","quarter":"2024 Q3","mapPrice":"$100","channels":["WM"],"img":"images/image36.jpg","main":"亲子教育渗透","secondary":"后院疗愈","position":"HOUSE入门款","role":"承接 backyard 家庭场景","competitors":[]},{"spu":"Nest Mocha","sku":"Nest Mocha","productGroup":"Nest Cyan","color":"","status":"DEV","owner":"吴华福","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道入门","skuImg":"images/image37.jpg","skuChannels":["BJ's"],"skuMapPrice":"$100","name":"Nest Mocha","category":"house","tier":"E","quarter":"2026 Q4","mapPrice":"$100","channels":["BJ's"],"img":"images/image37.jpg","main":"亲子教育渗透","secondary":"后院疗愈","position":"HOUSE入门款","role":"承接 backyard 家庭场景","competitors":[]},{"spu":"Nest Polygon","sku":"Nest Polygon","productGroup":"Nest Polygon","color":"","status":"EOL","owner":"李禄媛","health":"green","decision":"清完库存退市","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP+CTL","skuPosition":"渠道铺货","skuImg":"images/image38.jpg","skuChannels":["SAM"],"skuMapPrice":"$170","name":"Nest Polygon","category":"house","tier":"C","quarter":"2025 Q1","mapPrice":"$170","channels":["SAM"],"img":"images/image38.jpg","main":"后院疗愈","secondary":"亲子教育渗透","position":"设计感主销款","role":"庭院用户稳定自购承接","competitors":[]},{"spu":"Nest Polygon","sku":"Nest Polygon","productGroup":"Nest Polygon","color":"","status":"EOL","owner":"李禄媛","health":"green","decision":"清完库存退市","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP+CTL","skuPosition":"渠道铺货","skuImg":"images/image39.jpg","skuChannels":["SAM"],"skuMapPrice":"$170","name":"Nest Polygon","category":"house","tier":"C","quarter":"2025 Q1","mapPrice":"$170","channels":["SAM"],"img":"images/image39.jpg","main":"后院疗愈","secondary":"亲子教育渗透","position":"设计感主销款","role":"庭院用户稳定自购承接","competitors":[]},{"spu":"Nest Cedar","sku":"Nest Cedar","productGroup":"Nest Cedar","color":"","status":"LIVE","owner":"李禄媛","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"NSP","skuPosition":"渠道铺货","skuImg":"images/image40.jpg","skuChannels":["WBU"],"skuMapPrice":"$160","name":"Nest Cedar","category":"house","tier":"P","quarter":"2025 Q3","mapPrice":"$160","channels":["WBU"],"img":"images/image40.jpg","main":"后院疗愈","secondary":"亲子教育渗透","position":"花园渠道款","role":"花园渠道渗透","competitors":[]},{"spu":"Nest Duo AI","sku":"Nest Duo AI","productGroup":"Nest Duo AI","color":"","status":"LIVE","owner":"陈清圆","health":"green","decision":"主芯片要迭代","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ESP+CTL","skuPosition":"HOUSE线完整高配款","skuImg":"images/image41.jpg","skuChannels":["Shopify","SAM","SC"],"skuMapPrice":"$250","name":"Nest Duo AI","category":"house","tier":"U","quarter":"2025 Q2","mapPrice":"$250","channels":["Shopify","SAM","SC"],"img":"images/image41.jpg","main":"后院疗愈","secondary":"亲子教育渗透","position":"HOUSE线完整高配款","role":"高端庭院与深度玩家产品","competitors":[]},{"spu":"Jolly X","sku":"Jolly X","productGroup":"Jolly X","color":"","status":"PLAN","owner":"陈静","health":"green","decision":"Q3立项","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"BATH线入门款","skuImg":"","skuChannels":["SC"],"skuMapPrice":"$130","name":"Jolly X","category":"bath","tier":"E","quarter":"2027 Q1","mapPrice":"$130","channels":["SC"],"img":"","main":"后院疗愈","secondary":"稀有惊喜拉新","position":"Bath线入门款","role":"验证“智能鸟浴”概念接受度","competitors":[]},{"spu":"Jolly V","sku":"Jolly V","productGroup":"Jolly V","color":"","status":"LIVE","owner":"陈静","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道入门","skuImg":"images/image42.jpg","skuChannels":["WM"],"skuMapPrice":"$130","name":"Jolly V","category":"bath","tier":"E","quarter":"2025 Q3","mapPrice":"$130","channels":["WM"],"img":"images/image42.jpg","main":"后院疗愈","secondary":"稀有惊喜拉新","position":"Bath线入门款","role":"验证“智能鸟浴”概念接受度","competitors":[]},{"spu":"Jolly O","sku":"Jolly O","productGroup":"Jolly O","color":"","status":"LIVE","owner":"李禄媛","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"渠道入门","skuImg":"images/image43.jpg","skuChannels":["WBU"],"skuMapPrice":"$130","name":"Jolly O","category":"bath","tier":"E","quarter":"2025 Q3","mapPrice":"$130","channels":["WBU"],"img":"images/image43.jpg","main":"后院疗愈","secondary":"稀有惊喜拉新","position":"Bath线入门款","role":"验证“智能鸟浴”概念接受度","competitors":[]},{"spu":"Bath Pro Stand","sku":"Bath Pro Stand","productGroup":"Bath Pro Stand","color":"","status":"LIVE","owner":"陈静","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP+AI","skuPosition":"BATH线高端升级款","skuImg":"images/image44.jpg","skuChannels":["SC","Shopify","WM"],"skuMapPrice":"$270","name":"Bath Pro Stand","category":"bath","tier":"P","quarter":"2025 Q2","mapPrice":"$270","channels":["SC","Shopify","WM"],"img":"images/image44.jpg","main":"后院疗愈","secondary":"品牌展示","position":"设计差异化利润款","role":"强调设计与内容感","competitors":[]},{"spu":"Bath Pro Stand","sku":"Bath Pro Stand","productGroup":"Bath Pro Stand","color":"","status":"LIVE","owner":"陈静","health":"green","decision":"","platform":"","dependencies":[],"skuNotes":"","lastUpdated":"2026-05-16T00:00:00.000Z","skuConfig":"ISP","skuPosition":"BATH线完整高配款","skuImg":"images/image44.jpg","skuChannels":["SC","Shopify","WM"],"skuMapPrice":"$240","name":"Bath Pro Stand","category":"bath","tier":"P","quarter":"2025 Q2","mapPrice":"$240","channels":["SC","Shopify","WM"],"img":"images/image44.jpg","main":"后院疗愈","secondary":"品牌展示","position":"场景展示款","role":"提高展示感和内容呈现力","competitors":[]}];
+    let products = groupProductVariants(defaultProducts.map(product => ({ ...product, productGroup: product.spu, status: "PLAN", color: "", variants: [{ spu: product.spu, color: "", img: product.img }], competitors: defaultCompetitors[product.spu] || [], owner: product.owner || "", health: product.health || "green", decision: product.decision || "" })));
 
-    let products = groupProductVariants(BAKED_ROWS);
-
-    const state = { tiers: new Set(tiers.map(t => t.id)), channels: new Set(channels), statuses: new Set(statusDefinitions.map(status => status.id)), query: "", view: "matrix", openedSpu: null };
+    const state = { tiers: new Set(tiers.map(t => t.id)), channels: new Set(channels), statuses: new Set(statusDefinitions.map(status => status.id)), query: "", view: "matrix" };
 
     const tierLegend = document.getElementById("tierLegend");
     const tierFilters = document.getElementById("tierFilters");
@@ -1474,61 +1153,6 @@
     const detailDrawer = document.getElementById("detailDrawer");
     const drawerBackdrop = document.getElementById("drawerBackdrop");
     const importStatus = document.getElementById("importStatus");
-
-    // —— 角色 / 登录（软门禁，详见 DEPLOY.md） ——
-    // 默认管理员密码: Netvue123-（如需修改：把新密码 + 同样 salt 用 SHA-256 算出 hash 替换 ADMIN_PWD_HASH）
-    // 终端命令：echo -n "roadmap-salt-2026:你的新密码" | shasum -a 256
-    const ADMIN_PWD_SALT = "roadmap-salt-2026:";
-    const ADMIN_PWD_HASH = "f9c8067842b26e98a167ce7469ae19db359695621e698c139ff52aad2d74b3b2";
-    const ROLE_KEY = "roadmap-role-v1";
-
-    function getRole() {
-      try {
-        return sessionStorage.getItem(ROLE_KEY) === "admin" ? "admin" : "viewer";
-      } catch { return "viewer"; }
-    }
-    function isAdmin() { return getRole() === "admin"; }
-    async function sha256Hex(text) {
-      const buf = new TextEncoder().encode(text);
-      const hash = await crypto.subtle.digest("SHA-256", buf);
-      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
-    }
-    async function tryLogin(password) {
-      if (!password) return false;
-      const hash = await sha256Hex(ADMIN_PWD_SALT + password);
-      return hash === ADMIN_PWD_HASH;
-    }
-    function setRole(role) {
-      try {
-        if (role === "admin") sessionStorage.setItem(ROLE_KEY, "admin");
-        else sessionStorage.removeItem(ROLE_KEY);
-      } catch {}
-      document.body.classList.toggle("role-admin", role === "admin");
-      document.body.classList.toggle("role-viewer", role !== "admin");
-      const icon = document.getElementById("roleIcon");
-      const label = document.getElementById("roleLabel");
-      const hint = document.getElementById("roleHint");
-      const btn = document.getElementById("roleBtn");
-      if (icon) { icon.textContent = role === "admin" ? "🛠" : "👁"; icon.classList.toggle("admin", role === "admin"); icon.classList.toggle("viewer", role !== "admin"); }
-      if (label) label.textContent = role === "admin" ? "管理员模式" : "浏览模式";
-      if (hint) hint.textContent = role === "admin" ? "可点击任意字段直接编辑" : "只能查看，无法编辑数据";
-      if (btn) btn.textContent = role === "admin" ? "退出登录" : "登录";
-    }
-    function openAuthModal() {
-      const back = document.getElementById("authBackdrop");
-      const pwd = document.getElementById("authPwd");
-      const err = document.getElementById("authError");
-      back.classList.add("show");
-      back.setAttribute("aria-hidden", "false");
-      err.classList.remove("show");
-      pwd.value = "";
-      setTimeout(() => pwd.focus(), 50);
-    }
-    function closeAuthModal() {
-      const back = document.getElementById("authBackdrop");
-      back.classList.remove("show");
-      back.setAttribute("aria-hidden", "true");
-    }
 
     // —— Toast ——
     const toastHost = document.getElementById("toastHost");
@@ -1573,127 +1197,6 @@
         duration: 5200,
         key: "dirty"
       });
-    }
-
-    // —— URL state 持久化 + 深链接 ——
-    let suppressHashSync = false;
-    function syncRouteToHash() {
-      if (suppressHashSync) return;
-      const parts = [`view=${encodeURIComponent(state.view)}`];
-      if (state.openedSpu) parts.push(`spu=${encodeURIComponent(state.openedSpu)}`);
-      const hash = `#${parts.join("&")}`;
-      if (location.hash !== hash) {
-        suppressHashSync = true;
-        history.replaceState(null, "", hash);
-        suppressHashSync = false;
-      }
-    }
-    function parseHash() {
-      const raw = String(location.hash || "").replace(/^#/, "");
-      if (!raw) return {};
-      const out = {};
-      raw.split("&").forEach(pair => {
-        const [k, v] = pair.split("=");
-        if (!k) return;
-        out[decodeURIComponent(k)] = v ? decodeURIComponent(v) : "";
-      });
-      return out;
-    }
-    function applyHashToState() {
-      const route = parseHash();
-      let needRender = false;
-      if (route.view && route.view !== state.view) {
-        const validViews = new Set(["exec", "matrix", "timeline", "gap", "deps", "diff"]);
-        if (validViews.has(route.view)) {
-          state.view = route.view;
-          document.querySelectorAll(".view-toggle button").forEach(btn => btn.classList.toggle("active", btn.dataset.view === state.view));
-          needRender = true;
-        }
-      }
-      if (needRender) render();
-      if (route.spu) {
-        const wanted = route.spu.toLowerCase();
-        const product = products.find(p => (p.productGroup || p.spu || "").toLowerCase() === wanted || (p.variantSpus || []).some(s => String(s).toLowerCase() === wanted));
-        if (product) {
-          state.openedSpu = product.productGroup || product.spu;
-          openDrawer(product);
-        }
-      }
-    }
-
-    // —— PDF 导出 ——
-    async function exportCurrentViewAsPdf() {
-      if (!window.htmlToImage || !window.jspdf) {
-        showToast("PDF 导出库未加载，请联网后刷新页面。", { duration: 3500 });
-        return;
-      }
-      const root = document.querySelector(".app");
-      const main = root.querySelector("main");
-      const stamp = document.createElement("div");
-      const now = new Date();
-      const ymd = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
-      const viewLabel = { exec: "执行摘要", matrix: "档位矩阵", timeline: "时间线", gap: "档位 × 渠道空缺", deps: "依赖关系", diff: "版本对比" }[state.view] || state.view;
-      stamp.className = "export-stamp";
-      stamp.textContent = `产品 Roadmap · ${viewLabel} · 导出于 ${ymd}`;
-      main.insertBefore(stamp, main.firstChild);
-      root.classList.add("export-snap");
-      showToast("PDF 渲染中…可能需要 3-6 秒", { duration: 2200 });
-      try {
-        const dataUrl = await window.htmlToImage.toPng(main, {
-          pixelRatio: 2,
-          backgroundColor: "#f5f6f2",
-          cacheBust: true,
-          filter: node => !(node.classList && (node.classList.contains("toast-host") || node.classList.contains("tooltip") || node.classList.contains("drawer") || node.classList.contains("drawer-backdrop")))
-        });
-        // 把 PNG 装进 A4 横向 PDF
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
-        const pageW = pdf.internal.pageSize.getWidth();
-        const pageH = pdf.internal.pageSize.getHeight();
-        // 计算图片在 PDF 中的尺寸（按宽度等比）
-        await new Promise((resolve, reject) => {
-          const img = new Image();
-          img.onload = () => {
-            const ratio = img.height / img.width;
-            const targetW = pageW - 16;
-            let targetH = targetW * ratio;
-            if (targetH <= pageH - 16) {
-              pdf.addImage(dataUrl, "PNG", 8, 8, targetW, targetH);
-            } else {
-              // 多页
-              const pxPerMm = img.width / targetW;
-              const pageHeightPx = (pageH - 16) * pxPerMm;
-              let offsetPx = 0;
-              let pageIdx = 0;
-              const canvas = document.createElement("canvas");
-              canvas.width = img.width;
-              canvas.height = pageHeightPx;
-              const ctx = canvas.getContext("2d");
-              while (offsetPx < img.height) {
-                if (pageIdx > 0) pdf.addPage();
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(img, 0, -offsetPx);
-                const pageDataUrl = canvas.toDataURL("image/png");
-                const slicePxHeight = Math.min(pageHeightPx, img.height - offsetPx);
-                pdf.addImage(pageDataUrl, "PNG", 8, 8, targetW, slicePxHeight / pxPerMm);
-                offsetPx += pageHeightPx;
-                pageIdx++;
-              }
-            }
-            resolve();
-          };
-          img.onerror = reject;
-          img.src = dataUrl;
-        });
-        pdf.save(`product-roadmap-${state.view}-${ymd.replace(/[: ]/g, "-")}.pdf`);
-        showToast(`已导出 ${viewLabel} 视图为 PDF`, { duration: 2800 });
-      } catch (err) {
-        console.error(err);
-        showToast(`PDF 导出失败：${err.message || err}`, { duration: 4500 });
-      } finally {
-        root.classList.remove("export-snap");
-        stamp.remove();
-      }
     }
 
     // —— PNG 导出 ——
@@ -1755,45 +1258,6 @@
       document.getElementById("exportExcelBtn").addEventListener("click", () => { exportRoadmap("xlsx"); dirty = false; });
       document.getElementById("exportCsvBtn").addEventListener("click", () => { exportRoadmap("csv"); dirty = false; });
       document.getElementById("exportPngBtn").addEventListener("click", () => exportCurrentViewAsPng());
-      document.getElementById("exportPdfBtn").addEventListener("click", () => exportCurrentViewAsPdf());
-      document.getElementById("saveBaselineBtn").addEventListener("click", () => saveBaseline());
-
-      // —— 角色按钮 / 登录模态 ——
-      document.getElementById("roleBtn").addEventListener("click", () => {
-        if (isAdmin()) {
-          setRole("viewer");
-          showToast("已退出管理员模式", { duration: 2200 });
-          if (detailDrawer.classList.contains("show") && state.openedSpu) {
-            const fresh = products.find(p => (p.productGroup || p.spu || "").toLowerCase() === String(state.openedSpu).toLowerCase());
-            if (fresh) openDrawer(fresh);
-          }
-          render();
-        } else {
-          openAuthModal();
-        }
-      });
-      document.getElementById("authCancel").addEventListener("click", closeAuthModal);
-      document.getElementById("authBackdrop").addEventListener("click", e => {
-        if (e.target.id === "authBackdrop") closeAuthModal();
-      });
-      document.getElementById("authForm").addEventListener("submit", async e => {
-        e.preventDefault();
-        const pwd = document.getElementById("authPwd").value;
-        const err = document.getElementById("authError");
-        const ok = await tryLogin(pwd);
-        if (ok) {
-          setRole("admin");
-          closeAuthModal();
-          showToast("已登录管理员模式 — drawer 可点击字段直接编辑", { duration: 3000 });
-          if (detailDrawer.classList.contains("show") && state.openedSpu) {
-            const fresh = products.find(p => (p.productGroup || p.spu || "").toLowerCase() === String(state.openedSpu).toLowerCase());
-            if (fresh) openDrawer(fresh);
-          }
-          render();
-        } else {
-          err.classList.add("show");
-        }
-      });
 
       document.querySelectorAll(".view-toggle button").forEach(btn => btn.addEventListener("click", () => {
         state.view = btn.dataset.view;
@@ -2078,11 +1542,6 @@
       const owner = get("owner", "负责人", "Owner", "PM", "产品负责人");
       const health = normalizeHealth(get("health", "健康度", "风险", "风险状态"));
       const decision = get("decision", "需要决策", "待决策", "决策事项", "决策");
-      const platform = get("platform", "平台模组", "平台", "技术平台", "共享模组", "模组");
-      const dependencies = splitList(get("dependencies", "依赖SPU", "依赖", "上游SPU", "depends on"));
-      const skuNotes = get("sku notes", "SKU备注", "备注", "notes", "note", "memo");
-      const lastUpdatedRaw = get("last updated", "最近更新", "更新时间", "lastupdated");
-      const lastUpdated = lastUpdatedRaw ? parseDateLoose(lastUpdatedRaw) : "";
       return {
         spu,
         sku,
@@ -2092,10 +1551,6 @@
         owner,
         health,
         decision,
-        platform,
-        dependencies,
-        skuNotes,
-        lastUpdated,
         skuConfig: get("sku config", "SKU配置", "SKU 配置", "配置", "configuration", "config"),
         skuPosition: get("sku positioning", "SKU定位差异", "SKU 定位差异", "配置定位", "差异定位", "sku position"),
         skuImg: get("sku image", "SKU图片", "SKU 图片", "sku image url"),
@@ -2114,53 +1569,6 @@
         role: get("role", "核心职责", "responsibility", "job") || "待定义",
         competitors: buildCompetitors(competitorNames, competitorCompanies, competitorImages, competitorPrices, competitorChannels, competitorPoints, competitorResponses)
       };
-    }
-
-    function parseDateLoose(value) {
-      if (!value) return "";
-      const text = String(value).trim();
-      const isoMatch = text.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/);
-      if (isoMatch) {
-        const d = new Date(Number(isoMatch[1]), Number(isoMatch[2]) - 1, Number(isoMatch[3]));
-        if (!isNaN(d.getTime())) return d.toISOString();
-      }
-      const num = Number(text);
-      if (Number.isFinite(num) && num > 25569 && num < 80000) {
-        // Excel serial date number — days since 1899-12-30
-        const ms = Math.round((num - 25569) * 86400000);
-        return new Date(ms).toISOString();
-      }
-      const parsed = new Date(text);
-      return isNaN(parsed.getTime()) ? "" : parsed.toISOString();
-    }
-
-    function formatDateShort(value) {
-      if (!value) return "";
-      const d = new Date(value);
-      if (isNaN(d.getTime())) return "";
-      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-    }
-
-    function relativeDays(value) {
-      if (!value) return null;
-      const d = new Date(value);
-      if (isNaN(d.getTime())) return null;
-      return Math.floor((Date.now() - d.getTime()) / 86400000);
-    }
-
-    function formatRelative(value) {
-      const days = relativeDays(value);
-      if (days === null) return "未记录更新";
-      if (days <= 0) return "今天";
-      if (days === 1) return "昨天";
-      if (days < 30) return `${days} 天前`;
-      if (days < 365) return `${Math.floor(days / 30)} 个月前`;
-      return `${Math.floor(days / 365)} 年前`;
-    }
-
-    function isStale(value, threshold = 30) {
-      const days = relativeDays(value);
-      return days !== null && days >= threshold;
     }
 
     function normalizeHealth(value) {
@@ -2194,8 +1602,7 @@
           mapPrice: row.skuMapPrice || row.mapPrice,
           img: row.skuImg || row.img,
           main: row.main || "待定义",
-          secondary: row.secondary || "待定义",
-          notes: row.skuNotes || ""
+          secondary: row.secondary || "待定义"
         });
         group.spu = group.productGroup || group.spu;
         group.img = group.img && !isPlaceholderImage(group.img) ? group.img : row.img;
@@ -2204,22 +1611,12 @@
         if (!group.owner && row.owner) group.owner = row.owner;
         if (row.health && healthRank(row.health) > healthRank(group.health)) group.health = row.health;
         if (!group.decision && row.decision) group.decision = row.decision;
-        if (!group.platform && row.platform) group.platform = row.platform;
-        if (row.dependencies && row.dependencies.length) {
-          group.dependencies = unique([...(group.dependencies || []), ...row.dependencies]);
-        }
-        if (row.lastUpdated && (!group.lastUpdated || new Date(row.lastUpdated) > new Date(group.lastUpdated))) {
-          group.lastUpdated = row.lastUpdated;
-        }
       });
       return Array.from(grouped.values()).map(group => ({
         ...group,
         owner: group.owner || "",
         health: group.health || "green",
         decision: group.decision || "",
-        platform: group.platform || "",
-        dependencies: group.dependencies || [],
-        lastUpdated: group.lastUpdated || "",
         mapPrice: mapPriceForGroup(group),
         statuses: unique(group.variants.map(variant => normalizeStatus(variant.status))),
         cardId: [group.productGroup ? `group:${group.productGroup}` : `spu:${group.spu}`, group.category, group.tier].join("::"),
@@ -2397,14 +1794,14 @@
     }
 
     function roadmapHeaders() {
-      return ["产品组", "SPU", "SKU配置", "SKU定位差异", "SKU渠道", "SKU MAP价格", "配色", "品类", "档位", "季度", "状态", "MAP价格", "图片", "主战役", "次战役", "战略定位", "核心职责", "负责人", "健康度", "需要决策", "平台模组", "依赖SPU", "SKU备注", "最近更新", "对应竞品", "竞品公司", "竞品图片", "竞品价格", "竞品渠道", "对比要点", "我方打法"];
+      return ["产品组", "SPU", "SKU配置", "SKU定位差异", "SKU渠道", "SKU MAP价格", "配色", "品类", "档位", "季度", "状态", "MAP价格", "图片", "主战役", "次战役", "战略定位", "核心职责", "负责人", "健康度", "需要决策", "对应竞品", "竞品公司", "竞品图片", "竞品价格", "竞品渠道", "对比要点", "我方打法"];
     }
 
     function downloadTemplate() {
       const headers = roadmapHeaders();
       const samples = [
-        ["", "Nest E100", "无太阳能板 / 基础电源", "低价入口，主打基础功能和评价积累", "SC/WM", "$49.99", "White", "nest", "E", "2026 Q3", "PLAN", "$49.99", "可填图片链接；XLSX 可把图片放在此列", "低价位铺量", "新客首购", "E 档入口，补齐低价带防守", "拉新、评价积累、渠道补坑", "张三", "green", "", "温控主板 v1", "", "首批样机已封样", "2026-05-10", "K&H Heated Bed", "K&H", "可填竞品图片链接", "$45-90", "Amazon / Chewy", "温控休息场景成熟", "用智能温控和 App 连接验证新品类价值"],
-        ["", "Nest E100", "含太阳能板 / 户外长续航", "承担户外场景加价和差异化卖点", "SHOPIFY/SAMS", "$69.99", "Wood", "nest", "E", "2026 Q3", "ITER", "$49.99", "同一 SPU 多个配置可重复 SPU；每行维护一个 SKU 配置；SPU 渠道由 SKU渠道自动汇总", "低价位铺量", "户外长续航", "E 档入口，Solar 配置承担轻差异化", "基础款拉新，Solar 配置提升 ASP", "张三", "yellow", "Solar 模组成本待重谈", "温控主板 v1", "Nest E100", "Solar 配置需追加 IP67 测试", "2026-05-12", "K&H Heated Bed", "K&H", "多个竞品图片建议用 | 分隔", "$45-90", "Amazon / Chewy", "温控休息场景成熟", "用长续航配置和渠道组合应对"]
+        ["", "Nest E100", "无太阳能板 / 基础电源", "低价入口，主打基础功能和评价积累", "SC/WM", "$49.99", "White", "nest", "E", "2026 Q3", "PLAN", "$49.99", "可填图片链接；XLSX 可把图片放在此列", "低价位铺量", "新客首购", "E 档入口，补齐低价带防守", "拉新、评价积累、渠道补坑", "张三", "green", "", "K&H Heated Bed", "K&H", "可填竞品图片链接", "$45-90", "Amazon / Chewy", "温控休息场景成熟", "用智能温控和 App 连接验证新品类价值"],
+        ["", "Nest E100", "含太阳能板 / 户外长续航", "承担户外场景加价和差异化卖点", "SHOPIFY/SAMS", "$69.99", "Wood", "nest", "E", "2026 Q3", "ITER", "$49.99", "同一 SPU 多个配置可重复 SPU；每行维护一个 SKU 配置；SPU 渠道由 SKU渠道自动汇总", "低价位铺量", "户外长续航", "E 档入口，Solar 配置承担轻差异化", "基础款拉新，Solar 配置提升 ASP", "张三", "yellow", "Solar 模组成本待重谈", "K&H Heated Bed", "K&H", "多个竞品图片建议用 | 分隔", "$45-90", "Amazon / Chewy", "温控休息场景成熟", "用长续航配置和渠道组合应对"]
       ];
       if (window.XLSX) {
         const worksheet = XLSX.utils.aoa_to_sheet([headers, ...samples]);
@@ -2473,10 +1870,6 @@
           product.owner || "",
           product.health || "green",
           product.decision || "",
-          product.platform || "",
-          (product.dependencies || []).join(" / "),
-          variant.notes || "",
-          formatDateShort(product.lastUpdated),
           names,
           companies,
           images,
@@ -2541,266 +1934,10 @@
         case "exec":     renderExecutive(items); break;
         case "timeline": renderTimeline(items);  break;
         case "gap":      renderGapMatrix(items); break;
-        case "deps":     renderDependencies(items); break;
-        case "diff":     renderDiff(items); break;
         case "matrix":
         default:         renderMatrix(items);
       }
       attachProductEvents();
-      syncRouteToHash();
-    }
-
-    function renderDependencies(items) {
-      roadmap.className = "roadmap deps-roadmap";
-      roadmap.style.gridTemplateColumns = "1fr";
-
-      // 按平台聚合
-      const byPlatform = new Map();
-      const orphans = [];
-      items.forEach(p => {
-        const key = p.platform || "";
-        if (!key) { orphans.push(p); return; }
-        if (!byPlatform.has(key)) byPlatform.set(key, []);
-        byPlatform.get(key).push(p);
-      });
-
-      // 依赖边：FROM -> TO 反向显示
-      const cardsBySpu = new Map(items.map(p => [(p.productGroup || p.spu).toLowerCase(), p]));
-      const edges = [];
-      items.forEach(p => {
-        (p.dependencies || []).forEach(dep => {
-          const target = cardsBySpu.get(String(dep).trim().toLowerCase());
-          edges.push({ from: p, to: target, depCode: dep });
-        });
-      });
-
-      const platformHtml = Array.from(byPlatform.entries())
-        .sort((a, b) => b[1].length - a[1].length)
-        .map(([platform, list]) => {
-          const sharedNote = list.length > 1 ? `<span style="color:#bf6f2e;font-weight:800">⚠ ${list.length} 个 SPU 共用此平台，任何延期会同时影响</span>` : `单 SPU 使用`;
-          const chips = list.map(p => `<span class="dep-chip" data-card-id="${escapeHtml(p.cardId)}" title="${escapeHtml(p.productGroup || p.spu)}"><span class="health-dot health-${escapeHtml(p.health || "green")}"></span>${escapeHtml(p.productGroup || p.spu)} <span style="color:var(--muted);font-size:11px">· ${escapeHtml(p.tier)} · ${escapeHtml(p.quarter)}</span></span>`).join("");
-          return `<div class="platform-block">
-            <h2>${escapeHtml(platform)}</h2>
-            <div class="platform-meta">${sharedNote}</div>
-            <div class="platform-spus">${chips}</div>
-          </div>`;
-        }).join("");
-
-      const orphanHtml = orphans.length ? `<div class="platform-block">
-        <h2 style="color:var(--muted)">未指定平台 / 模组（${orphans.length}）</h2>
-        <div class="platform-meta">建议补充"平台模组"字段以追踪硬件/软件共用关系</div>
-        <div class="platform-spus">${orphans.map(p => `<span class="dep-chip" data-card-id="${escapeHtml(p.cardId)}"><span class="health-dot health-${escapeHtml(p.health || "green")}"></span>${escapeHtml(p.productGroup || p.spu)}</span>`).join("")}</div>
-      </div>` : "";
-
-      const edgeHtml = edges.length ? `<div class="platform-block">
-        <h2>跨 SPU 依赖关系</h2>
-        <div class="platform-meta">下游 SPU 受上游 SPU 影响，看依赖链识别风险传导</div>
-        ${edges.map(e => {
-          const fromCode = e.from.productGroup || e.from.spu;
-          const toCode = e.to ? (e.to.productGroup || e.to.spu) : e.depCode;
-          const toCardId = e.to ? e.to.cardId : "";
-          const toHealth = e.to ? (e.to.health || "green") : "na";
-          const fromHealth = e.from.health || "green";
-          const warn = e.to && (toHealth === "red" || toHealth === "yellow") ? `<strong style="color:#8a242c"> · 上游有风险 ⚠</strong>` : "";
-          const missing = !e.to ? `<span style="color:#8a242c"> · 在当前筛选中未找到</span>` : "";
-          return `<div class="dep-edge"><code data-card-id="${escapeHtml(e.from.cardId)}" title="点击查看"><span class="health-dot health-${escapeHtml(fromHealth)}" style="margin-right:4px"></span>${escapeHtml(fromCode)}</code> 依赖 <code${toCardId ? ` data-card-id="${escapeHtml(toCardId)}"` : ""}><span class="health-dot health-${escapeHtml(toHealth)}" style="margin-right:4px"></span>${escapeHtml(toCode)}</code>${warn}${missing}</div>`;
-        }).join("")}
-      </div>` : "";
-
-      roadmap.innerHTML = `<div class="deps-wrap">${platformHtml}${orphanHtml}${edgeHtml || `<div class="exec-empty">尚未配置跨 SPU 依赖关系。可在 drawer 的"依赖 SPU"字段填写</div>`}</div>`;
-    }
-
-    // —— Baseline 存取（localStorage） ——
-    const BASELINE_KEY = "roadmap-baseline-v1";
-
-    function snapshotForBaseline(productList) {
-      // 剥离 img 等大字段，避免 localStorage 超额
-      return productList.map(p => ({
-        productGroup: p.productGroup || "",
-        spu: p.spu,
-        category: p.category,
-        tier: p.tier,
-        quarter: p.quarter || "",
-        mapPrice: p.mapPrice || "",
-        channels: [...(p.channels || [])],
-        main: p.main || "",
-        secondary: p.secondary || "",
-        position: p.position || "",
-        role: p.role || "",
-        owner: p.owner || "",
-        health: p.health || "green",
-        decision: p.decision || "",
-        platform: p.platform || "",
-        dependencies: [...(p.dependencies || [])],
-        statuses: [...(p.statuses || [])],
-        variants: (p.variants || []).map(v => ({
-          spu: v.spu, sku: v.sku || v.spu, color: v.color || "", config: v.config || "",
-          status: normalizeStatus(v.status), position: v.position || "",
-          channels: [...(v.channels || [])], mapPrice: v.mapPrice || "",
-          main: v.main || "", secondary: v.secondary || "", notes: v.notes || ""
-        }))
-      }));
-    }
-
-    function saveBaseline() {
-      try {
-        const payload = { savedAt: new Date().toISOString(), products: snapshotForBaseline(products) };
-        localStorage.setItem(BASELINE_KEY, JSON.stringify(payload));
-        showToast(`已保存基准（${payload.products.length} 个 SPU）。切到"对比"视图随时对比变化。`, { duration: 3200 });
-        if (state.view === "diff") render();
-      } catch (err) {
-        showToast(`保存基准失败：${err.message || err}`, { duration: 4000 });
-      }
-    }
-
-    function loadBaseline() {
-      try {
-        const raw = localStorage.getItem(BASELINE_KEY);
-        if (!raw) return null;
-        return JSON.parse(raw);
-      } catch { return null; }
-    }
-
-    function clearBaseline() {
-      localStorage.removeItem(BASELINE_KEY);
-      showToast("已清除基准", { duration: 2200 });
-      if (state.view === "diff") render();
-    }
-
-    function importBaselineFromFile() {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = ".xlsx,.csv,.tsv";
-      input.addEventListener("change", () => {
-        const file = input.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = async e => {
-          try {
-            const { rows } = await parseWorkbook(file, e.target.result);
-            const imported = rows.map(row => normalizeRow(row, undefined)).filter(p => p.spu);
-            const baseProducts = groupProductVariants(imported);
-            const payload = { savedAt: new Date().toISOString(), products: snapshotForBaseline(baseProducts), sourceFile: file.name };
-            localStorage.setItem(BASELINE_KEY, JSON.stringify(payload));
-            showToast(`已用 ${file.name}（${baseProducts.length} 个 SPU）作为基准`, { duration: 3500 });
-            if (state.view === "diff") render();
-          } catch (err) {
-            showToast(`导入基准失败：${err.message || err}`, { duration: 4500 });
-          }
-        };
-        if (/\.csv$|\.tsv$/i.test(file.name)) reader.readAsText(file, "utf-8");
-        else reader.readAsArrayBuffer(file);
-      });
-      input.click();
-    }
-
-    function diffProducts(baseline, current) {
-      const baselineMap = new Map(baseline.products.map(p => [(p.productGroup || p.spu).toLowerCase(), p]));
-      const currentMap = new Map(current.map(p => [(p.productGroup || p.spu).toLowerCase(), p]));
-      const added = [];
-      const removed = [];
-      const modified = [];
-      const trackFields = ["quarter", "mapPrice", "channels", "main", "secondary", "position", "role", "owner", "health", "decision", "tier", "category", "platform", "dependencies", "statuses"];
-      currentMap.forEach((cur, key) => {
-        if (!baselineMap.has(key)) {
-          added.push(cur);
-          return;
-        }
-        const base = baselineMap.get(key);
-        const changes = [];
-        trackFields.forEach(field => {
-          const a = stringifyForDiff(base[field]);
-          const b = stringifyForDiff(cur[field]);
-          if (a !== b) changes.push({ field, from: a, to: b });
-        });
-        // 变体级变化（按 sku/config 匹配）
-        const baseVariants = base.variants || [];
-        const curVariants = cur.variants || [];
-        if (baseVariants.length !== curVariants.length) {
-          changes.push({ field: "SKU 数量", from: String(baseVariants.length), to: String(curVariants.length) });
-        }
-        if (changes.length) modified.push({ product: cur, changes });
-      });
-      baselineMap.forEach((base, key) => {
-        if (!currentMap.has(key)) removed.push(base);
-      });
-      return { added, removed, modified };
-    }
-
-    function stringifyForDiff(value) {
-      if (Array.isArray(value)) return [...value].sort().join(" / ");
-      if (value === undefined || value === null) return "";
-      return String(value);
-    }
-
-    function renderDiff(items) {
-      roadmap.className = "roadmap diff-roadmap";
-      roadmap.style.gridTemplateColumns = "1fr";
-      const baseline = loadBaseline();
-      if (!baseline) {
-        roadmap.innerHTML = `<div class="diff-wrap">
-          <div class="diff-head">
-            <strong>版本对比 · 基准未设置</strong>
-            <span class="diff-empty">先点上方"保存为基准"把当前状态存为基准，或导入一份历史 Excel 作为基准</span>
-            <div style="margin-left:auto;display:flex;gap:6px">
-              <button id="diffImportBtn" class="secondary-btn" type="button">导入基准 Excel</button>
-            </div>
-          </div>
-          <div class="exec-empty">基准设置后，这里会显示新增 / 移除 / 字段变更，按字段高亮 before → after</div>
-        </div>`;
-        const importBtn = document.getElementById("diffImportBtn");
-        if (importBtn) importBtn.addEventListener("click", importBaselineFromFile);
-        return;
-      }
-
-      const diff = diffProducts(baseline, items);
-      const savedAt = formatDateShort(baseline.savedAt) + " " + new Date(baseline.savedAt).toLocaleTimeString().slice(0, 5);
-      const sourceLabel = baseline.sourceFile ? `（来自 ${escapeHtml(baseline.sourceFile)}）` : "";
-
-      const renderProductLine = p => `<strong data-card-id="${escapeHtml(p.cardId || "")}">${escapeHtml(p.productGroup || p.spu)} <span style="color:var(--muted);font-weight:650">· ${escapeHtml(p.tier || "")} · ${escapeHtml(p.quarter || "")}</span></strong>`;
-
-      const addedHtml = diff.added.length ? `<div class="diff-section">
-        <h2 class="added">新增 SPU · ${diff.added.length}</h2>
-        <div class="diff-list">${diff.added.map(p => `<div class="diff-item">${renderProductLine(p)}<div class="diff-changes"><div class="diff-change"><b>主战役</b><span>${escapeHtml(p.main || "—")}</span></div><div class="diff-change"><b>负责人</b><span>${escapeHtml(p.owner || "—")}</span></div></div></div>`).join("")}</div>
-      </div>` : "";
-
-      const removedHtml = diff.removed.length ? `<div class="diff-section">
-        <h2 class="removed">从基准中移除 · ${diff.removed.length}</h2>
-        <div class="diff-list">${diff.removed.map(p => `<div class="diff-item"><strong>${escapeHtml(p.productGroup || p.spu)} <span style="color:var(--muted);font-weight:650">· ${escapeHtml(p.tier || "")} · ${escapeHtml(p.quarter || "")}</span></strong></div>`).join("")}</div>
-      </div>` : "";
-
-      const fieldLabels = { quarter: "季度", mapPrice: "MAP", channels: "渠道", main: "主战役", secondary: "次战役", position: "战略定位", role: "核心职责", owner: "负责人", health: "健康度", decision: "需决策", tier: "档位", category: "品类", platform: "平台模组", dependencies: "依赖 SPU", statuses: "状态" };
-
-      const modifiedHtml = diff.modified.length ? `<div class="diff-section">
-        <h2 class="modified">字段变更 · ${diff.modified.length}</h2>
-        <div class="diff-list">${diff.modified.map(({ product: p, changes }) => `<div class="diff-item">${renderProductLine(p)}<div class="diff-changes">${changes.map(c => `<div class="diff-change"><b>${escapeHtml(fieldLabels[c.field] || c.field)}</b><span><span class="from">${escapeHtml(c.from || "—")}</span><span class="arrow">→</span><span class="to">${escapeHtml(c.to || "—")}</span></span></div>`).join("")}</div></div>`).join("")}</div>
-      </div>` : "";
-
-      const nothing = !diff.added.length && !diff.removed.length && !diff.modified.length
-        ? `<div class="exec-empty">当前状态与基准完全一致</div>`
-        : "";
-
-      roadmap.innerHTML = `<div class="diff-wrap">
-        <div class="diff-head">
-          <div>
-            <strong>对比基准 · ${escapeHtml(savedAt)} ${sourceLabel}</strong>
-            <div class="diff-summary" style="margin-top:6px">
-              <span class="pill added">+${diff.added.length}</span>
-              <span class="pill removed">−${diff.removed.length}</span>
-              <span class="pill modified">±${diff.modified.length}</span>
-            </div>
-          </div>
-          <div style="margin-left:auto;display:flex;gap:6px">
-            <button id="diffImportBtn" class="secondary-btn" type="button">替换为新基准</button>
-            <button id="diffClearBtn" class="secondary-btn" type="button">清除基准</button>
-          </div>
-        </div>
-        ${addedHtml}${removedHtml}${modifiedHtml}${nothing}
-      </div>`;
-      const importBtn = document.getElementById("diffImportBtn");
-      const clearBtn = document.getElementById("diffClearBtn");
-      if (importBtn) importBtn.addEventListener("click", importBaselineFromFile);
-      if (clearBtn) clearBtn.addEventListener("click", clearBaseline);
     }
 
     function renderExecutive(items) {
@@ -2999,7 +2136,6 @@
       const competitorTag = competitorCount ? `<span class="tag competitor-tag">竞品 ${competitorCount}</span>` : "";
       const ownerTag = p.owner ? `<span class="tag owner-tag" title="负责人">👤 ${escapeHtml(p.owner)}</span>` : "";
       const decisionTag = p.decision ? `<span class="tag decision-tag" title="${escapeHtml(p.decision)}">⚑ 待决策</span>` : "";
-      const staleTag = isStale(p.lastUpdated) ? `<span class="tag stale-tag" title="距上次更新 ${escapeHtml(formatRelative(p.lastUpdated))}">⏱ 待评审</span>` : "";
       const health = p.health || "green";
       return `<article class="product-card" data-card-id="${escapeHtml(p.cardId)}" style="border-left-color:${tier.color}">
         <span class="health-dot health-${escapeHtml(health)} card-health" title="健康度：${escapeHtml(healthLabels[health] || "")}"></span>
@@ -3012,7 +2148,7 @@
           <h3>${escapeHtml(cardTitle)}</h3>
           ${configTags}
           <div class="card-meta">
-            <div class="meta-line">${p.mapPrice ? `<span class="tag map-tag">MAP ${escapeHtml(p.mapPrice)}</span>` : `<span class="tag map-tag">MAP 待补充</span>`}${competitorTag}${ownerTag}${decisionTag}${staleTag}</div>
+            <div class="meta-line">${p.mapPrice ? `<span class="tag map-tag">MAP ${escapeHtml(p.mapPrice)}</span>` : `<span class="tag map-tag">MAP 待补充</span>`}${competitorTag}${ownerTag}${decisionTag}</div>
             <div class="meta-line">${p.channels.map(channelTag).join("")}</div>
           </div>
         </div>
@@ -3071,12 +2207,6 @@
     function editableSpan(value, field, opts = {}) {
       const { placeholder = "点击编辑", target = "product", index = "", multiline = false, array = "" } = opts;
       const text = String(value ?? "").trim();
-      // viewer 模式：直接展示纯文本（无可编辑感、无 data-* 属性）
-      if (!isAdmin()) {
-        const display = text || (multiline ? "" : "");
-        const cls = multiline ? "value-multiline" : "";
-        return `<span class="${cls}" style="white-space:${multiline ? "pre-wrap" : "normal"}">${escapeHtml(display) || `<span style="color:#aab1a8">—</span>`}</span>`;
-      }
       const cls = ["editable"];
       if (!text) cls.push("is-empty");
       if (multiline) cls.push("is-multiline");
@@ -3085,11 +2215,6 @@
 
     function editableSelect(value, field, options, opts = {}) {
       const { target = "product", index = "" } = opts;
-      const matched = options.find(opt => opt.id === value);
-      // viewer 模式：纯文本
-      if (!isAdmin()) {
-        return `<span>${escapeHtml(matched ? matched.label : value)}</span>`;
-      }
       const optsHtml = options.map(opt => `<option value="${escapeHtml(opt.id)}"${opt.id === value ? " selected" : ""}>${escapeHtml(opt.label)}</option>`).join("");
       return `<select class="editable-select" data-edit-target="${target}" data-edit-field="${field}" data-edit-type="select"${index !== "" ? ` data-edit-index="${index}"` : ""}>${optsHtml}</select>`;
     }
@@ -3098,8 +2223,6 @@
       hideTooltip();
       const tier = tiers.find(t => t.id === p.tier) || tiers[1];
       const health = p.health || "green";
-      state.openedSpu = p.productGroup || p.spu;
-      syncRouteToHash();
       detailDrawer.innerHTML = `<div class="drawer-head">
           <div>
             <h2>${editableSpan(p.productGroup || p.spu, "productGroup", { placeholder: "产品组名" })}</h2>
@@ -3116,7 +2239,7 @@
           </div>
           <div class="meta-line">${p.channels.map(channelTag).join("")}</div>
         </div>
-        <div class="drawer-edit-hint admin-only">点击任意字段即可编辑（Enter 保存 / Esc 取消），数组字段用 “/” 或 “,” 分隔。改动会即时写入内存——确认无误后点 <strong>导出 Excel</strong> 持久化。</div>
+        <div class="drawer-edit-hint">点击任意字段即可编辑（Enter 保存 / Esc 取消），数组字段用 “/” 或 “,” 分隔。改动会即时写入内存——确认无误后点 <strong>导出 Excel</strong> 持久化。</div>
         ${productDetailHtml(p)}`;
       detailDrawer.classList.add("show");
       drawerBackdrop.classList.add("show");
@@ -3126,7 +2249,6 @@
     }
 
     function bindDrawerEditing(product) {
-      if (!isAdmin()) return;  // viewer 模式：不附加编辑事件
       detailDrawer.querySelectorAll(".editable").forEach(el => {
         el.addEventListener("click", () => beginEdit(el, product));
       });
@@ -3137,13 +2259,12 @@
 
     function beginEdit(el, product) {
       if (el.classList.contains("is-editing")) return;
-      const multiline = el.classList.contains("is-multiline");
       const placeholder = el.dataset.placeholder || "";
-      const current = el.classList.contains("is-empty") ? "" : (multiline ? el.innerText : el.textContent);
+      const current = el.classList.contains("is-empty") ? "" : el.textContent;
       el.classList.remove("is-empty");
       el.classList.add("is-editing");
       el.setAttribute("contenteditable", "true");
-      if (multiline) el.innerText = current; else el.textContent = current;
+      el.textContent = current;
       // 全选
       const range = document.createRange();
       range.selectNodeContents(el);
@@ -3157,10 +2278,10 @@
         el.setAttribute("contenteditable", "false");
         el.classList.remove("is-editing");
         if (commit) {
-          const newValue = (multiline ? el.innerText : el.textContent).trim();
+          const newValue = el.textContent.trim();
           applyTextEdit(el, product, newValue);
         } else {
-          if (multiline) el.innerText = current || placeholder; else el.textContent = current || placeholder;
+          el.textContent = current || placeholder;
           if (!current) el.classList.add("is-empty");
         }
       };
@@ -3184,6 +2305,7 @@
       const array = el.dataset.editArray;
       const indexAttr = el.dataset.editIndex;
       const idx = indexAttr !== undefined ? Number(indexAttr) : -1;
+      const value = array ? splitList(newValue) : newValue;
       let reason = field;
       if (target === "product") {
         if (field === "quarter") product.quarter = newValue || "TBD";
@@ -3193,8 +2315,6 @@
           product.channels = arr.length ? arr : ["TBD"];
         } else if (field === "owner") product.owner = newValue;
         else if (field === "decision") product.decision = newValue;
-        else if (field === "platform") product.platform = newValue;
-        else if (field === "dependencies") product.dependencies = splitList(newValue);
         else if (field === "productGroup") {
           product.productGroup = newValue;
           product.spu = newValue || product.spu;
@@ -3206,6 +2326,7 @@
         if (field === "channels") {
           const arr = normalizeChannels(splitList(newValue));
           variant.channels = arr.length ? arr : ["TBD"];
+          // 重新汇总 SPU 的 channels
           product.channels = mergeChannels([], product.variants.flatMap(v => v.channels || []));
         } else {
           variant[field] = newValue;
@@ -3215,10 +2336,10 @@
         product.competitors[idx][field] = newValue;
         reason = `竞品 ${product.competitors[idx].name || idx + 1} · ${field}`;
       }
-      // 任何编辑都刷新 lastUpdated
-      product.lastUpdated = new Date().toISOString();
+      // 重算派生字段
       product.statuses = unique((product.variants || []).map(v => normalizeStatus(v.status)));
       render();
+      // 重新打开 drawer 显示最新数据
       const fresh = products.find(item => item.cardId === product.cardId) || product;
       openDrawer(fresh);
       markDirty(reason);
@@ -3235,7 +2356,6 @@
       } else if (target === "variant" && idx >= 0 && product.variants[idx]) {
         product.variants[idx][field] = value;
       }
-      product.lastUpdated = new Date().toISOString();
       product.statuses = unique((product.variants || []).map(v => normalizeStatus(v.status)));
       render();
       const fresh = products.find(item => item.cardId === product.cardId) || product;
@@ -3247,8 +2367,6 @@
       detailDrawer.classList.remove("show");
       drawerBackdrop.classList.remove("show");
       detailDrawer.setAttribute("aria-hidden", "true");
-      state.openedSpu = null;
-      syncRouteToHash();
     }
 
     function productHoverHtml(p) {
@@ -3284,9 +2402,6 @@
       const variants = p.variants || [{ spu: p.spu, color: p.color }];
       const skuConfigs = renderVariantsEditable(variants, p.productGroup || p.spu);
       const channelsText = (p.channels || []).join(" / ");
-      const depsText = (p.dependencies || []).join(" / ");
-      const stale = isStale(p.lastUpdated);
-      const updatedText = `${escapeHtml(formatRelative(p.lastUpdated))}${p.lastUpdated ? `（${escapeHtml(formatDateShort(p.lastUpdated))}）` : ""}${stale ? `<span class="tag stale-tag" style="margin-left:6px">⏱ 待评审</span>` : ""}`;
       return `<div class="detail">
         <div class="detail-row"><b>负责人</b><span>${editableSpan(p.owner, "owner", { placeholder: "填写 PM/负责人" })}</span></div>
         <div class="detail-row"><b>需要决策</b><span>${editableSpan(p.decision, "decision", { placeholder: "若需上层决策，写一句话；留空则不出现在执行摘要" })}</span></div>
@@ -3295,9 +2410,6 @@
         <div class="detail-row"><b>次战役</b><span>${editableSpan(p.secondary, "secondary", { placeholder: "次战役" })}</span></div>
         <div class="detail-row"><b>战略定位</b><span>${editableSpan(p.position, "position", { placeholder: "战略定位" })}</span></div>
         <div class="detail-row"><b>核心职责</b><span>${editableSpan(p.role, "role", { placeholder: "核心职责" })}</span></div>
-        <div class="detail-row"><b>平台模组</b><span>${editableSpan(p.platform, "platform", { placeholder: "如：鲜食保鲜模组 v1" })}</span></div>
-        <div class="detail-row"><b>依赖 SPU</b><span>${editableSpan(depsText, "dependencies", { placeholder: "用 / 分隔，如 FDR-C300 / HFD-P500", array: "csv" })}</span></div>
-        <div class="detail-row"><b>最近更新</b><span class="updated-meta">${updatedText}</span></div>
         <div class="detail-row"><b>SKU配置</b><span>${skuConfigs}</span></div>
         <div class="detail-row"><b>对应竞品</b><span>${competitors}</span></div>
       </div>`;
@@ -3320,14 +2432,13 @@
             <span><b>主战役：</b>${editableSpan(variant.main, "main", { target: "variant", index: idx, placeholder: "主战役" })}</span>
             <span><b>次战役：</b>${editableSpan(variant.secondary, "secondary", { target: "variant", index: idx, placeholder: "次战役" })}</span>
             <span><b>定位差异：</b>${editableSpan(variant.position, "position", { target: "variant", index: idx, placeholder: "差异化卖点" })}</span>
-            <div class="variant-notes"><b>备注：</b>${editableSpan(variant.notes, "notes", { target: "variant", index: idx, placeholder: "多行备注：风险、待办、改版思路…（Shift+Enter 换行 / Enter 保存）", multiline: true })}</div>
           </div>
         </div>`;
       }).join("")}</div>`;
     }
 
     function renderCompetitorsEditable(competitors) {
-      if (!competitors.length) return `<span style="color:#aab1a8">${isAdmin() ? "（暂无竞品，请在 Excel 模板里录入后导入）" : "—"}</span>`;
+      if (!competitors.length) return `<span class="editable is-empty" data-edit-target="product" data-edit-field="competitorsText" data-placeholder="（暂无竞品，可在 Excel 模板里录入）">（暂无竞品，可在 Excel 模板里录入）</span>`;
       return `<div class="competitor-list">${competitors.map((c, idx) => `
         <div class="competitor-item">
           <img src="${escapeHtml(c.img || placeholderImage("cam"))}" alt="${escapeHtml(c.name)}" loading="lazy" />
@@ -3393,24 +2504,8 @@
 
     function hideTooltip() { tooltip.classList.remove("show"); }
 
-    // 启动：先确定角色（影响 drawer 渲染），再同步维度
-    setRole(getRole());
-    // 烘焙数据可能带额外品类/渠道，把侧栏过滤器跟上
-    syncDimensionsFromProducts();
     initControls();
     render();
-    applyHashToState();
-    window.addEventListener("hashchange", () => {
-      if (suppressHashSync) return;
-      applyHashToState();
-    });
-    window.addEventListener("beforeunload", e => {
-      if (dirty) {
-        e.preventDefault();
-        e.returnValue = "你有未导出的改动，离开会丢失。";
-        return e.returnValue;
-      }
-    });
   </script>
 </body>
 </html>
