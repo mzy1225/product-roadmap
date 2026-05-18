@@ -1341,12 +1341,12 @@
           <button type="button" data-view="diff">对比</button>
         </div>
         <div class="import-tools">
-          <button id="importBtn" class="admin-only" type="button">导入 Excel/CSV</button>
-          <button id="templateBtn" class="secondary-btn admin-only" type="button">下载模板</button>
-          <button id="exportExcelBtn" class="secondary-btn admin-only" type="button">导出 Excel</button>
-          <button id="exportCsvBtn" class="secondary-btn admin-only" type="button">导出 CSV</button>
-          <button id="exportPngBtn" class="secondary-btn admin-only" type="button">导出图片</button>
-          <button id="exportPdfBtn" class="secondary-btn admin-only" type="button">导出 PDF</button>
+          <button id="importBtn" type="button">导入 Excel/CSV</button>
+          <button id="templateBtn" class="secondary-btn" type="button">下载模板</button>
+          <button id="exportExcelBtn" class="secondary-btn" type="button">导出 Excel</button>
+          <button id="exportCsvBtn" class="secondary-btn" type="button">导出 CSV</button>
+          <button id="exportPngBtn" class="secondary-btn" type="button">导出图片</button>
+          <button id="exportPdfBtn" class="secondary-btn" type="button">导出 PDF</button>
           <button id="saveBaselineBtn" class="secondary-btn admin-only" type="button">保存为基准</button>
           <input id="fileInput" class="file-input" type="file" accept=".xlsx,.csv,.tsv" />
         </div>
@@ -2743,7 +2743,7 @@
             <strong>版本对比 · 基准未设置</strong>
             <span class="diff-empty">先点上方"保存为基准"把当前状态存为基准，或导入一份历史 Excel 作为基准</span>
             <div style="margin-left:auto;display:flex;gap:6px">
-              <button id="diffImportBtn" class="secondary-btn admin-only" type="button">导入基准 Excel</button>
+              <button id="diffImportBtn" class="secondary-btn" type="button">导入基准 Excel</button>
             </div>
           </div>
           <div class="exec-empty">基准设置后，这里会显示新增 / 移除 / 字段变更，按字段高亮 before → after</div>
@@ -2791,8 +2791,8 @@
             </div>
           </div>
           <div style="margin-left:auto;display:flex;gap:6px">
-            <button id="diffImportBtn" class="secondary-btn admin-only" type="button">替换为新基准</button>
-            <button id="diffClearBtn" class="secondary-btn admin-only" type="button">清除基准</button>
+            <button id="diffImportBtn" class="secondary-btn" type="button">替换为新基准</button>
+            <button id="diffClearBtn" class="secondary-btn" type="button">清除基准</button>
           </div>
         </div>
         ${addedHtml}${removedHtml}${modifiedHtml}${nothing}
