@@ -2107,7 +2107,7 @@
         quarter: get("quarter", "季度", "上市季度", "节点", "时间", "launch") || "TBD",
         mapPrice: get("map price", "map", "MAP", "MAP价格", "map价格", "最低广告价", "最低广告价格") || skuMapPrice || "TBD",
         channels: skuChannels.length ? skuChannels : ["TBD"],
-        img: embeddedImage || get("img", "image", "图片", "图片链接", "产品图片", "image url", "photo") || placeholderImage(category),
+        img: embeddedImage || get("img", "image", "图片链接", "image url", "photo") || placeholderImage(category),
         main: get("main", "主战役", "primary campaign", "primary") || "待定义",
         secondary: get("secondary", "次战役", "secondary campaign", "secondary") || "待定义",
         position: get("position", "战略定位", "positioning", "strategy") || "待定义",
