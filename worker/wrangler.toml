@@ -1,0 +1,12 @@
+name = "product-roadmap-sync"
+main = "index.js"
+compatibility_date = "2025-01-01"
+
+# KV namespace binding。
+# 部署前要先用 `wrangler kv:namespace create ROADMAP` 创建，
+# 把命令输出的 id（一串 32 位十六进制）填到 id = 下面。
+[[kv_namespaces]]
+binding = "ROADMAP"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# ADMIN_PASSWORD 不写在这里，用 `wrangler secret put ADMIN_PASSWORD` 加密注入。
